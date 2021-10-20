@@ -11,14 +11,14 @@ table {
 td {
     border: 1px solid black;
     padding: 2px;
-    margin: 10px;
+    padding: 10px;
 }
 
 th {
     border: 1px solid black ;
     padding: 2px;
     background-color: lightblue;
-    margin: 10px;
+    padding: 10px;
 }
 
 div {
