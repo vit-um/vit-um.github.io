@@ -2,8 +2,8 @@ h1 {
     color: blue;
     text-align: center;
 }
+
 table {
-    align-self: center;
     border: 1px solid black;
     border-collapse: collapse;
 }
@@ -39,3 +39,9 @@ ul li {
 #mys {
     background-color: yellow;
 }
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
