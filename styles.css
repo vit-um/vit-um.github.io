@@ -22,18 +22,13 @@ div {
     margin-top: 50px;
 }
 
-
-input[type=submit] {
+input[type=button], input[type=submit] {
     border: 1px dotted #999;
-    border-radius: 0;
+    border-radius: 5;
     background-color: red;
-    width: 200px;
-    height: 50px;
-    font-size: 24px;  
-    -webkit-appearance: none;
   }
 
-input[type=submit]:hover {
+input[type=button], input[type=submit]:hover {
     background-color: green;
 }
 
