@@ -3,7 +3,7 @@ h1 {
     text-align: center;
 }
 table {
-    align-items: center;
+    align-self: center;
     border: 1px solid black;
     border-collapse: collapse;
 }
