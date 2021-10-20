@@ -48,4 +48,9 @@ ul li {
     margin-left: auto;
     margin-right: auto;
   }
+
+a:hover {
+    color: #FF00FF;
+  }
+
   
