@@ -21,3 +21,15 @@ th {
 div {
     margin-top: 50px;
 }
+
+button {
+    background-color: red;
+    width: 200px;
+    height: 50px;
+    font-size: 24px;
+}
+
+button:hover {
+    background-color: green;
+}
+
