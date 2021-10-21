@@ -72,17 +72,18 @@ a:hover {
 }
 
 .grid {
-    background-color: green;
+    background-color: lightgreen;
     display: grid;
-    padding: 20px;
-    grid-column-gap: 20px;
-    grid-row-gap: 10px;
-    grid-template-columns: 200px 200px auto;
+    padding: 10px;
+    grid-column-gap: 10px;
+    grid-row-gap: 5px;
+    grid-template-columns: 50px auto 200px 200px;
 }
 
 .grid-item {
     background-color: white;
     font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     padding: 20px;
     text-align: center;
 }
