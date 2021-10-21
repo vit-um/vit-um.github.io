@@ -16,7 +16,7 @@ td {
 }
 
 th {
-    text-decoration: blue;
+    color: blue;
     border: 1px solid black ;
     padding: 2px;
     background-color: lightblue;
@@ -29,7 +29,7 @@ div {
 
 input[type=button], input[type=submit] {
     border: 1px dotted #999;
-    border-radius: 5;
+    border-radius: 10;
     background-color: red;
   }
 
@@ -58,4 +58,21 @@ a:hover {
     color: #FF00FF;
   }
 
-  
+@media (min-width: 600px) {
+    body {
+        border: 5px dotted red;
+    }
+}
+
+@media (max-width: 599px) {
+    body {
+        border: 5px dotted blue;
+    }
+}
+
+@media (max-width: 399px) {
+    body {
+        border: 5px dotted green;
+    }
+}
+
