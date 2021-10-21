@@ -1,5 +1,5 @@
 h1 {
-    color: blue;
+    color: black;
     text-align: center;
 }
 
@@ -36,12 +36,16 @@ input[type=button], input[type=submit]:hover {
     background-color: green;
 }
 
-ul li {
+ul {
     color: blue;
 }
 
 #mys {
     background-color: yellow;
+}
+
+a[href="/search/index.html"] {
+    color: red;
 }
 
 .center {
