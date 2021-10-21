@@ -58,21 +58,24 @@ a:hover {
     color: #FF00FF;
   }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
     body {
         border: 5px dotted red;
+        padding: 30px;
     }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 600px) {
     body {
         border: 5px dotted blue;
+        padding: 30px;
     }
 }
 
-@media (max-width: 399px) {
+@media (max-width: 480px) {
     body {
         border: 5px dotted green;
+        padding: 30px;
     }
 }
 
