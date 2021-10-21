@@ -23,15 +23,12 @@ th {
     padding: 10px;
 }
 
-div {
-    margin-top: 50px;
-}
 
 input[type=button], input[type=submit] {
     border: 1px dotted #999;
     border-radius: 10;
     background-color: red;
-  }
+}
 
 input[type=button], input[type=submit]:hover {
     background-color: green;
@@ -41,12 +38,17 @@ li {
     color: blue;
 }
 
+
 #mys {
     background-color: yellow;
 }
 
 a[href="/search/index.html"] {
     color: red;
+}
+
+.sp_div {
+    margin-top: 50px;
 }
 
 .center {
@@ -77,7 +79,7 @@ a:hover {
     padding: 10px;
     grid-column-gap: 10px;
     grid-row-gap: 5px;
-    grid-template-columns: 50px auto 200px 200px;
+    grid-template-columns: 50px auto 100px 100px;
 }
 
 .grid-item {
