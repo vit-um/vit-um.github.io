@@ -68,17 +68,11 @@
     background-color: transparent;
     width: auto;
     display: flex;
-    margin-top: 10%;
     flex-direction: column;
     justify-content: center;
-}
-.midleimg {
+    align-content: center;
     align-items: center;
-    justify-content: center;
-}
-
-img {
-width: 272px;
+    margin-top: 10%;
 }
 .midleform {
     display: flex;
