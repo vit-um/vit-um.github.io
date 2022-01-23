@@ -1,0 +1,311 @@
+.topblock {
+    /*border: 10px ridge #f00;*/
+    background-color: #048cfcf3;
+    width: auto;
+    padding: .1rem;
+    display: flex;
+   /* justify-content: flex-end;*/
+    
+}
+.topblockleft {
+    /*border: 10px ridge #f00;*/
+    font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    text-align: left;
+    font-weight: bold;
+    color: #f6fa08f3;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    line-height: 16px;
+    margin-right: 8px;
+    min-width: 56px;
+    padding: 3px 10px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    width: 20%;
+}
+.topblockright {
+    /*border: 10px ridge rgb(0, 255, 42);*/
+    width: 100%;
+    padding: .1rem;
+    display: flex;
+    justify-content: flex-end;
+    
+}
+.midleblock {
+    /*border: 10px ridge rgb(21, 255, 0);*//*границі діва для візуального контролю відображення*/
+    background-color: rgb(255, 255, 255);
+    width: auto;
+    display: flex;
+    justify-content: center;
+}
+.midleimg {
+   
+    margin-top: 1px;
+}
+img {
+width: 470px;
+}
+.midleform {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.forminput {
+    margin-top: 1px;
+}
+.forminput input:hover{
+    border-radius: 25px;
+    border-color:rgb(0, 0, 255);
+    border-width: 2px;
+    }
+.maininput {
+    position: absolute;
+    padding-left: 50px;
+}
+.radiusinput {
+    border-radius: 25px;
+    width: 410px;
+    height: 45px;
+}
+.radiusinput:focus {
+    outline: none;
+    border: 2px blue solid;
+    box-shadow: 0px 0px 3px #0066ff;
+}
+.imginput {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    padding-left: 1px;
+    padding-top: 3px;
+}
+.formbutton {
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+   padding-left: 150px;
+
+    
+}
+.btn {
+    width: 150px;
+    cursor: pointer;
+    margin-right: 0px;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 14px;
+    border-radius: .25rem;
+    color: black;
+    background-color: #f8f9faf3;
+    border-color: #f8f9fa52;
+}
+.btn:hover {
+    cursor: pointer;
+    margin-right: 1px;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 14px;
+    border-radius: .25rem;
+    color: black;
+    background-color: #f8f9faf3;
+    border-color: #00050a52;
+}
+.btnblue {
+    cursor: pointer;
+    margin-right: 0px;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 14px;
+    border-radius: .25rem;
+    color: black;
+    background-color: #048cfcf3;
+    border-color: #f8f9fa52;
+}
+.btnyellow {
+    cursor: pointer;
+    margin-right: 10px;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 14px;
+    border-radius: .25rem;
+    color: black;
+    background-color: #f6fa08f3;
+    border-color: #f8f9fa52;
+}
+.btn3 {
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(7, 11, 250);
+    background: #f6fa08f3;
+    border: 1px solid transparent;
+    font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    letter-spacing: 0.25px;
+    line-height: 16px;
+    margin-right: 8px;
+    min-width: 56px;
+    padding: 3px 10px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.btn3:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(7, 11, 250);
+    background: #a5fa08f3;
+    border: 1px solid transparent;
+    font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    line-height: 16px;
+    margin-right: 8px;
+    min-width: 56px;
+    padding: 3px 10px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+.paramblock {
+    color: #d93025;
+    font-size: 20px;
+    margin: 25px 35px;
+    font-family: arial,sans-serif;
+}
+.stroka {
+    border-bottom: 1px solid #ebebeb;
+}
+.paramforma {
+    max-width: 1140px;
+    min-width: 200px;
+    width: 96%;
+    margin: 40px 2% 0 45px;
+}
+.findepage {
+    width: 100%;
+    clear: both;
+}
+.findepage2 {
+    clear: both;
+}
+.findepage-start {
+    float:left;
+    display: inline-block;
+    min-width: 167px;
+    width: 16%;
+    font-size: 16px;
+    min-height: 42px;
+    font-weight: 500;
+    color: #333;
+    vertical-align: middle;
+}
+.findepage-null {
+    float: left;
+    display: inline-block;
+    min-width: 167px;
+    min-height: 41px;
+    vertical-align: middle;
+    width: 50%;
+}
+.findepage-end {
+    float: left;
+    display: inline-block;
+    width: 33%;
+    font-size: 13px;
+    font-weight: 700;
+    color: #777;
+    padding-left: 5px;
+    vertical-align: middle;
+}
+.findepage-start-2 {
+    height: 30px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.findepage_1 {
+    float: left;
+    display: inline-block;
+    min-width: 167px;
+    width: 16%;
+    height: 42px;
+    color: #222;
+    font-size: 13px;
+    line-height: 16px;
+    vertical-align: middle;
+}
+.findepage_2 {
+    float: left;
+    display: inline-block;
+    min-width: 167px;
+    min-height: 41px;
+    vertical-align: middle;
+    width: 50%;
+}
+.findepage_3 {
+    float: left;
+    display: inline-block;
+    width: 32%;
+    min-width: 160px;
+    margin: 0 0 8px 1%;
+    color: #555;
+    font-size: 11px;
+    padding-left: 5px;
+    vertical-align: middle;
+    position: relative;
+}
+.findepage_2_1 {
+    padding-right: 16px;
+}
+.param-input {
+    width: 100%;
+    text-align: left;
+    border-radius: 1px;
+    border: 1px solid #d9d9d9;
+    border-top: 1px solid #c0c0c0;
+    font-size: 13px;
+    height: 25px;
+    padding: 1px 8px;
+}
+.lastword {
+    color: #666;
+    font-family: monospace;
+    font-size: 11px;
+    white-space: pre;
+}
+.stroka2 {
+    margin: 18px 0;
+    clear: both;
+    border-top: 1px solid #ebebeb;
+}
+.findepage_2_2 {
+    /*border: 10px ridge #f00;*/
+    padding-right: 0px;
+    text-align: right;
+}
