@@ -5,12 +5,26 @@
 }
 @media (max-width: 599px){
     body {
-        background-color: wheat;
+        background-color: rgb(214, 248, 240);
     }
 }
 
 * {
     font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+}
+
+#backgroundImage {
+    border: none;
+    height: 100%;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    visibility: hidden;
+    width: 100%;
+}
+
+[show-background-image] #backgroundImage {
+        visibility: visible;
 }
 
 .topblock {
