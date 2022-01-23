@@ -75,17 +75,17 @@
     margin-top: 10%;
 }
 
-input {
+form.input {
     border-radius: 25px;
     width: 410px;
     height: 45px;
 }
-input:focus {
+form.input:focus {
     outline: none;
     border: 2px blue solid;
     box-shadow: 0px 0px 3px #0066ff;
 }
-input.icon{
+form.input.icon{
     background: url(img/magnifying-glass.png) no-repeat center left;
     padding-left:30px;
 }
