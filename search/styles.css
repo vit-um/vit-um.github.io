@@ -69,12 +69,14 @@
     width: auto;
     display: flex;
     margin-top: 10%;
+    flex-direction: column;
     justify-content: center;
 }
 .midleimg {
-    margin-top: 1px;
+    align-items: center;
     justify-content: center;
 }
+
 img {
 width: 272px;
 }
@@ -114,9 +116,8 @@ width: 272px;
 }
 .formbutton {
     display: flex;
-    margin-top: 20px;
+    margin-top: 35px;
     flex-direction: row;
-    padding: 50px;
 }
 
 .btnblue {
