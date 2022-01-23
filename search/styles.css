@@ -14,7 +14,18 @@
 .topblock {
     background-color: transparent;
     width: auto;
-    padding: .1rem;
+    padding: 2em;
+    font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+    text-align: left;
+    font-weight: bold;
+    color: rgb(29, 29, 29);
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    line-height: 16px;
+    margin-right: 8px;
+    min-width: 56px;
+    padding: 3px 10px;
+    vertical-align: middle;
     display: flex;
     justify-content: flex-end;
 }
