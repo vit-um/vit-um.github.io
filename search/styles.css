@@ -1,12 +1,13 @@
 @media (min-width: 600px) {
     body {
         background: black  url(img/kyiv_nigh.jpg); /* Цвет фона и путь к файлу */
-            color: #fff; /* Цвет текста */
+        color: #fff; /* Цвет текста */
     }  
 }
 @media (max-width: 599px){
     body {
         background-color: rgb(214, 248, 240);
+        color:  rgb(29, 29, 29);
     }
 }
 
@@ -26,7 +27,6 @@
 .btn3 {
     cursor: pointer;
     text-decoration: none;
-    color:  rgb(29, 29, 29);
     background: transparent;
     border: none;
     font-weight: 400;
@@ -44,7 +44,6 @@
 .btn3:hover {
     cursor: pointer;
     text-decoration: none;
-    color:  rgb(29, 29, 29);
     background-color: rgba(200, 218, 236, 0.5);
     border: 1px solid transparent;
     font-weight: 500;
