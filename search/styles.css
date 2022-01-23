@@ -74,6 +74,22 @@
     align-items: center;
     margin-top: 10%;
 }
+
+input.icon{
+    background: url(img/magnifying-glass.png) no-repeat center left;
+    padding-left:30px;
+}
+
+.imginput {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    padding-left: 1px;
+    padding-top: 3px;
+}
+
+
+
 .midleform {
     display: flex;
     flex-direction: column;
@@ -101,13 +117,7 @@
     border: 2px blue solid;
     box-shadow: 0px 0px 3px #0066ff;
 }
-.imginput {
-    position: relative;
-    width: 45px;
-    height: 45px;
-    padding-left: 1px;
-    padding-top: 3px;
-}
+
 .formbutton {
     display: flex;
     margin-top: 35px;
