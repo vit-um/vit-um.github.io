@@ -68,6 +68,8 @@
     background-color: transparent;
     width: auto;
     display: flex;
+    position: relative;
+    margin-top: 50%;
     justify-content: center;
 }
 .midleimg {
