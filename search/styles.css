@@ -16,10 +16,48 @@
 .topblock {
     background-color: transparent;
     width: auto;
-    padding: 5em;
+    padding: 1em;
     text-align: left;
     display: flex;
     justify-content: flex-end;
+}
+
+.btn3 {
+    cursor: pointer;
+    text-decoration: none;
+    color:  rgb(29, 29, 29);
+    background: transparent;
+    border: none;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.25px;
+    line-height: 16px;
+    margin-right: 8px;
+    min-width: 56px;
+    padding: 3px 10px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+.btn3:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color:  rgb(29, 29, 29);
+    background-color: rgba(200, 218, 236, 0.719);
+    border: 1px solid transparent;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.25px;
+    line-height: 16px;
+    margin-right: 8px;
+    min-width: 56px;
+    padding: 3px 10px;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px grey;
+    box-sizing: border-box;
 }
 
 .btn {
@@ -169,44 +207,7 @@ width: 470px;
     background-color: #f6fa08f3;
     border-color: #f8f9fa52;
 }
-.btn3 {
-    cursor: pointer;
-    text-decoration: none;
-    color: rgb(7, 11, 250);
-    background: #f6fa08f3;
-    border: 1px solid transparent;
-    font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
-    font-weight: bold;
-    font-size: 12px;
-    letter-spacing: 0.25px;
-    line-height: 16px;
-    margin-right: 8px;
-    min-width: 56px;
-    padding: 3px 10px;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-.btn3:hover {
-    cursor: pointer;
-    text-decoration: none;
-    color: rgb(7, 11, 250);
-    background: #a5fa08f3;
-    border: 1px solid transparent;
-    font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
-    font-weight: bold;
-    font-size: 14px;
-    letter-spacing: 0.25px;
-    line-height: 16px;
-    margin-right: 8px;
-    min-width: 56px;
-    padding: 3px 10px;
-    text-align: center;
-    vertical-align: middle;
-    border-radius: 10px;
-    box-sizing: border-box;
-}
+
 .paramblock {
     color: #d93025;
     font-size: 20px;
