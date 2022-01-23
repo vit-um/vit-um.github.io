@@ -92,8 +92,8 @@ width: 272px;
     border-width: 2px;
     }
 .maininput {
-    position: absolute;
-    padding-left: 50px;
+    position: relative;
+    justify-content: center;
 }
 .radiusinput {
     border-radius: 25px;
@@ -116,7 +116,7 @@ width: 272px;
     display: flex;
     margin-top: 20px;
     flex-direction: row;
-   padding: 50px;
+    padding: 50px;
 }
 
 .btnblue {
