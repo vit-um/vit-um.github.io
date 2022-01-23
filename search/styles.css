@@ -1,7 +1,8 @@
 @media (min-width: 600px) {
     body {
-        background-color: white;
-    }   
+        background: black  url(img/kyiv_nigh.jpg); /* Цвет фона и путь к файлу */
+            color: #fff; /* Цвет текста */
+    }  
 }
 @media (max-width: 599px){
     body {
@@ -11,20 +12,6 @@
 
 * {
     font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
-}
-
-#backgroundImage {
-    border: none;
-    height: 100%;
-    pointer-events: none;
-    position: fixed;
-    top: 0;
-    visibility: hidden;
-    width: 100%;
-}
-
-[show-background-image] #backgroundImage {
-        visibility: visible;
 }
 
 .topblock {
