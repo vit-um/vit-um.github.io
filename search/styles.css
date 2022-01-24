@@ -5,13 +5,19 @@
         -webkit-background-size: 100%; /* Safari 3.1+ и Chrome 4.0+ */
         -o-background-size: 100%; /* Opera 9.6+ */
         background-size: 100%; /* Современные браузеры */
-        color: white; /* Цвет текста */
+        color: white !important;  /* Цвет текста */
     }  
+    .btn3 {
+        color: white;
+    }
 }
 @media (max-width: 599px){
     body {
         background-color: rgb(214, 248, 240);
-        color:  rgb(29, 29, 29);
+        color:  rgb(29, 29, 29) !important;  /* Цвет текста */
+    }
+    .btn3 {
+        color: rgb(29, 29, 29) !important;  /* Цвет текста */
     }
 }
 
@@ -21,6 +27,7 @@
 
 .topblock {
     background: transparent;
+    color: white;
     width: auto;
     padding: 1em;
     text-align: left;
@@ -37,13 +44,13 @@
     font-size: 16px;
     letter-spacing: 0.25px;
     line-height: 16px;
-    margin-right: 5px;
     min-width: 50px;
     padding: 3px 10px;
     text-align: center;
     vertical-align: middle;
     border-radius: 20px;
     box-sizing: border-box;
+    margin-inline: 10px;
 }
 .btn3:hover {
     cursor: pointer;
@@ -54,7 +61,6 @@
     font-size: 16px;
     letter-spacing: 0.25px;
     line-height: 16px;
-    margin-right: 5px;
     min-width: 50px;
     padding: 3px 10px;
     text-align: center;
@@ -62,6 +68,7 @@
     border-radius: 20px;
     box-shadow: 1px 1px 5px grey;
     box-sizing: border-box;
+    margin-inline: 10px;
 }
 
 .midleblock {
@@ -74,90 +81,43 @@
     align-items: center;
     margin-top: 10%;
 }
+.formbutton {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 35px;
+}
 
-form.input {
+
+input {
+    margin-top: 25px;
     border-radius: 25px;
+    background: white;
+    border: 1px grey solid;
     width: 410px;
     height: 45px;
 }
-form.input:focus {
+input:focus {
     outline: none;
-    border: 2px blue solid;
-    box-shadow: 0px 0px 3px #0066ff;
+    background-color: white;
+    border: 2px yellow solid;
+    box-shadow: 0px 0px 3px yellow;
 }
-form.input.icon{
-    background: url(img/magnifying-glass.png) no-repeat center left;
-    padding-left:30px;
+input:hover {
+    outline: none;
+    background-color: white;
+    border: 1px green solid;
+    box-shadow: 0px 0px 5px green;
 }
-
-
-.imginput {
-    position: absolute;
-    width: 45px;
-    height: 45px;
-    padding-left: 1px;
-    padding-top: 3px;
-}
-
-
-
-.midleform {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.forminput {
-    margin-top: 1px;
-}
-.forminput input:hover{
-    border-radius: 25px;
-    border-color:rgb(0, 0, 255);
-    border-width: 2px;
-    }
-.maininput {
-    position: relative;
-    justify-content: center;
-}
-
-.formbutton {
-    display: flex;
-    margin-top: 35px;
-    flex-direction: row;
-}
-
-.btnblue {
-    cursor: pointer;
-    margin-right: 0px;
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    font-size: 14px;
-    border-radius: .25rem;
-    color: black;
-    background-color: #048cfcf3;
-    border-color: #f8f9fa52;
-}
-.btnyellow {
-    cursor: pointer;
-    margin-right: 10px;
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    font-size: 14px;
-    border-radius: .25rem;
-    color: black;
-    background-color: #f6fa08f3;
-    border-color: #f8f9fa52;
+input.icon{
+    background: white url(img/magnifying-glass.png) no-repeat center left;
+    background-size: auto 90%;
+    font-weight: 500;
+    font-size: 16px;
+    padding-left:40px;
 }
 
 

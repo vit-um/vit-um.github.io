@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
     <head>
+        <meta charset="utf-8">
         <title>Search in Google</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="shortcut icon" href="img/icosmall.png" type="image/png">
     </head>
     <body>
@@ -14,12 +15,13 @@
 
         <div class="midleblock">
             <a href="https://abc.xyz/"> <img src="img/googlelogo_color_272x92dp.png" alt="Google"></a>      
-            <form action="https://google.com/search">
-                <input type="text" name="q">
-                <button type="submit" name="btnK" class="btn3">Пошук Google</button>
-                <button type="submit" name="btnI" class="btn3">Мені пощастить</button>
+            <form class="input" action="https://www.google.com/search">
+                <input class="icon" type="text" name="q">
+                <div class="formbutton">
+                    <button type="submit" name="btnK" class="btn3">Пошук Google</button>
+                    <button class="btn3" type="submit" name="btnI" value="Мне повезёт!" aria-label="Мне повезёт!">Мені пощастить</button>
+                </div>
             </form>
         </div>
-
     </body>
 </html>
