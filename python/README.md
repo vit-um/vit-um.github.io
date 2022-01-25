@@ -12,7 +12,7 @@
 
 ```
 ## Conditions
-```
+```python
 n = int(input("Number: "))
 
 if n > 0:
@@ -48,19 +48,57 @@ See in the [file](functions.py)
 
 ## Modules
 Дозволяють імпортувати функцію з іншого файла
-```
+```python
 from functions import square
 
 print(f"The square of 5 is {square(5)}")
 ```
 Або під'єднати увесь модуль
-```
+```python
 import functions
 
 print(f"The squuare of 5 is {functions.square(5)}")
 ```
-
 See in the files [square.py](square.py) and [functions.py](functions.py)
+
+## Classes
+Класи: ми вже бачили кілька різних типів змінних у Python, але як бути, якщо ми хочемо створити власний тип? Клас Python – це, по суті, шаблон для об’єкта нового типу, який може зберігати інформацію та виконувати дії. Ось клас, який визначає двовимірну точку:
+```python
+class Point():
+    # Метод визначає, як створювати точку:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+```
+More code see in [classes.py](classes.py)
+
+## Decorators
+Декоратори використовують для зміни поведінки функції.  Декоратор - це функція яка приймає іншу функцію як аргумент та повертає змінену версію цієї функуції.  
+Парадигма функціональого программування, де функція - це значення 
+```python
+def announce(f):
+    def wrapper():
+        print("About to run the function...")
+        f()
+        print("Done with the function.")
+    return wrapper
+
+@announce
+def hello():
+    print("Hello, world!")
+
+hello()
+```
+See in the file [decorators.py](decorators.py)
+
+## Lambda
+Лямбда-функції забезпечують ще один спосіб створення функцій у Python. Наприклад, якщо ми хочемо визначити ту саму функцію square, що і раніше, ми можемо написати:
+```python
+square = lambda x: x * x
+```
+Де аргументи йдуть ліворуч від :, а результат праворуч.  
+Функцію зручно використовувати для сортування данних з складною структрурою, дивись приклад у файлі [lambda.py](lambda.py)
+
 
 
 ## [Go back](../README.md)
