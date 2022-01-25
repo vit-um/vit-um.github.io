@@ -1,4 +1,4 @@
-# Python and JavaScript CS50 Study Project
+# My Python and JavaScript CS50 learning project
 
 ## Contents
 
