@@ -33,14 +33,14 @@ See in the [file](conditions.py)
 - [Sets](sets.py) `s = set()` (множина або набір унікальних значень)
 
 ## Loops
-```
+```python
 for i in range(6):
     print(i)
 ```
 See in the [file](loops.py)
 
 ## Functions
-```
+```python
 def square(x):
     return x * x
 ```
