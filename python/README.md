@@ -1,6 +1,6 @@
 # Contents
 
-##Type of variables
+## Type of variables
 
 ```
 `int:` ціле число
@@ -11,7 +11,7 @@
 `NoneType:` Спеціальне значення (None), яке вказує на відсутність значення
 
 ```
-##Conditions
+## Conditions
 ```
 n = int(input("Number: "))
 
@@ -23,3 +23,12 @@ else:
 	print("n is zerro")
 ```
 Or in [file](conditions.py)
+
+## Types of Python Sequences
+
+- [Strings](sequences.py) `“TechVidvan”`
+- [Lists](sequences.py) `[10, 100, 30, 40]` or `["Harry", "Ron", "Hermione", "Ginny"]` (список)
+- [Tuples](sequences.py) `(10.0, 20.0)` (кортеж)
+- [Dictionary](dictionary.py) `{"Harry":"Gryffindor", "Draco": "Slytherin"}` (словник)
+- [Sets](sets.py) `s = set()` Множини. Набір унікальних значень.
+
