@@ -4,9 +4,11 @@
 
 |№ | Name | Description|
 |---|--------|------------------------| 
-1 | HTML/CSS | Task1 - Create site search anythings in the Google|
+| [1](https://youtu.be/zFZrkCIc2Oc) | HTML/CSS/Bootstrap  | [Task 1](https://vit-um.github.io/search/index.html): Create a site search for anything in Google. |
+| [2](https://youtu.be/EOLPQdVj5Ac) | Python | Basic elements of Python. Examples. [CS50 Library for Python](https://github.com/cs50/python-cs50) |
+
+###[See more on the web page](https://vit-um.github.io/index.html)
 
 
-See more command line parameters and switches [here](https://habr.com/en/company/ruvds/blog/326328/)
 
-https://vit-um.github.io/search/index.html
+Bootstrap
