@@ -97,9 +97,21 @@ See in the file [decorators.py](decorators.py)
 square = lambda x: x * x
 ```
 Де аргументи йдуть ліворуч від :, а результат праворуч.  
-Функцію зручно використовувати для сортування данних з складною структрурою, дивись приклад у файлі [lambda.py](lambda.py)
+Функцію зручно використовувати для сортування даних зі складною структрурою, дивись приклад у файлі [lambda.py](lambda.py)
 
+## Exceptions
+When an error occurs, or exception as we call it, Python will normally stop and generate an error message.
+```python
+import sys
 
+try:
+    x = int(input("x: "))
+    y = int(input("y: "))
+except ValueError:
+    print("Error: Invalid input.")
+    sys.exit()
+```
+More code see in [exceptions.py](exceptions.py)
 
 ## [Go back](../README.md)
 
