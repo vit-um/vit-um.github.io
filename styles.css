@@ -113,6 +113,6 @@ a:hover {
 
 .row > div {
     padding: 20px;
-    background-color: teal;
+    background-color: rgb(121, 255, 255);
     border: 2px solid black;
 }

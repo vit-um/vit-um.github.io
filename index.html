@@ -3,6 +3,7 @@
 <head>
     <title>Index page for my CS50 tasks</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="search/img/vit-um.png" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -24,15 +25,8 @@
             </tr>
         </tbody>
     </table>
-
-    <h2>Some experiments</h2>
-
     <div class="sp_div">
-        <ol>
-            <li><a href="https://bokiss8.github.io/bokiss_search_like_google/">Example1</a></li>
-            <li><a href="https://alextemp2019.github.io/">Example2</a></li>
-            <li><a id="mys" href="/search/index.html">My search</a></li>
-        </ol>
+        <h2>Some experiments</h2>    
     </div>
   
     <div id="container">
@@ -68,9 +62,10 @@
         <div class="grid-item">300</div>
     </div>
 
-    <br/>
-    <h2><a href="https://getbootstrap.com/docs/5.1/examples/">Bootstrap examples</a></h2>
-    <br/>
+    <div class="sp_div">
+        <h2><a href="https://getbootstrap.com/docs/5.1/examples/">Bootstrap examples</a></h2>
+    </div>
+    <h4 style="text-align: center;">Grid system</h4>
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-sm-6">
@@ -87,8 +82,31 @@
             </div>        
         </div>
     </div>
-    <br/>
+    
+    <h4 style="text-align: center;">Display property</h4>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-1">
+                This is the name of filds.
+            </div>
+            <div class="col-2">
+                This is the form.
+            </div>
+            <div class="col-2 d-none d-lg-block">
+                This is the comments.
+            </div>
+        </div>
+            <div class="d-lg-none"><span style="text-align: center; color: blue;">hide on sm and wider screens</span></div>
+            <div class="d-sm-none"><span style="text-align: center; color: red;">hide on lg and wider screens</span></div>
+            <div class="d-none d-lg-block"><span style="text-align: center; color: green;">hide on screens smaller than lg</span></div>
+    </div>
+
+
+    <div class="sp_div">
+        <h2>Form example</a></h2>
+    </div>
+  
     <div class="sp_div">
     <form>
         <input type="text" placeholder="First Name" name="first">

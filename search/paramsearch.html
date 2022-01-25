@@ -4,12 +4,18 @@
         <title>Розширений пошук</title>
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="shortcut icon" href="img/icosmall.png" type="image/png">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
     <body>
-        <div class="topblock">
-            <a class="btn3" href="index.html" target="_top">Пошук GOOGLE</a>
-            <a class="btn3" href="imagesearch.html" target="_top">Пошук зображень</a>
-            <a class="btn3" href="https://mail.google.com/mail/u/0/#inbox" target="_top">Gmail</a>
+        <div class="topblock greed">  
+            <div class="grid-item d-none d-lg-block"> 
+                <a href="index.html"> <img src="img/googlelogo_color_272x92dp.png" alt="Google" style="width: 120px;"></a> 
+            </div>          
+            <div class="grid-item">
+                <a class="btn3" href="index.html" target="_top">Пошук GOOGLE</a>
+                <a class="btn3" href="imagesearch.html" target="_top">Пошук зображень</a>
+                <a class="btn3" href="https://mail.google.com/mail/u/0/#inbox" target="_top">Gmail</a>
+            </div>
         </div>
 
         <div class="paramblock">
@@ -17,126 +23,68 @@
         </div>
 
         <div class="stroka"></div>
-
-        <div class="paramforma">
-            <form action="https://www.google.com.ua/search" method="GET" name="f">
-            <input value="ru" name="h1" type="hidden">
-            <div class="findepage">
-                <div class="findepage2">
-                    <div class="findepage-start">
-                        <div class="findepage-start-2">
-                            <span>Знайти сторінки із...</span>
-                        </div>
-                    </div>
-                    <div class="findepage-null">&nbsp; </div>
-                    <div class="findepage-end">
-                        <div class="findepage-start-2">
-                            Як це працює в звичайному полі пошуку Google:
-                        </div>
-                    </div>
+        
+        <form class="container paramforma" action="https://www.google.com.ua/search" method="GET" name="f">
+        <input value="ru" name="h1" type="hidden">
+            <div class="row row-cols-auto">
+                <div class="col-3">
+                    <b>Знайти сторінки, що містять...</b>
+                </div>
+                <div class="col"></div>
+                <div class="col d-none d-lg-block">
+                    <b>Як це зробити в полі пошуку Google:</b>
                 </div>
             </div>
-<!-- -------------------------------------------------------------------- -->
-        <div class="findepage">
-        <div class="findepage2">
-            <div class="findepage_1">
-                <div class="findepage-start-2">
-                    <label for="put1">усіма цими словами:</label>
+            <div class="row row-cols-auto">
+                <div class="col-3">
+                    усі ці слова:
                 </div>
-            </div>
-            <div class="findepage_2">
-                <div class="findepage_2_1">
+                <div class="col">
                     <input class="param-input" autofocus="autofocus" id="put1" name="as_q" type="text">
                 </div>
-            </div>
-            <div class="findepage_3">
-                <div class="findepage-start-2">
-                    Введіть ключові слова: 
-                    <span class="lastword">Іван Федорович Крузенштерн</span>
-                </div>
-            </div>    
-        </div>
-        <div class="findepage">
-            <div class="findepage_1">
-                <div class="findepage-start-2">
-                    <label for="put2">саме цим словом або фразою:</label>
+                <div class="col d-none d-lg-block">
+                    Введіть важливі слова: триколірний рет-тер’єр
                 </div>
             </div>
-            <div class="findepage_2">
-                <div class="findepage_2_1">
+            <div class="row row-cols-auto">
+                <div class="col-3">
+                    точне слово або фразу:
+                </div>
+                <div class="col">
                     <input class="param-input" autofocus="autofocus" id="put2" name="as_epq" type="text">
                 </div>
-            </div>
-            <div class="findepage_3">
-                <div class="findepage-start-2">
-                    Візьміть словосполучення в лапки: 
-                    <span class="lastword">"книга Іван Крузенштерн"</span>
-                </div>
-            </div>    
-        </div>
-        <div class="findepage2">
-            <div class="findepage_1">
-                <div class="findepage-start-2">
-                    <label for="put3">будь-яким із цих слів:</label>
+                <div class="col d-none d-lg-block">
+                    Візьміть точні слова в лапки: "рет-тер’єр"
                 </div>
             </div>
-            <div class="findepage_2">
-                <div class="findepage_2_1">
+            <div class="row row-cols-auto">
+                <div class="col-3">
+                    будь-яке з цих слів:
+                </div>
+                <div class="col">
                     <input class="param-input" autofocus="autofocus" id="put3" name="as_oq" type="text">
                 </div>
-            </div>
-            <div class="findepage_3">
-                <div class="findepage-start-2">
-                    Вставте оператор OR між словами:
-                    <span class="lastword">людина OR пароплав</span>
-                </div>
-            </div>    
-        </div>
-        <div class="findepage2">
-            <div class="findepage_1">
-                <div class="findepage-start-2">
-                    <label for="put4">жодне з цих слів:</label>
+                <div class="col d-none d-lg-block">
+                    Введіть OR між усіма потрібними словами: мініатюрні OR стандартні
                 </div>
             </div>
-            <div class="findepage_2">
-                <div class="findepage_2_1">
+            <div class="row row-cols-auto">
+                <div class="col-3">
+                    жодне з цих слів:
+                </div>
+                <div class="col">
                     <input class="param-input" autofocus="autofocus" id="put4" name="as_eq" type="text">
                 </div>
-            </div>
-            <div class="findepage_3">
-                <div class="findepage-start-2">
-                    Поставте знак мінуса перед словами:
-                    <span class="lastword">-пароплав, -"книжка про пароплав"</span>
+                <div class="col d-none d-lg-block">
+                    Поставте знак мінус перед небажаними словами: -гризун, -"Джек Рассел"
                 </div>
-            </div>    
-        </div>
-        <div class="findepage2"></div>
-        </div>
-<!-- ------------------------BUTTON-------------------------------------------- -->
-<div class="findepage2">
-    <div class="findepage_1">
-        <div class="findepage-start-2">
-            <!-- block left -->
-        </div>
-    </div>
-    <div class="findepage_2">
-        <div class="findepage_2_2">
-            <br>
-            <button type="submit" class="btn3">Пошук</button>
-            <br><br>
-        </div>
-    </div>
-    <div class="findepage_3">
-        <div class="findepage-start-2">
-                <!-- block right -->
-        </div>
-    </div>    
-</div>
-<!-- -------------------------------------------------------------------- -->
-        <div class="stroka2"></div>
-<!-- -------------------------------------------------------------------- -->
-
-            </form>
-        </div>
+            </div>
+            <div class="findepage">
+                <br>
+                <button type="submit" class="btn3">Пошук</button>
+                <br><br>
+            </div>
+            <div class="stroka2"></div>
+        </form>
     </body>
 </html>

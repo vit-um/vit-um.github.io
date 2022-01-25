@@ -1,4 +1,4 @@
-@media (min-width: 600px) {
+@media (min-width: 1200px) {
     body {
         background: black  url(img/kyiv_nigh.jpg) no-repeat; /* Цвет фона и путь к файлу */
         -moz-background-size: 100%; /* Firefox 3.6+ */
@@ -11,7 +11,7 @@
         color: white;
     }
 }
-@media (max-width: 599px){
+@media (max-width: 1199px){
     body {
         background-color: rgb(214, 248, 240);
         color:  rgb(29, 29, 29) !important;  /* Цвет текста */
@@ -27,12 +27,24 @@
 
 .topblock {
     background: transparent;
-    color: white;
     width: auto;
     padding: 1em;
     text-align: left;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    padding: 10px;
+    grid-column-gap: 10px;
+    grid-template-columns: 50px auto;
+}
+
+.grid-item {
+    padding: 20px;
+    text-align: left;
 }
 
 .btn3 {
@@ -45,12 +57,12 @@
     letter-spacing: 0.25px;
     line-height: 16px;
     min-width: 50px;
-    padding: 3px 10px;
     text-align: center;
     vertical-align: middle;
     border-radius: 20px;
     box-sizing: border-box;
-    margin-inline: 10px;
+    padding: 5px 10px;
+    margin-inline: 5px;
 }
 .btn3:hover {
     cursor: pointer;
@@ -62,13 +74,13 @@
     letter-spacing: 0.25px;
     line-height: 16px;
     min-width: 50px;
-    padding: 3px 10px;
     text-align: center;
     vertical-align: middle;
     border-radius: 20px;
     box-shadow: 1px 1px 5px grey;
     box-sizing: border-box;
-    margin-inline: 10px;
+    padding: 5px 10px;
+    margin-inline: 5px;
 }
 
 .midleblock {
@@ -90,7 +102,6 @@
     flex-direction: row;
     margin-top: 35px;
 }
-
 
 input {
     margin-top: 25px;
@@ -120,70 +131,6 @@ input.icon{
     padding-left:40px;
 }
 
-
-
-
-
-
-
-
-.btn {
-    width: 150px;
-    cursor: pointer;
-    margin-right: 0px;
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    border: none;
-    font-size: 16px;
-    color:  rgb(29, 29, 29);
-    background-color: white;
-}
-.btn:hover {
-    cursor: pointer;
-    margin-right: 1px;
-    font-weight: 500;
-    line-height: 1.5;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    border: 0px solid transparent;
-    box-shadow: 1px 1px 10px grey;
-    padding: 1em 1em;
-    font-size: 16px;
-    border-radius: 50%;
-    color:  rgb(29, 29, 29);
-    background-color: rgba(200, 218, 236, 0.719);
-}
-
-.topblockleft {
-    /*border: 10px ridge #f00;*/
-    font-family: Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
-    text-align: left;
-    font-weight: bold;
-    color: #f6fa08f3;
-    font-size: 14px;
-    letter-spacing: 0.25px;
-    line-height: 16px;
-    margin-right: 8px;
-    min-width: 56px;
-    padding: 3px 10px;
-    vertical-align: middle;
-    box-sizing: border-box;
-    width: 20%;
-}
-.topblockright {
-    /*border: 10px ridge rgb(0, 255, 42);*/
-    width: 100%;
-    padding: .1rem;
-    display: flex;
-    justify-content: flex-end;
-    
-}
-
 .paramblock {
     color: #d93025;
     font-size: 20px;
@@ -191,89 +138,27 @@ input.icon{
     font-family: arial,sans-serif;
 }
 .stroka {
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: 1px solid whitesmoke;
+    box-shadow: 0px 0px 3px white;
 }
+
 .paramforma {
     max-width: 1140px;
     min-width: 200px;
+    font-size: 12px;
     width: 96%;
-    margin: 40px 2% 0 45px;
+    margin: 40px 2% 30px 45px;
 }
+
+.row {
+    margin: 1em auto 2em;
+}
+
 .findepage {
-    width: 100%;
-    clear: both;
+    padding-right: 0px;
+    text-align: right;
 }
-.findepage2 {
-    clear: both;
-}
-.findepage-start {
-    float:left;
-    display: inline-block;
-    min-width: 167px;
-    width: 16%;
-    font-size: 16px;
-    min-height: 42px;
-    font-weight: 500;
-    color: #333;
-    vertical-align: middle;
-}
-.findepage-null {
-    float: left;
-    display: inline-block;
-    min-width: 167px;
-    min-height: 41px;
-    vertical-align: middle;
-    width: 50%;
-}
-.findepage-end {
-    float: left;
-    display: inline-block;
-    width: 33%;
-    font-size: 13px;
-    font-weight: 700;
-    color: #777;
-    padding-left: 5px;
-    vertical-align: middle;
-}
-.findepage-start-2 {
-    height: 30px;
-    display: table-cell;
-    vertical-align: middle;
-}
-.findepage_1 {
-    float: left;
-    display: inline-block;
-    min-width: 167px;
-    width: 16%;
-    height: 42px;
-    color: #222;
-    font-size: 13px;
-    line-height: 16px;
-    vertical-align: middle;
-}
-.findepage_2 {
-    float: left;
-    display: inline-block;
-    min-width: 167px;
-    min-height: 41px;
-    vertical-align: middle;
-    width: 50%;
-}
-.findepage_3 {
-    float: left;
-    display: inline-block;
-    width: 32%;
-    min-width: 160px;
-    margin: 0 0 8px 1%;
-    color: #555;
-    font-size: 11px;
-    padding-left: 5px;
-    vertical-align: middle;
-    position: relative;
-}
-.findepage_2_1 {
-    padding-right: 16px;
-}
+
 .param-input {
     width: 100%;
     text-align: left;
@@ -284,19 +169,10 @@ input.icon{
     height: 25px;
     padding: 1px 8px;
 }
-.lastword {
-    color: #666;
-    font-family: monospace;
-    font-size: 11px;
-    white-space: pre;
-}
+
 .stroka2 {
     margin: 18px 0;
     clear: both;
-    border-top: 1px solid #ebebeb;
-}
-.findepage_2_2 {
-    /*border: 10px ridge #f00;*/
-    padding-right: 0px;
-    text-align: right;
+    border-top: 1px solid whitesmoke;
+    box-shadow: 0px 0px 3px white;
 }
