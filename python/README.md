@@ -26,9 +26,11 @@ Or in [file](conditions.py)
 
 ## Types of Python Sequences
 
-- [Strings](sequences.py) `“TechVidvan”`
-- [Lists](sequences.py) `[10, 100, 30, 40]` or `["Harry", "Ron", "Hermione", "Ginny"]` (список)
-- [Tuples](sequences.py) `(10.0, 20.0)` (кортеж)
-- [Dictionary](dictionary.py) `{"Harry":"Gryffindor", "Draco": "Slytherin"}` (словник)
-- [Sets](sets.py) `s = set()` Множини. Набір унікальних значень.
+- [Strings](sequences.py) `"Harry"`
+- [Lists](sequences.py) `[10, 100, 30, 40]` or `["Harry", "Ron", "Hermione", "Ginny"]` (список або послідовність змінних значень)
+- [Tuples](sequences.py) `(10.0, 20.0)` (кортеж або послідовність незмінних значень)
+- [Dictionary](dictionary.py) `{"Harry":"Gryffindor", "Draco": "Slytherin"}` (словник або збірка пар ключ-значення)
+- [Sets](sets.py) `s = set()` (множина або набір унікальних значень)
+
+## [Go back](../README.md)
 
