@@ -1,0 +1,15 @@
+h1 {
+    font-family: sans-serif;
+    font-size: 40px;
+    text-align: center;
+}
+h2 {
+    color: green;
+    font-family: sans-serif;
+    font-size: 30px;
+}
+li {
+    color: blue;
+    font-family: sans-serif;
+    font-size: 25px;
+}
