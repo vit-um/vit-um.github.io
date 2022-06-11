@@ -3,17 +3,28 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
-tasks = ["foo", "bar", "baz"] 
+# tasks = ["foo", "bar", "baz"] 
 
 class NewTaskForm(forms.Form):
     task = forms.CharField(label="New Task")
     priority = forms.IntegerField(label="Priority", min_value=1,max_value=10)
 
 # Create your views here.
+# def index(request):
+#     return render(request, "tasks/index.html", {
+#         "tasks": tasks
+#     })
+
 def index(request):
+    # Перевіряємо, чи ключ «завдання» вже існує у нашій сесії
+    if "tasks" not in request.session:
+        # Якщо ні, створюємо новий список
+        request.session["tasks"] = []
     return render(request, "tasks/index.html", {
-        "tasks": tasks
+        "tasks": request.session["tasks"]
     })
+
+
 
 # def add(request):
 #     return render(request, "tasks/add.html")
@@ -28,7 +39,8 @@ def add(request):
             # Відділяємо завдання від «очищеної» версії даних форми 
             task = form.cleaned_data["task"]
             # Додаємо нове завдання до нашого списку завдань 
-            tasks.append(task)
+            # tasks.append(task)
+            request.session["tasks"] += [task]
             # Перенаправлюємо користувача до списку завдань
             return HttpResponseRedirect(reverse("tasks:index"))
         else:

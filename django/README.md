@@ -279,6 +279,37 @@ def add(request):
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 ```  
+## Sessions
+1. How to use [sessions](https://docs.djangoproject.com/en/4.0/topics/http/sessions/)
+
+2. Let's delete the global variable `tasks`, we replaced it with `request.session ["tasks"]`  
+```python
+# tasks = ["foo", "bar", "baz"]
+```  
+
+3. Let's check if the "task" key already exists in our session
+```python
+def index(request):
+    # Перевіряємо, чи ключ «task» вже існує у нашій сесії
+    if "tasks" not in request.session:
+        # Якщо ні, створюємо новий список
+        request.session["tasks"] = []
+    return render(request, "tasks/index.html", {
+        "tasks": request.session["tasks"]
+    })
+```  
+4. Add a new task:
+```python
+    # Додаємо нове завдання до нашого списку завдань 
+    # tasks.append(task)
+    request.session["tasks"] += [task]
+```  
+
+5. Error "no such table: django_session". With the command that allows you to save sessions in tables, we migrate standard Django tables to the database
+```python
+python manage.py migrate
+```  
+
 
 
 ## [Go back](../README.md)
