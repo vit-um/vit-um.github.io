@@ -132,15 +132,16 @@ def index(request):
 ## Style templates
 1. Add a static file and path `myproject\hello\static\hello\styles.css`
 2. Add content in the file: 
-```html
-h2 {
-    color: red;
-    font-family: sans-serif;
-    font-size: 50px;
-    text-align: center;
-}
+```css
+    h2 {
+        color: red;
+        font-family: sans-serif;
+        font-size: 50px;
+        text-align: center;
+    }
 ```  
 3. Add the code `{% load static %}` at the top of the html file  
+
 4. Add a css style sheet to the html file header  
 `<link rel="stylesheet" href="{% static 'hello/styles.css' %}">`
 
