@@ -140,8 +140,10 @@ def index(request):
         text-align: center;
     }
 ```  
-3. Add the code `{% load static %}` at the top of the html file  
-
+3. Add the code at the top of the html file  
+```  
+{% load static %}
+```  
 4. Add a css style sheet to the html file header  
 `<link rel="stylesheet" href="{% static 'hello/styles.css' %}">`
 
