@@ -240,7 +240,7 @@ def add(request):
 5. In add.html change the input field to the form we just created:
 ```html 
         <form action="{ % url 'tasks:add' %}" method="post">
-            {% csrf_token %}
+            { % csrf_token %}
             {{ form }}
 <!--         <input type="text",name="task">   -->
             <input type="submit">
