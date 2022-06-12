@@ -206,7 +206,7 @@ urlpatterns = [
 3. To include this technology in our code, we need to add a line to our form in `add.html`  
 ```html
 <form action="{ % url 'tasks:add' %}" method="post">
-            {% csrf_token %}
+            { % csrf_token %}
             <input type="text", name="task">
             <input type="submit">
         </form>
