@@ -178,8 +178,8 @@ def index(request):
 ## Links
 1. Add these links to the "index.html" and "add.html" files, respectively: 
 ```html
-<a href="{% url 'add' %}">Add a New Task</a>
-<a href="{% url 'index' %}">View Tasks</a>
+<a href="{ % url 'add' %}">Add a New Task</a>
+<a href="{ % url 'index' %}">View Tasks</a>
 ```  
 2. Function `url` find link in `myproject\tasks\urls.py`, but we have 'index' in an other application. That, we must add variable `app_name` in `urls.py` in each app. 
 
@@ -192,20 +192,20 @@ urlpatterns = [
 ```  
 3. Change these links to the "index.html" and "add.html"
 ```html
-<a href="{% url 'tasks:add' %}">Add a New Task</a>
-<a href="{% url 'tasks:index' %}">View Tasks</a>
+<a href="{ % url 'tasks:add' %}">Add a New Task</a>
+<a href="{ % url 'tasks:index' %}">View Tasks</a>
 ```  
 
 ## Forms
 1. Forward to `add` URL and use `post` method 
 ```html
-<form action="{% url 'tasks:add' %}" method="post">
+<form action="{ % url 'tasks:add' %}" method="post">
 ```  
 2. Cross-site request forgery [(CSRF)](https://portswigger.net/web-security/csrf) This CSRF check is built into the [Django Middleware framework](https://docs.djangoproject.com/en/4.0/topics/http/middleware/)
 
 3. To include this technology in our code, we need to add a line to our form in `add.html`  
 ```html
-<form action="{% url 'tasks:add' %}" method="post">
+<form action="{ % url 'tasks:add' %}" method="post">
             {% csrf_token %}
             <input type="text", name="task">
             <input type="submit">
