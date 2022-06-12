@@ -142,7 +142,7 @@ def index(request):
 ```  
 3. Add the code at the top of the html file  
 ```html  
-"{% load static %}"
+{ % load static % }
 ```  
 4. Add a css style sheet to the html file header  
 `<link rel="stylesheet" href="{% static 'hello/styles.css' %}">`
@@ -150,7 +150,7 @@ def index(request):
 ## Template extending (layout)
 1. Create a base [template](https://tutorial.djangogirls.org/en/template_extending/): layout.html
 ```html
-{% load static %}
+{ % load static % }
 <!DOCTYPE html>
 <html lang="en">
     <head>
