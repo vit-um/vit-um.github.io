@@ -141,7 +141,7 @@ def index(request):
     }
 ```  
 3. Add the code at the top of the html file  
-```  
+```html  
 {% load static %}
 ```  
 4. Add a css style sheet to the html file header  
