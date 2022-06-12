@@ -173,7 +173,7 @@ def index(request):
             <li>{{ task }}</li>
         {% endfor %}
     </ul>
-{% endblock %}
+{ % endblock % }
 ```  
 ## Links
 1. Add these links to the "index.html" and "add.html" files, respectively: 
