@@ -145,7 +145,7 @@ def index(request):
 { % load static % }
 ```  
 4. Add a css style sheet to the html file header  
-`<link rel="stylesheet" href="{% static 'hello/styles.css' %}">`
+`<link rel="stylesheet" href="{ % static 'hello/styles.css' % }">`
 
 ## Template extending (layout)
 1. Create a base [template](https://tutorial.djangogirls.org/en/template_extending/): layout.html
@@ -155,7 +155,7 @@ def index(request):
 <html lang="en">
     <head>
         <title>Tasks</title>
-        <link rel="stylesheet" href="{% static 'tasks/styles.css' %}">
+        <link rel="stylesheet" href="{ % static 'tasks/styles.css' % }">
     </head>
     <body>
         {% block body %}
