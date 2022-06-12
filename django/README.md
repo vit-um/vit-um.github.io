@@ -158,15 +158,15 @@ def index(request):
         <link rel="stylesheet" href="{ % static 'tasks/styles.css' % }">
     </head>
     <body>
-        {% block body %}
-        {% endblock %}
+        { % block body % }
+        { % endblock % }
     </body>
 </html>
 ```  
 2. Change in the files: `index.html` and `add.html`  
 ```html
-{% extends "tasks/layout.html" %}
-{% block body %}
+{ % extends "tasks/layout.html" % }
+{ % block body % }
     <h1>Tasks:</h1>
     <ul>
         {% for task in tasks %}
