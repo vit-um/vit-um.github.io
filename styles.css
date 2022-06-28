@@ -43,9 +43,6 @@ li {
     background-color: yellow;
 }
 
-a[href="/search/index.html"] {
-    color: red;
-}
 
 .sp_div {
     margin-top: 50px;
