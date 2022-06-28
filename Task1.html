@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- https://useiconic.com/open -->
+        <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" rel="stylesheet">
+
+        <link href="/cs50web_2021/assets/style.css" rel="stylesheet">
+
+        <!-- http://getbootstrap.com/docs/4.2/getting-started/introduction/ -->
+        <script crossorigin="anonymous" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script crossorigin="anonymous" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+        <script crossorigin="anonymous" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+
+        <title>Лекція 0 - Вебпрограмування з Python та JavaScript CS50</title>
+
+        <style type="text/css">
+          main {
+                margin-left: 0; 
+          }
+        </style>
+
+    </head>
+
+    <body>
+
+<div class="container-fluid">
+    <div class="row">
+    	<main class="col-md" style="margin-bottom: 0px;">
+
+                    <a data-id="" id="search" style="top: -58px;"></a><h1><a data-id="" href="#search">Пошук</a></h1>
+
+<p>Створіть власний фронтенд для пошуку Google, пошуку зображень Google і розширеного пошуку Google.</p>
+
+<a data-id="" id="background" style="top: -58px;"></a><h2><a data-id="" href="#background">Передумови</a></h2>
+
+<p>Згадайте з лекції, що ми можемо створити HTML-форму за допомогою тегу <code class="language-plaintext highlighter-rouge">&lt;form&gt;</code> і можемо додати теги <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> для створення полів вводу для цієї форми. Пізніше в курсі ми побачимо, як писати вебпрограми, які можуть приймати дані форми на вхід. Для цього проєкту ми напишемо форми, які надсилають дані на реальний вебсервер, у цьому випадку – на Google.</p>
+
+<p>Коли ви виконуєте пошук у Google, як, наприклад, коли вводите запит на домашній сторінці Google і натискаєте кнопку «Пошук Google», як працює цей запит? Спробуємо з’ясувати.</p>
+
+<p>Перейдіть на сторінку <a href="https://www.google.com/">google.com</a>, введіть запит на зразок «Гарвард» у поле пошуку та натисніть кнопку «Пошук Google».</p>
+
+<p>Як ви, мабуть, очікували, ви повинні побачити результати пошуку Google для слова «Гарвард». А тепер погляньте на URL-адресу. Починати слід з <code class="language-plaintext highlighter-rouge">https://www.google.com/search</code>, маршруту на вебсайті Google, який дозволяє здійснювати пошук. Але за маршрутом йде знак <code class="language-plaintext highlighter-rouge">?</code>, за яким далі додаткова інформація.</p>
+
+<p>Ці додаткові фрагменти інформації в URL-адресі відомі як рядок запиту. Рядок запиту складається з послідовності параметрів GET, де кожен параметр має ім'я та значення. Рядки запитів зазвичай мають формат:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>field1=value1&amp;field2=value2&amp;field3=value3...
+</code></pre></div></div>
+
+<p>де знак <code class="language-plaintext highlighter-rouge">=</code> відокремлює ім'я параметра від його значення, а символ <code class="language-plaintext highlighter-rouge">&amp;</code> відокремлює параметри один від одного. Ці параметри є способом для форм подавати інформацію на вебсервер, кодуючи дані форми у URL-адресі.</p>
+
+<p>Погляньте на URL-адресу своєї сторінки результатів пошуку Google. Здається, існує досить багато параметрів, які використовує Google. Перегляньте URL-адресу (може бути корисно скопіювати / вставити її до текстового редактору) і переконайтеся, що ви можете знайти згадку про «Гарвард», наш запит.</p>
+
+<p>Переглядаючи URL-адресу, ви побачите, що одним із параметрів GET в URL-адресі є <code class="language-plaintext highlighter-rouge">q=Harvard</code>. Це свідчить про те, що ім'я параметра, що відповідає пошуковому запиту Google, - <code class="language-plaintext highlighter-rouge">q</code> (ймовірно, скорочення від «query»).</p>
+
+<p>Виявляється, хоча інші параметри надають корисні дані Google, для пошуку потрібен лише параметр <code class="language-plaintext highlighter-rouge">q</code>. Ви можете перевірити це самі, відвідавши <code class="language-plaintext highlighter-rouge">https://www.google.com/search?q=Harvard</code>, видаливши всі інші параметри. Ви повинні побачити ті самі результати Google!</p>
+
+<p>Використовуючи цю інформацію, ми можемо фактично повторно створити фронтенд для домашньої сторінки Google. Вставте наведене нижче у файл HTML, який називається <code class="language-plaintext highlighter-rouge">index.html</code>, і відкрийте його у браузері.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;Search&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;form action="https://google.com/search"&gt;
+            &lt;input type="text" name="q"&gt;
+            &lt;input type="submit" value="Google Search"&gt;
+        &lt;/form&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+<p>Коли ви відкриєте цю сторінку в браузері, ви побачите (дуже просту) форму HTML. Введіть пошуковий запит, як «Гарвард», і натисніть «Пошук Google», і ви перейдете на сторінку результатів пошуку Google!</p>
+
+<p>Як це працює? У цьому випадку атрибут <code class="language-plaintext highlighter-rouge">action</code> у <code class="language-plaintext highlighter-rouge">form</code> повідомляє браузеру, що коли форму подано, дані слід надсилати на <code class="language-plaintext highlighter-rouge">https://google.com/search</code>. А шляхом додавання поля <code class="language-plaintext highlighter-rouge">input</code> до форми, атрибут <code class="language-plaintext highlighter-rouge">name</code> якого був <code class="language-plaintext highlighter-rouge">q</code>, усе, що введе користувач в це поле, включається як параметр GET до URL-адреси.</p>
+
+<p>Вашим завданням у цьому проєкті є створення власного фронтенду для пошуку Google, досліджуючи інтерфейс Google, щоб визначити, які параметри GET він очікує, та додавання необхідних HTML та CSS на ваш вебсайт.</p>
+
+<a data-id="" id="getting-started" style="top: -58px;"></a><h2><a data-id="" href="#getting-started">З чого почати?</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Завантажте код дистрибутива з <a href="https://cdn.cs50.net/web/2020/spring/projects/0/search.zip">https://cdn.cs50.net/web/2020/spring/projects/0/search.zip</a> та розпакуйте його.</li>
+</ul>
+
+<a data-id="" id="specification" style="top: -58px;"></a><h2><a data-id="" href="#specification">Умови завдання</a></h2>
+
+<p>Ваш вебсайт повинен відповідати таким вимогам.</p>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span><strong>Сторінки</strong>. Ваш вебсайт повинен мати принаймні три сторінки: одну для пошуку Google, одну для пошуку зображень Google і одну для розширеного пошуку Google.
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>На сторінці пошуку Google у верхньому правому куті сторінки повинні бути посилання для переходу до пошуку зображень або розширеного пошуку. На кожній з двох інших сторінок у верхньому правому куті має бути посилання для повернення до пошуку Google.</li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span><strong>Текст запиту</strong>. На сторінці пошуку Google користувач повинен мати можливість ввести запит, натиснути кнопку «Пошук Google» і перейти до результатів пошуку Google для цієї сторінки.
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Як і в Google, ваш рядок пошуку повинен бути відцентрований із закругленими кутами. Кнопка пошуку також повинна бути відцентрована та розташована під рядком пошуку.</li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span><strong>Пошук зображень</strong>. На сторінці пошуку зображень Google користувач повинен мати можливість ввести запит, натиснути кнопку пошуку та перейти до результатів пошуку зображень Google для цієї сторінки.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span><strong>Розширений пошук</strong>. На сторінці розширеного пошуку Google користувач повинен мати можливість вводити дані для наведених чотирьох полів (взято з власних параметрів <a href="https://www.google.com/advanced_search">розширеного пошуку</a> Google)
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Знайти сторінки із… «усіма цими словами»:”</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Знайти сторінки з… «саме цим словом або фразою»:”</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Знайти сторінки з… «будь-яким із цих слів»:</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Знайти сторінки з… «жодне з цих слів»:</li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span><strong>Зовнішній вигляд</strong>. Як і власна сторінка розширеного пошуку Google, чотири варіанти слід складати вертикально, а всі текстові поля слід вирівнювати за лівим краєм.
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Відповідно до власного CSS Google, кнопка «Розширений пошук» повинна бути синьою з білим текстом. Після натискання кнопки «Розширений пошук» користувач повинен перейти на сторінку результатів пошуку для заданого запиту.</li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span><strong>Пощастило</strong>. Додайте кнопку «Мені пощастить» на головну сторінку пошуку Google. Відповідно до власної поведінки Google, натискання цього посилання має перевести користувачів безпосередньо до першого результату пошуку Google для запиту, минаючи звичайну сторінку результатів.</li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span><strong>Естетика</strong>. CSS, який ви пишете, повинен якнайкраще відповідати власній естетиці Google.</li>
+</ul>
+
+<a data-id="" id="hints" style="top: -58px;"></a><h2><a data-id="" href="#hints">Підказки</a></h2>
+
+<ul class="fa-ul">
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Щоб визначити, якими мають бути назви параметрів, ви можете експериментувати з пошуком у Google та переглядати отриману URL-адресу. Також може бути корисно переглянути інспектор «Мережа» (доступний у Google Chrome, вибравши Перегляд -> Розробник -> Інструменти розробника), щоб переглянути деталі щодо запитів, які ваш браузер надсилає до Google.
+    <ul class="fa-ul">
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Будь-який елемент <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> (його <code class="language-plaintext highlighter-rouge">type</code> – <code class="language-plaintext highlighter-rouge">text</code>, <code class="language-plaintext highlighter-rouge">submit</code>, <code class="language-plaintext highlighter-rouge">number</code>, або щось інше) може мати атрибути <code class="language-plaintext highlighter-rouge">name</code> та <code class="language-plaintext highlighter-rouge">value</code>, які стануть параметрами GET при поданні форми.</li>
+      <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Вам також може бути корисно переглянути власний HTML Google, щоб відповісти на ці запитання. У більшості браузерів ви можете натиснути Ctrl та клікнути мишкою або клацнути правою кнопкою миші на сторінці та вибрати «Переглянути джерело сторінки», щоб переглянути вихідний HTML-код сторінки.</li>
+    </ul>
+  </li>
+  <li data-marker="*"><span class="fa-li"><i class="fas fa-circle"></i></span>Щоб включити поле введення до форми, яке користувачі не можуть побачити чи змінити, ви можете використовувати <a href="https://www.w3schools.com/tags/att_input_type_hidden.asp">«приховане»</a> поле введення.</li>
+</ul>
+
+                </main>
+            </div>
+        </div>
+</body>
+</html>
