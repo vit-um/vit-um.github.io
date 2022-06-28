@@ -90,21 +90,21 @@ a:hover {
 
 @media screen and (min-width: 1200px) {
     body {
-        border: 5px dotted green;
+        border: 3px dotted green;
         padding: 30px;
     }
 }
 
 @media screen and (max-width: 1199px)  {
     body {
-        border: 5px dotted yellow;
+        border: 3px dotted yellow;
         padding: 30px;
     }
 }
 
 @media (max-width: 600px) {
     body {
-        border: 5px dotted red;
+        border: 3px dotted red;
         padding: 30px;
     }
 }
