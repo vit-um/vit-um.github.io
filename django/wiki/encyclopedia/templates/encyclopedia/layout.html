@@ -11,7 +11,12 @@
     <body>
         <div class="row">
             <div class="sidebar col-lg-2 col-md-3">
-                <h2>Wiki</h2>
+                <h2 class="text-center">WikiPediA</h2>
+                <p class="text-center fs-5 fst-italic">my encyclopedia</p>
+                <div id="p-logo" role="banner">
+                    <a class="wiki-logo" href="{% url 'index' %}" title="Visit the main page"></a>
+                </div>
+
                 <form>
                     <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
                 </form>

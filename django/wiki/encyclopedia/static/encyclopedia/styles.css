@@ -12,6 +12,15 @@ h1 {
     padding-top: 20px;
 }
 
+h2 {
+    margin-top: 0px;
+    margin-bottom: 0.25em;
+    padding: 0;
+    font-family: 'Linux Libertine','Georgia','Times',serif;
+    line-height: 0.1;
+}
+
+
 textarea {
     height: 90vh;
     width: 80%;
@@ -35,4 +44,18 @@ textarea {
 
 .sidebar h2 {
     margin-top: 5px;
+}
+
+.wiki-logo {
+    background-image: url(/static/images/wiki-logo.png);
+}
+
+#p-logo a {
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: block;
+    height: 160px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    align-content: center;
 }
