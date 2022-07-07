@@ -187,13 +187,20 @@ def index(request):
 app_name = "tasks"
 urlpatterns = [
     path("", views.index, name="index"),
-    path("add", views.add, name="add")
+    path("add", views.add, name="add"),
+    path("wiki/<str:entry>/", views.page, name="page"),
 ]
 ```  
 3. Change these links to the "index.html" and "add.html"
 ```html
 <a href="{ % url 'tasks:add' %}">Add a New Task</a>
 <a href="{ % url 'tasks:index' %}">View Tasks</a>
+
+<!-- https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#std-templatetag-url -->
+{ % for entry in entries %}
+<li><a href="{ % url 'encyclopedia:page' entry %}"> {{ entry }}</a></li> 
+{ % endfor %}
+
 ```  
 
 ## Forms
