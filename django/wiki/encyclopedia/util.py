@@ -1,5 +1,6 @@
 import re
-
+import os
+from posixpath import splitext
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
@@ -30,8 +31,16 @@ def get_entry(title):
     Retrieves an encyclopedia entry by its title. If no such
     entry exists, the function returns None.
     """
-    try:
-        f = default_storage.open(f"entries/{title}.md")
-        return f.read().decode("utf-8")
-    except FileNotFoundError:
+    for dirpath, dirnames, filenames in os.walk("entries"):
+        for filename in filenames:
+           
+            no_ext_file = splitext(filename)[0]
+
+            if no_ext_file.lower() == title.lower():
+                print(filename)
+                try:
+                    f = default_storage.open(f"entries/{title}.md")
+                    return f.read().decode("utf-8")
+                except FileNotFoundError:
+                    return None
         return None

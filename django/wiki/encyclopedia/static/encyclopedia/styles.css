@@ -50,6 +50,14 @@ textarea {
     background-image: url(/static/images/wiki-logo.png);
 }
 
+.br_top {
+    margin-top: 15px;
+}
+
+.br_edit {
+    margin: 20px 50px 20px 0;
+}
+
 #p-logo a {
     background-position: center center;
     background-repeat: no-repeat;
@@ -59,3 +67,8 @@ textarea {
     margin-bottom: 20px;
     align-content: center;
 }
+
+.searchform {
+    width: 95%;
+}
+

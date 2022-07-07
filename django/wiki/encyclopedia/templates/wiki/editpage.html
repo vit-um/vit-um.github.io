@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ form.title.value }}
+{% endblock %}
+
+{% block body %}
+<h1>Редагування сторінки "{{ form.title.value }}"</h1>
+<form action="{% url 'encyclopedia:save' %}" method="post">
+    {% csrf_token %} 
+    <div class="br_edit">{{ form.body }} </div>
+    <input type="hidden" name = "title" value="{{ form.title.value }}">
+    <input class="btn btn-outline-secondary" type="submit" value="Зберегти">
+    {% if edit %}
+        <input type="hidden" name = "edit" value="True">
+    {% endif %}
+</form>
+{% endblock %}

@@ -5,12 +5,10 @@
 {% endblock %}
 
 {% block body %}
-    <h1>All Pages</h1>
-
-    <ul>
+    <h1 class="h1">{{ header }}</h1>
+    <ul class="list-unstyled" style="margin-left: 20px;">
         {% for entry in entries %}
-            <li>{{ entry }}</li>
+            <li><a href="{% url 'encyclopedia:page' entry %}"> {{ entry }}</a></li>  <!-- https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#std-templatetag-url -->
         {% endfor %}
     </ul>
-
 {% endblock %}

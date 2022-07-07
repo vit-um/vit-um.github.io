@@ -6,6 +6,7 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="shortcut icon" href="{% static 'images/vit-um.png' %}" type="image/png">
         <link href="{% static 'encyclopedia/styles.css' %}" rel="stylesheet">
     </head>
     <body>
@@ -14,20 +15,20 @@
                 <h2 class="text-center">WikiPediA</h2>
                 <p class="text-center fs-5 fst-italic">my encyclopedia</p>
                 <div id="p-logo" role="banner">
-                    <a class="wiki-logo" href="{% url 'index' %}" title="Visit the main page"></a>
+                    <a class="wiki-logo" href="{% url 'encyclopedia:index' %}" title="Відвідати головну сторінку"></a>
                 </div>
 
-                <form>
-                    <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
+                <form action="{% url 'encyclopedia:search'%}">
+                    <input class="search" type="text" name="q" placeholder="Пошук в енциклопедії">
                 </form>
-                <div>
-                    <a href="{% url 'index' %}">Home</a>
+                <div class="br_top">
+                    <a href="{% url 'encyclopedia:index' %}">Головна сторінка</a>
                 </div>
                 <div>
-                    Create New Page
+                    <a href="{% url 'encyclopedia:new' %}">Створити нову сторінку</a>
                 </div>
                 <div>
-                    Random Page
+                    <a href="{% url 'encyclopedia:random_page'%}">Випадкова сторінка</a>
                 </div>
                 {% block nav %}
                 {% endblock %}

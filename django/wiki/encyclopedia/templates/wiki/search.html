@@ -1,0 +1,24 @@
+
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+   {{title}}
+{% endblock %}
+
+{% block body %}
+  
+   {% if search %}
+      <div class="search">
+            {{ search | safe }}
+      </div>     
+   {% endif %}
+   <div>
+      <form action="edit/{{ title }}">
+
+         <p><input type="submit" value="Редагувати статтю"></p>
+
+      </form>
+   </div>
+{% endblock %}
+   
+
