@@ -320,7 +320,30 @@ def index(request):
 python manage.py migrate
 ```  
 
+## Python environment deployment
 
+1. Register on the [site pythonanywhere](https://www.pythonanywhere.com/)  
+2. Open console and input the command where `wiki` - it is the project name:  
+  `virtualenv -p /usr/bin/python3.9 wiki_env`    
+3. Go to the project dir and activate it:  
+  `source bin/activate`  
+
+![console](.img/Bash_console.jpg)   
+
+4. From a console with an active environment, run the following commands:  
+```
+pip install Pillow
+pip install Django
+```  
+![console](.img/pip_insall.jpg)
+
+5. Open "File" menu in Pythonanywhere interface and upload in the home directory your project zip file   
+
+6. Go to "Console" and `unzip wiki.zip`  
+
+7. Open "Web" menu in Pythonanywhere interface and press "Add a new web app"  
+
+8. More read on this [site](https://anhel.in/python/doc/django-deployment/)   
 
 
 ## [Go back](../README.md)
