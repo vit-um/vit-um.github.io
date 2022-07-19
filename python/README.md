@@ -113,5 +113,20 @@ except ValueError:
 ```
 More code see in [exceptions.py](exceptions.py)
 
+## Share your Wi-Fi password with your guests by printing it as qr code
+1. Install two dependencies:  
+```
+pip install pillow  
+pip install qrcode  
+```  
+
+2. Run this command:  
+```
+echo "WIFI:T:WPA;S:NETWORK_NAME;P:PASSWORD_HERE;H:;" | qr --output=wifi.png
+```
+3. Print this qr code  
+
+![wifi](wifi.png)  
+
 ## [Go back](../README.md)
 
