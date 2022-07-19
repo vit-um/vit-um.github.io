@@ -1,4 +1,4 @@
-# Contents
+# The Basics of the Python Language
 
 ## Type of variables
 
