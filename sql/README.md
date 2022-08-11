@@ -620,37 +620,35 @@ urlpatterns = [
 3. За стандартом створюємо файл layout.html з шапкою сайту:  
 
 ```html
-{% raw %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Users</title>
     </head>
     <body>
-        {% block body %}
-        {% endblock %}
+        { % block body % }
+        { % endblock % }
     </body>
 </html>
-{% endraw %}
 ```
 
 4. Створюємо форму, де користувач зможе увійти до системи login.html, що містить форму та демонструє повідомлення, якщо таке існує.  
 
 ```html
-\{% extends "users/layout.html" %\}
+{ % extends "users/layout.html" % }
 
-\{% block body %\}
-    \{% if message %\}
+{ % block body % }
+    { % if message % }
         <div>{{ message }}</div>
-    \{% endif %\}
+    { % endif % }
 
     <form action="{ % url 'login' % }" method="post">
-        \{% csrf_token %\}
+        { % csrf_token %}
         <input type="text", name="username", placeholder="Username">
         <input type="password", name="password", placeholder="Password">
         <input type="submit", value="Login">
     </form>
-\{% endblock %\}
+{ % endblock %}
 ```
 
 5. Тепер у `views.py` додамо три функції:  
