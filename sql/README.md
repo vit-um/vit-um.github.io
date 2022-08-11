@@ -160,11 +160,13 @@ class Flight(models.Model):                         # створюємо мод�
 
 5. Тепер ви побачите, що у каталозі нашого проекту з’явився файл `db.sqlite3`.
 
-## Shell
+## Shell  
+
 1. Щоб взаємодіяти з базою даних та тестувати запити можемо скористатися оболонкою, де зможемо виконувати команди Python у межах нашого проекту:  
 
 `python manage.py shell`   
 2. Далі виконуємо наступні команди для отримання досвіду роботи з shell:  
+
 ```python 
 # Імпортувати модель flights
 In [1]: from flights.models import Flight
@@ -397,7 +399,7 @@ urlpatterns = [
 
 ```python
 def flight(request, flight_id):
-    flight = Flight.objects.get(id=flight_id)
+    flight = Flight.objects.get(id=flight_id)       # тут замість може id= використовуватись pk= (праймари кей)
     return render(request, "flights/flight.html", {
         "flight": flight
     })
@@ -433,3 +435,281 @@ def flight(request, flight_id):
 
 ![id1](.img/page_id1.jpg)  
 
+## Зв’язки ManyToMany або «Багато до багатьох»
+1. Створимо модель «Пасажир», який може одночасно реєструватись на багатьох рейсах:  
+
+```python
+class Passenger(models.Model):
+    first = models.CharField(max_length=64)
+    last = models.CharField(max_length=64)
+    flights = models.ManyToManyField(Flight, blank=True, related_name="passengers")
+# додамо blank=True, що пасажир міг бути незареєстрованим на жоден рейс.
+# related_name="passengers" - дасть нам змогу знайти всіх пасажирів певного рейсу.
+    def __str__(self):
+        return f"{self.first} {self.last}"
+```
+
+2. Створимо міграції та застосовуємо їх:  
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```  
+3. Реєструємо модель «Пасажир» в admin.py та додаємо кілька пасажирів:  
+
+```python
+from .models import Flight, Airport, Passenger
+
+# Register your models here.
+admin.site.register(Passenger)
+```  
+4. У файлі views.py додамо можливість доступу до пасажирів в файлі `views.py`    
+
+```python
+from .models import Flight, Airport, Passenger
+
+def flight(request, flight_id):
+    flight = Flight.objects.get(pk=flight_id)
+    return render(request, "flights/flight.html", {
+        "flight": flight,
+        "passengers": flight.passengers.all()
+    })
+```
+5. В шаблонах додаємо список пасажирів до flight.html:  
+
+```html
+<h2>Passengers:</h2>
+<ul>
+    {% for passenger in passengers %}
+        <li> {{ passenger }} </li>
+    {% empty %}
+        <li>No Passengers.</li>
+    {% endfor %}
+</ul>
+```
+
+6. Тепер наша сторінка з інформацією про рейс виглядає так:  
+
+![id1](.img/page_id1_passengers.jpg)
+
+7. Додамо ще одну функцію сайту - бронювання рейсу. 
+- Для чого додамо маршрут бронювання в urls.py:  
+
+```python
+path("<int:flight_id>/book", views.book, name="book")
+``` 
+- До views.py додамо функцію бронювання, що зареєструє пасажира на рейс:  
+
+```python
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+def book(request, flight_id):
+    # Якщо запит post - додаємо новий рейс
+    if request.method == "POST":
+        # Отримуємо доступ до рейсів
+        flight = Flight.objects.get(pk=flight_id)
+        # Знаходимо id пасажира через дані з надісланої форми. Це означає, що в квадратних дужках зазначена назва поля із форми 
+        passenger_id = int(request.POST["passenger"])
+        # Знаходимо пасажира за id
+        passenger = Passenger.objects.get(pk=passenger_id)
+        # Додаємо пасажира на рейс
+        passenger.flights.add(flight)
+        # Перенаправляємо користувача на сторінку рейсів
+        return HttpResponseRedirect(reverse("flight", args=(flight.id,)))
+```
+Якщо нам потрібно викликати нову сторінку, то використовуємо метод "GET", нам же потрібно змінити данні на самій сторінці та в базі даних, тому використовуємо метод "POST"  
+
+- Передамо певний контекст до шаблону рейсу. Щоб сформувати список тільки тих хто ще не став пасажиром рейсу використаємо [фільтр Django](https://docs.djangoproject.com/en/4.0/topics/db/queries/#retrieving-specific-objects-with-filters) виключивши певні об’єкти із запиту:  
+
+```python
+def flight(request, flight_id):
+    flight = Flight.objects.get(pk=flight_id)
+    return render(request, "flights/flight.html", {
+        "flight": flight,
+        "passengers": flight.passengers.all(),
+        "non_passengers": Passenger.objects.exclude(flights=flight).all()
+    })
+```
+
+- Нарешті додамо в шаблонах форму до нашої HTML-сторінки рейсу, використовуючи select із полем input:  
+
+```html
+<form action="{% url 'book' flight.id %}" method="post">
+    {% csrf_token %}
+    <select name="passenger" id="">
+        {% for passenger in non_passengers %}
+            <option value="{{ passenger.id }}">{{ passenger }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit">
+</form>
+```
+- Як результат отримаємо наступний вигляд сторінки:  
+
+![id1](.img/page_id3.jpg)  
+
+## Користувачі сайту та використання інтерфейсу адміністратора 
+1. Налаштуємо вбудований [застосунок адміністратора Django](https://docs.djangoproject.com/en/4.1/ref/contrib/admin/) так щоб бачити всі аспекти рейсу в інтерфейсі адміністратора. Для цього створимо новий клас у файлі `admin.py` і додамо його як аргумент, реєструючи модель Flight:  
+
+```python
+class FlightAdmin(admin.ModelAdmin):
+    list_display = ("id", "origin", "destination", "duration")
+# Реєструємо нашу модель.
+admin.site.register(Flight, FlightAdmin) 
+```
+
+![admin](.img/flight_admin.jpg)
+
+2. Зробимо аналогічні налаштування для панелі керування пасажирами:  
+
+```python
+class PassengerAdmin(admin.ModelAdmin):
+    filter_horizontal = ("flights",)
+# Реєструємо нашу модель.
+admin.site.register(Passenger, PassengerAdmin)
+```
+
+3. Ось так зміниться меню редагування інформації про пасажира:  
+Було:  
+![admin](.img/admin_pass1.jpg)  
+Стало:  
+![admin](.img/admin_pass2.jpg)  
+
+## Користувачі сайту. Автентифікація
+1. Створимо новий застосунок `users`  
+- Крок 1:  
+`python manage.py startapp users`  
+
+- Крок 2: (airline\settings.py)   
+```python
+INSTALLED_APPS = [
+    'flights',
+    'users',
+# ---- cut ----
+```
+- Крок 3: (airline\urls.py)   
+```python
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('flights/', include("flights.urls")),
+    path('users/', include("users.urls"))
+]
+```
+
+2. Напишемо наступний код у новому файлі `urls.py`:  
+
+```python
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.index, name="index"),
+    path("login", views.login_view, name="login"),
+    path("logout", views.logout_view, name="logout")
+]
+```
+3. За стандартом створюємо файл layout.html з шапкою сайту:  
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Users</title>
+    </head>
+    <body>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
+```
+
+4. Створюємо форму, де користувач зможе увійти до системи login.html, що містить форму та демонструє повідомлення, якщо таке існує.  
+
+```html
+{% extends "users/layout.html" %}
+
+{% block body %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <input type="text", name="username", placeholder="Username">
+        <input type="password", name="password", placeholder="Password">
+        <input type="submit", value="Login">
+    </form>
+{% endblock %}
+```
+
+5. Тепер у `views.py` додамо три функції:  
+```python
+def index(request):
+    # Якщо користувач не увійшов до системи, повернутись на сторінку входу:
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+    return render(request, "users/user.html")
+
+def login_view(request):
+    return render(request, "users/login.html")
+
+def logout_view(request):
+    # Pass – простий спосіб сказати python, що не треба нічого робити.
+    pass
+```
+
+6. Запустимо сервер та додамо користувача через інтерфейс адміністратора http://127.0.0.1:8000/admin/auth/user/  
+7. Вносимо оновлення до `views.py` у частині функції `login_view` для обробки запиту POST з ім’ям користувача та паролем:
+
+```python
+# Потрібні додаткові імпорти:
+from django.contrib.auth import authenticate, login, logout
+
+def login_view(request):
+    if request.method == "POST":
+        # Отримуємо доступ до ім’я користувача та пароля з даних
+        username = request.POST["username"]
+        password = request.POST["password"]
+
+        # Перевіряємо, чи ім’я користувача та пароль правильні, повертаємо об’єкт User, якщо все правильно
+        user = authenticate(request, username=username, password=password)
+
+        # Якщо об’єкт user повернуто, увійти до системи та повернутись на головну сторінку:
+        if user:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        # У іншому випадку, повернутись до сторінки входу з новим контекстом
+        else:
+            return render(request, "users/login.html", {
+                "message": "Invalid Credentials"
+            })
+    return render(request, "users/login.html")
+```
+8. Створимо файл `user.html`, який функція `index` виводить під час автентифікації користувача:
+```html
+{% extends "users/layout.html" %}
+
+{% block body %}
+    <h1>Welcome, {{ request.user.first_name }}</h1>
+    <ul>
+        <li>Username: {{ request.user.username }}</li>
+        <li>Email: {{ request.user.email }}</li>
+    </ul>
+
+    <a href="{% url 'logout' %}">Log Out</a>
+{% endblock %}
+```
+9. Оновимо функцію `logout_view`, щоб вона використовувала вбудовану у Django функцію `logout`:  
+```python
+def logout_view(request):
+    logout(request)
+    return render(request, "users/login.html", {
+                "message": "Logged Out"
+            })
+
+```
+10. За посиланням отримуємо наступну сторінку:  
+
+![admin](.img/login.jpg)  
