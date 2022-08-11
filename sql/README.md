@@ -424,14 +424,14 @@ def flight(request, flight_id):
         <li>Destination: {{ flight.destination }}</li>
         <li>Duration: {{ flight.duration }} minutes</li>
     </ul>
-    <a href="{% url 'index' %}">All Flights</a>
+    <a href="{ % url 'index' %  }">All Flights</a>
 { % endblock % } 
 ```
 
 4. Змінимо нашу головну сторінку, додавши посилання з кожного рейсу:  
 
 ```html
-<li><a href="{% url 'flight' flight.id %}">Flight {{ flight.id }}</a>
+<li><a href="{ % url 'flight' flight.id % }">Flight {{ flight.id }}</a>
 ```
 
 5. Як результат отримуємо ось таку головну сторінку:  
@@ -542,7 +542,7 @@ def flight(request, flight_id):
 - Нарешті додамо в шаблонах форму до нашої HTML-сторінки рейсу, використовуючи select із полем input:  
 
 ```html
-<form action="{% url 'book' flight.id %}" method="post">
+<form action="{ % url 'book' flight.id % }" method="post">
     { % csrf_token % }
     <select name="passenger" id="">
         { % for passenger in non_passengers % }
@@ -642,7 +642,7 @@ urlpatterns = [
         <div>{{ message }}</div>
     { % endif % }
 
-    <form action="{% url 'login' %}" method="post">
+    <form action="{ % url 'login' % }" method="post">
         {% csrf_token %}
         <input type="text", name="username", placeholder="Username">
         <input type="password", name="password", placeholder="Password">
@@ -705,7 +705,7 @@ def login_view(request):
         <li>Email: {{ request.user.email }}</li>
     </ul>
 
-    <a href="{% url 'logout' %}">Log Out</a>
+    <a href="{ % url 'logout' % }">Log Out</a>
 { % endblock % }
 ```
 9. Оновимо функцію `logout_view`, щоб вона використовувала вбудовану у Django функцію `logout`:  
