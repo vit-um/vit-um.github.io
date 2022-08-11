@@ -306,8 +306,8 @@ def index(request):
         <title>Flights</title>
     </head>
     <body>
-        {% block body %}
-        {% endblock %}
+        { % block body % }
+        { % endblock % }
     </body>
 </html>
 ```
@@ -315,16 +315,16 @@ def index(request):
 4. Створюємо у тій же теці index.html:
 
 ```html
-{% extends "flights/layout.html" %}
+{ % extends "flights/layout.html" % }
 
-{% block body %}
+{ % block body % }
     <h1>Flights:</h1>
     <ul>
-        {% for flight in flights %}
+        { % for flight in flights % }
             <li>Flight {{ flight.id }}: {{ flight.origin }} to {{ flight.destination }}</li>
-        {% endfor %}
+        { % endfor % }
     </ul>
-{% endblock %}
+{ % endblock % }
 ```
 5. Запустимо сервер:  
 `python manage.py runserver`
@@ -408,9 +408,9 @@ def flight(request, flight_id):
 3. Створимо шаблон сторінки `flights/flight.html` з інформацією про рейс та посиланням для повернення на домашню сторінку:  
 
 ```html
-{% extends "flights/layout.html" %}
+{ % extends "flights/layout.html" % }
 
-{% block body %}
+{ % block body % }
     <h1>Flight {{ flight.id }}</h1>
     <ul>
         <li>Origin: {{ flight.origin }}</li>
@@ -418,7 +418,7 @@ def flight(request, flight_id):
         <li>Duration: {{ flight.duration }} minutes</li>
     </ul>
     <a href="{% url 'index' %}">All Flights</a>
-{% endblock %}
+{ % endblock % } 
 ```
 
 4. Змінимо нашу головну сторінку, додавши посилання з кожного рейсу:  
@@ -480,11 +480,11 @@ def flight(request, flight_id):
 ```html
 <h2>Passengers:</h2>
 <ul>
-    {% for passenger in passengers %}
+    { % for passenger in passengers % }
         <li> {{ passenger }} </li>
-    {% empty %}
+    { % empty % }
         <li>No Passengers.</li>
-    {% endfor %}
+    { % endfor % }
 </ul>
 ```
 
@@ -536,11 +536,11 @@ def flight(request, flight_id):
 
 ```html
 <form action="{% url 'book' flight.id %}" method="post">
-    {% csrf_token %}
+    { % csrf_token % }
     <select name="passenger" id="">
-        {% for passenger in non_passengers %}
+        { % for passenger in non_passengers % }
             <option value="{{ passenger.id }}">{{ passenger }}</option>
-        {% endfor %}
+        { % endfor % }
     </select>
     <input type="submit">
 </form>
@@ -628,12 +628,12 @@ urlpatterns = [
 4. Створюємо форму, де користувач зможе увійти до системи login.html, що містить форму та демонструє повідомлення, якщо таке існує.  
 
 ```html
-{% extends "users/layout.html" %}
+{ % extends "users/layout.html" % }
 
-{% block body %}
-    {% if message %}
+{ % block body % }
+    {% if message % }
         <div>{{ message }}</div>
-    {% endif %}
+    { % endif % }
 
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
@@ -641,7 +641,7 @@ urlpatterns = [
         <input type="password", name="password", placeholder="Password">
         <input type="submit", value="Login">
     </form>
-{% endblock %}
+{ % endblock % }
 ```
 
 5. Тепер у `views.py` додамо три функції:  
@@ -689,9 +689,9 @@ def login_view(request):
 ```
 8. Створимо файл `user.html`, який функція `index` виводить під час автентифікації користувача:
 ```html
-{% extends "users/layout.html" %}
+{ % extends "users/layout.html" % }
 
-{% block body %}
+{ % block body % }
     <h1>Welcome, {{ request.user.first_name }}</h1>
     <ul>
         <li>Username: {{ request.user.username }}</li>
@@ -699,7 +699,7 @@ def login_view(request):
     </ul>
 
     <a href="{% url 'logout' %}">Log Out</a>
-{% endblock %}
+{ % endblock % }
 ```
 9. Оновимо функцію `logout_view`, щоб вона використовувала вбудовану у Django функцію `logout`:  
 ```python
