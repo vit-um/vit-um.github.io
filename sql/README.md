@@ -620,6 +620,7 @@ urlpatterns = [
 3. За стандартом створюємо файл layout.html з шапкою сайту:  
 
 ```html
+{% raw %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -630,6 +631,7 @@ urlpatterns = [
         {% endblock %}
     </body>
 </html>
+{% endraw %}
 ```
 
 4. Створюємо форму, де користувач зможе увійти до системи login.html, що містить форму та демонструє повідомлення, якщо таке існує.  
