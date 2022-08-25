@@ -1,7 +1,85 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Active Listings</h2>
+    <div class="d-flex justify-content-center">
+        <h2>All listings</h2>
+    </div>
+    <hr>
+    {% for lot in lots %}
+    <div class="itemLotOuter">
+        {% if lot.statusActive %}
+        <div class="itemLot">
+        {% else %}
+        <div class="itemLotInactive">
+        {% endif %}
+            <div class="itemLotInner">
+                <div class="imageUnit">
+                    {% if lot.urlimage %}
+                        <img src="{{ lot.urlimage }}">
+                    {% elif lot.image %}
+                        <img src="/media/{{ lot.image }}">
+                    {% endif %}
+                </div>
+                <h5 class="nameText">
+                    {{ lot.name }}  
+                </h5>
+                <p class="descrText text-justify">
+                    {{ lot.description }}
+                </p>
+                <div class="lotfooter">
+                    <div class="d-flex justify-content-between">
+                        <p class="bidItem">
+                            Starting bid: ${{ lot.bid }}
+                        </p>
+                        {% if lot.statusActive %}
+                            {% for item in lotsMaxBids %}
+                                {% if lot == item.lot %}
+                                    <p class="bidItem"> 
+                                        {% if item.userBid > 9999 %}
+                                            Current: 
+                                        {% else %}
+                                            Current bid: 
+                                        {% endif %}
+                                        ${{ item.userBid }}
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% if lot.dirtyHack %}
+                                {% for item in lotsMaxBids %}
+                                    {% if lot == item.lot %}
+                                        <p class="bidItem"> 
+                                            Sold for: ${{ item.userBid }}
+                                        </p>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <p class="bidItem">
+                                    Closed, but unsold
+                                </p>
+                            {% endif %}    
+                        {% endif %}
+                    </div> 
+                    <div class="catItems">
+                        {% for item in lot.category.all|dictsort:"name" %} 
+                            <div class="catItem">
+                                <a class="linkForCatPage" href="{% url 'catview' item.name %}"> {{item.name}} </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if not lot.statusActive%}
+                    <p class="mark">
+                        {% if lot.dirtyHack %}
+                            Sold
+                        {% else %}
+                            Closed
+                        {% endif %}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}        
 
-    TODO
 {% endblock %}

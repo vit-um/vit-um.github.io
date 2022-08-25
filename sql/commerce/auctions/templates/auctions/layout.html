@@ -6,35 +6,97 @@
         <title>{% block title %}Auctions{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <link rel="icon" type="image/png" href="{% static 'auctions/favicon.png' %}">
     </head>
     <body>
-        <h1>Auctions</h1>
-        <div>
-            {% if user.is_authenticated %}
-                Signed in as <strong>{{ user.username }}</strong>.
-            {% else %}
-                Not signed in.
-            {% endif %}
+        <div class="topline">
+            <div class="row">
+                <div class="col">
+                    <h1> <a href="{% url 'index' %}"> <img src="{% static 'auctions/auction.png' %}" alt="Auctions"></a> </h1>
+                </div>
+                <div class="col-md-6">
+                    <form action="{ % url 'encyclopedia:search'%}">
+                        <input class="search" type="text" name="q" placeholder="Auction search">
+                    </form>
+                </div>
+                <div class="col">
+                    <ul class="nav">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'register' %}">Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
         </div>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
-            </li>
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-            {% endif %}
-        </ul>
+        <div class="row">
+            <div class="sidebar col-lg-2 col-md-3">
+                <h4>
+                    {% if user.is_authenticated %}
+                    Signed in as <strong>{{ user.username }}</strong>
+                    {% else %}
+                    Not signed in
+                    {% endif %}
+                </h4>
+                <ul class="ullistcat">
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a class="linkForCat" href="{% url 'newlot' %}">Create a lot</a>
+                    </li>
+                    <li>
+                        <a class="linkForCat" href="{% url 'wishlist' %}">My wishlist</a>
+                    </li>
+                    <li>
+                        <a class="linkForCat" href="{% url 'mylots' %}">My listings</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a class="linkForCat" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <a class="linkForCat" href="{% url 'active' %}">Active listings</a>
+                    </li>
+                    <li>
+                        <a class="linkForCat" href="{% url 'index' %}">All  listings</a>
+                    </li>
+                </ul>
+                <hr>
+                <h2>Categories</h2>
+                <hr>
+                <div class="listofCat">
+                    {% for item in categories %} 
+                        <ul class="ullistcat">
+                            <li class="">
+                                <a class="linkForCat" href="{% url 'catview' item.name %}"> {{item.name}} </a>
+                            </li>        
+                        </ul>
+                    {% endfor %} 
+                </div>
+
+
+            </div>
+            <div class="main col-lg-10 col-md-9">
+                {% block body %}
+                {% endblock %}
+            </div>
+        </div>
+
+        
+
+        
+<!-- 
+
         <hr>
-        {% block body %}
-        {% endblock %}
+        { % block body %}
+        { % endblock %} -->
     </body>
 </html>
