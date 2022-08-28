@@ -1,4 +1,5 @@
 from decimal import Decimal
+from operator import truediv
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
@@ -12,32 +13,61 @@ from .models import Lots, User, Category, Bids, Comments
 
 def index(request):
     categories = Category.objects.all().order_by('name')
-    lots = Lots.objects.all()
+    lots = Lots.objects.all().order_by('-status')
+    lotsMaxBidsList = lotsMaxBids(lots)
     return render(request, "auctions/index.html", {
             "categories": categories,
-            "lots": lots
+            "lots": lots,
+            "lotsMaxBids": lotsMaxBidsList,
+            "titleH": "All listings",
         })
 
 def active(request):
     categories = Category.objects.all().order_by('name')
-    return render(request, "auctions/active.html", {
-            "categories": categories
+    lots = Lots.objects.filter(status = True)
+    lotsMaxBidsList = lotsMaxBids(lots)
+    return render(request, "auctions/index.html", {
+            "categories": categories,
+            "lots": lots,
+            "lotsMaxBids": lotsMaxBidsList,
+            "titleH": "Only active listings"
         })
 
 def mylots(request):
+    user = request.user
     categories = Category.objects.all().order_by('name')
-    return render(request, "auctions/mylots.html", {
-            "categories": categories
+    lots = Lots.objects.filter(author = user).order_by('-status')
+    lotsMaxBidsList = lotsMaxBids(lots)
+    return render(request, "auctions/index.html", {
+            "categories": categories,
+            "lots": lots,
+            "lotsMaxBids": lotsMaxBidsList,
+            "titleH": "Only my listings"
         })
+
 
 def wishlist(request):
     user = request.user
-    lots = Lots.objects.filter(usersWhoAddToWatchlist = user).order_by('-statusActive', 'id')
-
-
+    lots = Lots.objects.filter(wishlist = user).order_by('-status', 'id')
+    categories = Category.objects.all().order_by('name')
+    lotsMaxBidsList = lotsMaxBids(lots)
     return render(request, "auctions/index.html", {
-            "titleH": "My watchlist",
+            "titleH": "My Wishlist",
+            "categories": categories,
+            "lotsMaxBids": lotsMaxBidsList,
             "lots": lots
+        })
+
+def catview(request, cat):
+    catid = Category.objects.get(name = cat)
+    lots = Lots.objects.filter(category = catid.id).order_by('-status')
+    lotsMaxBidsList = lotsMaxBids(lots)
+    categories = Category.objects.all().order_by('name')
+    return render(request, "auctions/index.html", {
+            "titleH": cat,
+            "categories": categories,
+            "lots": lots,
+            "lotsMaxBids": lotsMaxBidsList
         })
 
 def newlot(request):
@@ -55,57 +85,6 @@ def newlot(request):
     return render(request, "auctions/createnewlot.html", {
             "form": NewLotForm()
         })
-
-class NewLotForm(ModelForm):
-    # checkbox required attr is not valid 
-    # for positive numbers 
-    bid = forms.DecimalField(
-        min_value = Decimal('0.01'),
-        max_value = Decimal('99999'),
-        decimal_places = 2,
-        required = True, 
-        label = "Starting bid",
-        widget = forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight'})
-    )
-    class Meta:       
-        model = Lots
-        fields = ['name', 'description', 'bid', 'urlimage', 'image', 'category']
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'lotTitle formElemWidth formElemInlineHeight'}),
-            'description': forms.Textarea(attrs={'class': 'lotDescription formElemWidth'}),
-            'bid': forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight'}),
-            'urlimage': forms.URLInput(attrs={'class': 'lotURL formElemInlineHeight'}),
-            'image': forms.ClearableFileInput(attrs={'class': 'lotUp formElemInlineHeight'}),
-            'category': forms.CheckboxSelectMultiple(attrs={'class': 'lotCateg', 'required': 'True'}),
-        }
-        labels = {
-            'name': "Title",
-            'description': "Description",
-            'bid': ("Starting bid"),
-            'urlimage': "URL or image",
-            'image': "",
-            'category': "Category",
-        }
-  
-
-# def categories(request):
-#     categories = Category.objects.all().order_by('name')
-#     return render(request, "auctions/layout.html", {
-#             "categories": categories
-#         })
-
-
-def catview(request, title):
-    catid = Category.objects.get(name = title)
-    lots = Lots.objects.filter(category = catid.id).order_by('-statusActive')
-    # lotsMaxBidsList = lotsMaxBids(lots)
-
-    return render(request, "auctions/index.html", {
-            "title": title,
-            "lots": lots
-#            "lotsMaxBids": lotsMaxBidsList
-        })
-
 
 def login_view(request):
     if request.method == "POST":
@@ -158,6 +137,103 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
+
+def lotpage(request, lotID):
+    lot = Lots.objects.get(id = lotID)
+    messageBad = ""
+    messageGood = ""
+    UserMaxBid = ""
+    user = request.user
+    statusWatch = listingInWatchlist(lot, user)
+    statusOwner = ownerIndaHouse(lot, user)
+
+    # for comment
+    if request.method == "POST" and "Make comment" in request.POST:
+        
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("login"))
+
+        form = YourComment(request.POST)
+        if form.is_valid():
+            objSave(form, lot, user) 
+
+    # for bid
+    if request.method == "POST" and "Make bid" in request.POST:
+        
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("login"))
+
+        if statusOwner:
+            messageBad = "Owner is not allowed to make bid"
+        else:     
+            form = YourBid(request.POST)
+            if form.is_valid():
+                price = form.cleaned_data.get("userBid")
+                UserBids = getMaxBid(lotID)
+                if UserBids:
+                    if price > UserBids.userBid:
+                        objSave(form, lot, user)
+                        messageGood = "Your bid has been accepted"
+                    else:
+                        messageBad = "Your bid must be higher than the current bid"
+                else:
+                    if price > lot.bid:
+                        objSave(form, lot, user)
+                        lot.dirtyHack = True
+                        lot.save(update_fields=['dirtyHack']) # if at least one bid was bidded, switch, for 'unsold' message
+                        messageGood = "Your bid has been accepted"
+                    else:
+                        messageBad = "Your bid must be higher than the starting bid"
+            if statusWatch == False and messageGood:
+                lot.usersWhoAddToWatchlist.add(user)
+                lot.save()
+                messageGood = messageGood + ". Lot has been added to your watchlist"
+                statusWatch = True
+    
+    # for adding to watchlist
+    if request.method == "POST" and "watchlistSwitch" in request.POST:
+        
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("login"))
+
+        if statusWatch == False:
+            lot.usersWhoAddToWatchlist.add(user)
+            lot.save()
+            messageGood = "Lot has been added to your watchlist"
+            statusWatch = True
+        else:
+            lot.usersWhoAddToWatchlist.remove(user)
+            lot.save()
+            messageBad = "Lot has been deleted from your watchlist"
+            statusWatch = False
+
+    UserBid = getMaxBid(lotID)
+
+    # for closing the lot
+    if request.method == "POST" and "closelot" in request.POST:
+        lot.status = False
+        lot.save(update_fields=['statusActive'])
+        messageGood = "Lot has been closed"
+
+    Commentses = Comments.objects.filter(lot = lotID)
+    if request.user.is_authenticated:
+        UserMaxBid = getUserMaxBid(lotID, user)
+
+    return render(request, "auctions/lotpage.html", {
+            "lot": lot,
+            "bidform": YourBid(),
+            "commentform": YourComment(),
+            "Comments": Commentses,
+            "UserBid": UserBid,
+            "messageBad": messageBad,
+            "messageGood": messageGood,
+            "UserMaxBid": UserMaxBid,
+            "statusWatch": statusWatch,
+            "statusOwner": statusOwner,
+            "user": user
+        })
+
+
 def search(request):
     q = request.GET.get("q")
     entry_text = util.get_entry(q)
@@ -181,3 +257,110 @@ def search(request):
             "entry_name": q,
             "edit": True
             })
+
+
+###########   Functions   ###########
+
+def objSave(form, lot, user):
+    preform = form.save(commit = False)
+    preform.lot = lot
+    preform.author = user
+    preform.save()
+
+def getMaxBid(lotID):
+    UserBid = Bids.objects.filter(lot = lotID)
+    if UserBid:
+        UserBid = UserBid.order_by('-id')[0]
+    return UserBid   
+
+def getUserMaxBid(lotID, user):
+    UserBid = Bids.objects.filter(lot = lotID, author = user)
+    if UserBid:
+        UserBid = UserBid.order_by('-id')[0]
+    return UserBid
+
+def lotsMaxBids(lots):
+    lotsMaxBids = []
+    for lot in lots:
+        UserBid = getMaxBid(lot.id)
+        lotsMaxBids.append(UserBid)
+    return lotsMaxBids
+
+def listingInWatchlist(lot, user):
+    userlist = User.objects.filter(wishUsers = lot)
+    if user in userlist:
+        return True
+    else:
+        return False
+
+def ownerIndaHouse(lot, user):
+    authorOfListing = User.objects.filter(authorUser = lot)
+    if user in authorOfListing:
+        return True
+    else:
+        return False
+
+###########   Classes   ###########
+
+class NewLotForm(ModelForm):
+    # checkbox required attr is not valid 
+    # for positive numbers 
+    bid = forms.DecimalField(
+        min_value = Decimal('0.01'),
+        max_value = Decimal('99999'),
+        decimal_places = 2,
+        required = True, 
+        label = "Starting bid",
+        widget = forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight'})
+    )
+    class Meta:       
+        model = Lots
+        fields = ['name', 'description', 'bid', 'urlimage', 'image', 'category']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'lotTitle formElemWidth formElemInlineHeight'}),
+            'description': forms.Textarea(attrs={'class': 'lotDescription formElemWidth'}),
+            'bid': forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight'}),
+            'urlimage': forms.URLInput(attrs={'class': 'lotURL formElemInlineHeight'}),
+            'image': forms.ClearableFileInput(attrs={'class': 'lotUp formElemInlineHeight'}),
+            'category': forms.CheckboxSelectMultiple(attrs={'class': 'lotCateg', 'required': 'False'}),
+        }
+        labels = {
+            'name': "Title",
+            'description': "Description",
+            'bid': ("Starting bid"),
+            'urlimage': "URL or image",
+            'image': '',
+            'category': "Category",
+        }
+  
+class YourBid(ModelForm):
+    userBid = forms.DecimalField(
+        min_value = Decimal('0.01'),
+        max_value = Decimal('99999'),
+        decimal_places = 2,
+        required = True,
+        label = '',         
+        widget = forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight', 'placeholder': 'Your Bid'})
+    )
+    class Meta:       
+        model = Bids
+        fields = ['userBid']
+#        widgets = {
+#            'userBid': forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight', 'placeholder': 'Your Bid'}),
+#        }
+#        labels = {
+#            'userBid': ' ',
+#        }
+
+###################################################################################
+
+class YourComment(ModelForm):
+    class Meta:       
+        model = Comments
+        fields = ['comment']
+        widgets = {
+            'comment': forms.Textarea(attrs={'class': 'lotAddComment formElemWidth', "placeholder": 'Your comment'}),
+        }
+        labels = {
+            'comment': '',
+        }

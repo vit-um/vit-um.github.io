@@ -21,9 +21,10 @@ class Lots(models.Model):
     bid = models.DecimalField(max_digits = 7, decimal_places = 2)
     urlimage = models.URLField(max_length = 512, blank = True)
     image = models.ImageField(upload_to ="uploads/", blank = True, default="uploads/default.jpg")    
-    category = models.ManyToManyField(Category, blank = False)
+    category = models.ManyToManyField(Category, blank = True)
     wishlist = models.ManyToManyField(User, blank = True, related_name = "wishUsers")
     status = models.BooleanField(default = True)
+    sold = models.BooleanField(default = False)
 
     def __str__(self):
         return f"{self.id}: {self.name} by {self.author}"

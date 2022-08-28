@@ -18,14 +18,6 @@
                             </div>
                     </div>
                 {% elif fielda.name == 'image' %}
-                {% elif fielda.name == 'category' %}
-                    <div class="rowForms">
-                        <label class="lotLabel" for="{{ fielda.name}}">{{ fielda.label }}:</label>
-                        {{ fielda }}
-                        {% for item in fielda|dictsort:"0" %}
-                            {{ item }}
-                        {% endfor %}
-                    </div>
                 {% else %}    
                     <div class="rowForms">
                         <label class="lotLabel" for="{{ fielda.name}}">{{ fielda.label }}:</label>
