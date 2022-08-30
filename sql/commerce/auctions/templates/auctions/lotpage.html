@@ -15,111 +15,130 @@
                 {{ messageBad }}
             </div>
         {% endif %}
-        {% if lot.statusActive %}
         <div class="itemLotPage">
-        {% else %}
-        <div class="itemLotPageInactive">
-        {% endif %}
             <div class="itemLotInner">
+                <h2 class="nameTextPage">
+                    {{ lot.name }}  
+                </h2>
+                <hr>
                 <div class="imageAndPanel">
                     <div class="imageUnitPage">
                         {% if lot.urlimage %}
                             <img src="{{ lot.urlimage }}">
                         {% else %}
-                            <img src="/media/{{ lot.uploadimage }}">
+                            <img src="/media/{{ lot.image }}">
                         {% endif %}
                     </div>
                     <div class="Panel">
-                        <div class="BidsForm">
-                            <p class="bidItemPage">
-                                Starting bid: ${{ lot.bid }}
-                            </p>
-                            {% if lot.statusActive %}
+                        <div class="Panel-row1">
+                            <div class="row">
+                                <div class="col ItemPanel">
+                                    Starting bid: <div class="userAuthor">${{ lot.bid }}</div>
+                                </div>
+                                <div class="col ItemPanel">
+                                    Created  by: <div class="userAuthor">{{ lot.author.username }}</div>
+                                </div>
+                            </div>
+                            {% if lot.status %}
                                 {% if UserBid %}
-                                    {% if UserMaxBid %}
-                                        <p class="bidItemPage">
-                                            Your last bid: ${{ UserMaxBid.userBid }}
-                                        </p>
-                                    {% endif %}
-                                    <p class="bidItemPage">
-                                        Current bid: ${{ UserBid.userBid }}
-                                    </p>
+                                    <div class="row">
+                                        <div class="col ItemPanel">
+                                            Current bid: <div class="userAuthor">${{ UserBid.userBid }}</div>
+                                        </div>
+                                        <div class="col ItemPanel">
+                                        {% if UserMaxBid %}
+                                            Your last bid: <div class="userAuthor">${{ UserMaxBid.userBid }}</div>
+                                        {% endif %}
+                                        </div>
+                                    </div>
                                 {% endif %}
-                                <form action="{% url 'lotpage' lot.id %}" method="post">
-                                    {% csrf_token %} 
-                                    {{ bidform }}
-                                    <input type="submit" class="btn btn-info btn-sm" name="Make bid" value="Make bid">
-                                </form>
-                                <form action="{% url 'lotpage' lot.id %}" method="post">
-                                    {% csrf_token %} 
-                                    {% if statusWatch == False %}
-                                        <input type="submit" class="btn btn-success btn-sm" name="watchlistSwitch" value="Add to watchlist">
-                                    {% elif statusWatch == True %}
-                                        <input type="submit" class="btn btn-success btn-sm" name="watchlistSwitch" value="Delete from watchlist">
+                                <div class="row">
+                                    <div class="col ItemPanel">
+                                        <form action="{% url 'lotpage' lot.id %}" method="post">
+                                            {% csrf_token %} 
+                                            {{ bidform }}
+                                    </div>
+                                    <div class="col ItemPanel">
+                                            <input type="submit" class="btn btn-info btn-sm" name="Make bid" value="Make bid">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col ItemPanel">
+                                        <form action="{% url 'lotpage' lot.id %}" method="post">
+                                            {% csrf_token %} 
+                                            {% if statusWatch == False %}
+                                                <input type="submit" class="btn btn-success btn-sm" name="watchlistSwitch" value="Add to wishlist">
+                                            {% elif statusWatch == True %}
+                                                <input type="submit" class="btn btn-success btn-sm" name="watchlistSwitch" value="Delete from wishlist">
+                                            {% endif %}
+                                        </form>
+                                    </div>
+                                    <div class="col ItemPanel">
+                                    {% if statusOwner %}
+                                        <form action="{% url 'lotpage' lot.id %}" method="post">
+                                            {% csrf_token %} 
+                                            <input type="submit" class="btn btn-success btn-sm" name="closelot" value="Close the lot">
+                                            </form>    
                                     {% endif %}
-                                </form>
-                                {% if statusOwner %}
-                                    <form action="{% url 'lotpage' lot.id %}" method="post">
-                                        {% csrf_token %} 
-                                        <input type="submit" class="btn btn-success btn-sm" name="closelot" value="Close the lot">
-                                     </form>    
-                                {% endif %}
+                                    </div>
+                                </div>
                             {% else %}
                                 {% if UserBid %}
-                                    <p class="bidItemPage">
-                                        Sold for ${{ UserBid.userBid }} <br> to <span class="userAuthor">{{ UserBid.author }}</span> 
-                                    </p>
-                                    {% if user == UserBid.author %}
-                                        <p class = "bidItemPage congrat">
-                                            Congratulations! You won!
-                                        </p>
-                                    {% endif %}
+                                <div class="row">
+                                    <div class="col ItemPanel">
+                                        Sold for: <div class="userAuthor">${{ UserBid.userBid }}</div>
+                                    </div>
+                                    <div class="col ItemPanel">
+                                        {% if user == UserBid.author %}
+                                        <p class = "congrat"> Congratulations! You won! </p>
+                                        {% else %}        
+                                        to: <span class="userAuthor">{{ UserBid.author }}</span> 
+                                        {% endif %}
+                                    </div>
+                                </div>
                                 {% else %}
-                                    <p class="bidItemPage">
-                                        Lot closed, but unsold 
-                                    </p>
+                                <div class="row">
+                                    <div class="col ItemPanel">
+                                        <p class = "congrat"> Lot closed, but unsold</p>
+                                    </div>
+                                </div>
                                 {% endif %}
-                            {% endif %}
+                            {% endif %}     
                         </div>
+                        <div class="Panel-row2">
+                            <div class="catItems">
+                                {% for item in lot.category.all|dictsort:"name" %} 
+                                    <div class="catItem">
+                                        <a class="linkForCatPage" href="{% url 'catview' item.name %}"> {{item.name}} </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>   
                     </div>        
                 </div>
-                <h4 class="nameTextPage">
-                    {{ lot.name }}  
-                </h4>
-                <p class="descrTextPage text-justify">
+                <p class="descrTextPage">
                     {{ lot.description }}
                 </p>
-                
-                <div class="catAndSeller">
-                    <div class="catItems">
-                        {% for item in lot.category.all|dictsort:"name" %} 
-                            <div class="catItem">
-                                <a class="linkForCatPage" href="{% url 'catview' item.name %}"> {{item.name}} </a>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <span class="bidItem">
-                        created by <div class="userAuthor">{{ lot.author.username }}</div>
-                    </span>
-                </div>
+                <div class="commentdiv">
+                    {% for item in Comments %}
+                        <div class="comment">
+                            <p class="commentUser bidItem">
+                                {{ item.author }}
+                            </p> 
+                            <p>
+                                {{ item.comment }}
+                            </p>
+                        </div>
+                    {% endfor %}
+                    <form action="{% url 'lotpage' lot.id %}" method="post">
+                        {% csrf_token %} 
+                        {{ commentform }}
+                        <input type="submit" name= "Make comment" class="btn btn-success btn-sm" value="Add comment">
+                    </form>
+                </div>              
             </div>
         </div>
     </div>
-    <div class="commentdiv">
-        {% for item in Comments %}
-            <div class="comment">
-                <p class="commentUser bidItem">
-                    {{ item.author }}
-                </p> 
-                <p>
-                    {{ item.comment }}
-                </p>
-            </div>
-        {% endfor %}
-        <form action="{% url 'lotpage' lot.id %}" method="post">
-            {% csrf_token %} 
-            {{ commentform }}
-            <input type="submit" name= "Make comment" class="btn btn-success btn-sm" value="Add comment">
-        </form>
-    </div>
+
 {% endblock %}

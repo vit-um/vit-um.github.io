@@ -2,11 +2,12 @@ from decimal import Decimal
 from operator import truediv
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 from django.forms import ModelForm
+from django.contrib.auth.decorators import login_required
 
 from .models import Lots, User, Category, Bids, Comments
 
@@ -33,6 +34,8 @@ def active(request):
             "titleH": "Only active listings"
         })
 
+@login_required(redirect_field_name=None,login_url='login')
+
 def mylots(request):
     user = request.user
     categories = Category.objects.all().order_by('name')
@@ -45,6 +48,7 @@ def mylots(request):
             "titleH": "Only my listings"
         })
 
+@login_required(redirect_field_name=None,login_url='login')
 
 def wishlist(request):
     user = request.user
@@ -69,6 +73,8 @@ def catview(request, cat):
             "lots": lots,
             "lotsMaxBids": lotsMaxBidsList
         })
+
+@login_required(redirect_field_name=None,login_url='login')
 
 def newlot(request):
     if request.method == "POST":
@@ -139,6 +145,7 @@ def register(request):
 
 
 def lotpage(request, lotID):
+    categories = Category.objects.all().order_by('name')
     lot = Lots.objects.get(id = lotID)
     messageBad = ""
     messageGood = ""
@@ -179,13 +186,13 @@ def lotpage(request, lotID):
                 else:
                     if price > lot.bid:
                         objSave(form, lot, user)
-                        lot.dirtyHack = True
-                        lot.save(update_fields=['dirtyHack']) # if at least one bid was bidded, switch, for 'unsold' message
+                        lot.sold = True
+                        lot.save(update_fields=['sold']) # if at least one bid was bidded, switch, for 'unsold' message
                         messageGood = "Your bid has been accepted"
                     else:
                         messageBad = "Your bid must be higher than the starting bid"
             if statusWatch == False and messageGood:
-                lot.usersWhoAddToWatchlist.add(user)
+                lot.wishlist.add(user)
                 lot.save()
                 messageGood = messageGood + ". Lot has been added to your watchlist"
                 statusWatch = True
@@ -197,12 +204,12 @@ def lotpage(request, lotID):
             return HttpResponseRedirect(reverse("login"))
 
         if statusWatch == False:
-            lot.usersWhoAddToWatchlist.add(user)
+            lot.wishlist.add(user)
             lot.save()
             messageGood = "Lot has been added to your watchlist"
             statusWatch = True
         else:
-            lot.usersWhoAddToWatchlist.remove(user)
+            lot.wishlist.remove(user)
             lot.save()
             messageBad = "Lot has been deleted from your watchlist"
             statusWatch = False
@@ -212,7 +219,7 @@ def lotpage(request, lotID):
     # for closing the lot
     if request.method == "POST" and "closelot" in request.POST:
         lot.status = False
-        lot.save(update_fields=['statusActive'])
+        lot.save(update_fields=['status'])
         messageGood = "Lot has been closed"
 
     Commentses = Comments.objects.filter(lot = lotID)
@@ -230,6 +237,7 @@ def lotpage(request, lotID):
             "UserMaxBid": UserMaxBid,
             "statusWatch": statusWatch,
             "statusOwner": statusOwner,
+            "categories": categories,
             "user": user
         })
 
@@ -339,20 +347,12 @@ class YourBid(ModelForm):
         max_value = Decimal('99999'),
         decimal_places = 2,
         required = True,
-        label = '',         
-        widget = forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight', 'placeholder': 'Your Bid'})
+        label = 'Place your bet',         
+        widget = forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight', 'placeholder': '0.00'})
     )
     class Meta:       
         model = Bids
         fields = ['userBid']
-#        widgets = {
-#            'userBid': forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight', 'placeholder': 'Your Bid'}),
-#        }
-#        labels = {
-#            'userBid': ' ',
-#        }
-
-###################################################################################
 
 class YourComment(ModelForm):
     class Meta:       

@@ -14,7 +14,7 @@ urlpatterns = [
     path("mylots", views.mylots, name="mylots"),
     path("newlot", views.newlot, name="newlot"),
     path("wishlist", views.wishlist, name="wishlist"),
-    path("categories/<str:cat>", views.catview, name="catview"),
+    path("cat/<str:cat>", views.catview, name="catview"),
     path("lot<int:lotID>", views.lotpage, name="lotpage")
 ]
 
