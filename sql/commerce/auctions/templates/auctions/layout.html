@@ -15,7 +15,7 @@
                     <h1> <a href="{% url 'index' %}"> <img src="{% static 'auctions/auction.png' %}" alt="Auctions"></a> </h1>
                 </div>
                 <div class="col-md-6">
-                    <form action="{ % url 'encyclopedia:search'%}">
+                    <form action="{% url 'search' %}">
                         <input class="search" type="text" name="q" placeholder="Auction search">
                     </form>
                 </div>

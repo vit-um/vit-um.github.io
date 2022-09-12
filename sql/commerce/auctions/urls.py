@@ -15,7 +15,8 @@ urlpatterns = [
     path("newlot", views.newlot, name="newlot"),
     path("wishlist", views.wishlist, name="wishlist"),
     path("cat/<str:cat>", views.catview, name="catview"),
-    path("lot<int:lotID>", views.lotpage, name="lotpage")
+    path("lot<int:lotID>", views.lotpage, name="lotpage"),
+    path("search", views.search, name="search")
 ]
 
 if settings.DEBUG:

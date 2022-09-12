@@ -1,4 +1,6 @@
+from ast import In
 from decimal import Decimal
+from lib2to3.pgen2.token import NAME
 from operator import truediv
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
@@ -244,28 +246,16 @@ def lotpage(request, lotID):
 
 def search(request):
     q = request.GET.get("q")
-    entry_text = util.get_entry(q)
-    if entry_text == None:
-        entries = util.list_entries()
-        search_entries = []
-        for i in entries:
-            if i.lower().find(q.lower()) != -1:
-                search_entries.append(i)
-        if len(search_entries) == 0:
-            page_header = "Нічого не знайдено"
-        else:
-            page_header = "Результати пошуку"
-        return render(request, "encyclopedia/index.html", {
-            "entries": search_entries,
-            "header": page_header
-            })
-    else:
-        return render(request, "wiki/page.html", {
-            "entry_text": markdown(entry_text),
-            "entry_name": q,
-            "edit": True
-            })
-
+    lots = Lots.objects.filter(name__icontains = q).order_by('-status')
+# https://django.fun/docs/django/ru/4.0/ref/models/querysets/#id4
+    categories = Category.objects.all().order_by('name')
+    lotsMaxBidsList = lotsMaxBids(lots)
+    return render(request, "auctions/index.html", {
+            "categories": categories,
+            "lots": lots,
+            "lotsMaxBids": lotsMaxBidsList,
+            "titleH": "Searching results",
+        })
 
 ###########   Functions   ###########
 
@@ -327,15 +317,13 @@ class NewLotForm(ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'lotTitle formElemWidth formElemInlineHeight'}),
             'description': forms.Textarea(attrs={'class': 'lotDescription formElemWidth'}),
-            'bid': forms.NumberInput(attrs={'class': 'lotBid formElemInlineHeight'}),
             'urlimage': forms.URLInput(attrs={'class': 'lotURL formElemInlineHeight'}),
             'image': forms.ClearableFileInput(attrs={'class': 'lotUp formElemInlineHeight'}),
-            'category': forms.CheckboxSelectMultiple(attrs={'class': 'lotCateg', 'required': 'False'}),
+            'category': forms.CheckboxSelectMultiple(attrs={'class': 'lotCateg'}),
         }
         labels = {
             'name': "Title",
             'description': "Description",
-            'bid': ("Starting bid"),
             'urlimage': "URL or image",
             'image': '',
             'category': "Category",
