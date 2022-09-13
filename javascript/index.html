@@ -1,12 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
     <head>
         <title>Привіт</title>
         <script>
-            alert('Привіт, світ!');
+            function hello() {
+                alert('Привіт, світ!');
+            }
+            let counter = 0;
+            function count() {
+                counter++;
+                alert(`Значення лічильника: ${counter}`);
+            }
         </script>
     </head>
     <body>
         <h1>Hello!</h1>
+        <button onclick="hello()">Скажи Привіт</button>
+        <br><br><br>
+        <button onclick="count()">Порахувати</button>
     </body>
 </html>
