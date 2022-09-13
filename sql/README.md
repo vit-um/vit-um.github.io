@@ -725,4 +725,4 @@ def logout_view(request):
 Спроєктуйте подібний до eBay онлайн-майданчик для електронної торгівлі та проведення аукціонів, на якому користувачі зможуть виставляти товари, розміщувати ставки та додавати товари до списку відстеження.  
 
 Результ виконання завдання на відео, при бажанні застосунок завжди можливо розгорнути на локальному компьтері використавши код вище:  
-[![Task 3 result ](https://i9.ytimg.com/vi/GUTyulpQsBk/mq2.jpg?sqp=CLCD_pgG&rs=AOn4CLBlIMGF6N30hvEXenMYOBp4kc3UQw)](https://youtu.be/GUTyulpQsBk)
+[![Task 3 result ](.img/task3.jpg) ](https://youtu.be/GUTyulpQsBk)
