@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        <title>Кольори</title>
+        <script>
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                    document.querySelectorAll('button').forEach(button => {
+                        button.onclick = () => {
+                            document.querySelector("#hello").style.color = button.dataset.color;
+                        }
+                    });
+                    console.log(document.querySelectorAll('button')); // для виводу діагностичних даних у консоль
+                });
+        </script>
+    </head>
+    <body>
+        <h1 id="hello">Кольори</h1>
+        <button data-color="red">Червоний</button>
+        <button data-color="blue">Синій</button>
+        <button data-color="green">Зелений</button>
+    </body>
+</html>

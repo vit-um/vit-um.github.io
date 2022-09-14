@@ -9,14 +9,31 @@
             let counter = 0;
             function count() {
                 counter++;
-                alert(`Значення лічильника: ${counter}`);
+                document.querySelector('h2').innerHTML = counter;
+
+                if (counter % 5 === 0) {
+                    alert(`Значення лічильника: ${counter}`)
+                }
             }
+            function hi() {
+                const header = document.querySelector('h1');
+                if (header.innerHTML === 'Привіт!') {
+                    header.innerHTML = 'До побачення!'
+                }
+                else {
+                    header.innerHTML = 'Привіт!'
+                }
+            }
+
         </script>
     </head>
     <body>
-        <h1>Hello!</h1>
+        <h1>Привіт!</h1>
         <button onclick="hello()">Скажи Привіт</button>
         <br><br><br>
-        <button onclick="count()">Порахувати</button>
+        <button onclick="count()">Порахувати?</button>
+        <h2>Лічильник</h2>
+        <br><br><br>
+        <button onclick="hi()">Привіт чи до побачення?</button> 
     </body>
 </html>
