@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        <title>Counter</title>
+        <script>
+            let counter = 0;
+            
+            function count() {
+                counter++;
+                document.querySelector('h2').innerHTML = counter;
+            }
+            
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelector('button').onclick = count;
+            
+                setInterval(count, 1000);
+            });
+            
+        </script>
+    </head>
+    <body>
+        <h1>Приклад автоматичного лічильника з інтервалом 1 сек</h1>
+        <button>Порахувати?</button>
+        <br><br><br>
+        <h2></h2>
+    </body>
+</html>
+

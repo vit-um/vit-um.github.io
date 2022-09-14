@@ -3,21 +3,20 @@
     <head>
         <title>Кольори</title>
         <script>
-            
             document.addEventListener('DOMContentLoaded', () => {
-                    document.querySelectorAll('button').forEach(button => {
-                        button.onclick = () => {
-                            document.querySelector("#hello").style.color = button.dataset.color;
-                        }
-                    });
-                    console.log(document.querySelectorAll('button')); // для виводу діагностичних даних у консоль
-                });
+                document.querySelector('select').onchange = function() {
+                    document.querySelector('#hello').style.color = this.value;
+                }
+            });
         </script>
     </head>
     <body>
         <h1 id="hello">Кольори</h1>
-        <button data-color="red">Червоний</button>
-        <button data-color="blue">Синій</button>
-        <button data-color="green">Зелений</button>
+        <select>
+            <option value="black">Чорний</option>
+            <option value="red">Червоний</option>
+            <option value="blue">Синій</option>
+            <option value="green">Зелений</option>
+        </select>
     </body>
 </html>

@@ -215,4 +215,84 @@ console.log(document.querySelectorAll('button'));
 
 4. Іменовані функції, які використовують стрілки, на прикладі `function count() {` записується як `coutn = () => {`  
 
-5. 
+5. Заміняємо кнопки в коді HTML на випадне меню:  
+
+```html
+<select>
+    <option value="black">Чорний</option>
+    <option value="red">Червоний</option>
+    <option value="blue">Синій</option>
+    <option value="green">Зелений</option>
+</select>
+```
+6. Ми можемо виявити зміни в елементі `select` за допомогою атрибута `onchange` 
+`querySelector('select').onchange = function() {`
+
+7. Ключове слово `this` змінюється залежно від контексту, в якому воно використовується. У випадку обробника події [this](https://www.w3schools.com/js/js_this.asp) стосується об’єкта, який ініціював подію. От же скористаємось ним для отримання значення `value` обраного кольору у меню `select`  
+
+```js
+document.querySelector('select').onchange = function() {
+    document.querySelector('#hello').style.color = this.value;
+}
+```
+
+
+8. Існує багато інших [подій](https://www.w3schools.com/js/js_events.asp), які можна відстежувати в JavaScript, наприклад:  
+- `onclick` The user clicks an HTML element
+- `onmouseover` The user moves the mouse over an HTML element
+- `onkeydown` The user pushes a keyboard key
+- `onkeyup` The event occurs when the user releases a key
+- `onload` The browser has finished loading the page
+- `onblur` When a user leaves an input field
+
+## Список справ на JavaScript
+1. Створимо файл [tasks.html](tasks.html) для HTML-сторінки та [tasks.js](tasks.js) для коду JavaScrip
+2. В цьому прикладі, ми лише один раз отримуємо нашу кнопку надсилання та поле введення для завдання та зберігаємо ці два значення у змінних `submit` та `newTask`:  
+
+```js
+const submit = document.querySelector('#submit');
+const newTask = document.querySelector('#task');
+```
+3. Маємо можливість увімкнути/вимкнути кнопку, встановивши для її атрибута disabled значення false/true.  
+
+```js
+ submit.disabled = true;
+```
+4. Щоб розблокувати кнопку будемо визначати довжину введеного рядка за допомогою `.length` (використовується для таких об’єктів, як рядки та масиви)  
+
+```js
+newTask.onkeyup = () => {
+    if (newTask.value.length > 0) {
+        submit.disabled = false;
+    }
+    else {
+        submit.disabled = true;
+    }
+}
+```
+5. В кінці коду додаємо рядок `return false`. Це запобігає надсиланню форми, що передбачає перезавантаження поточної сторінки або переспрямування на нову. 
+
+6. У JavaScript ми можемо створювати елементи HTML за допомогою функції [createElement](https://www.w3schools.com/jsref/met_document_createelement.asp).  
+
+```js
+const li = document.createElement('li');
+li.innerHTML = task;
+```
+
+7. Потім ми можемо додавати ці елементи до `DOM` за допомогою функції `append`:  
+```js
+document.querySelector('#tasks').append(li);
+```
+
+## Інтервали
+1. Дають можливість налаштувати функції на запуск через певний проміжок часу. Для цього ми використовуємо функцію [setInterval](https://www.w3schools.com/jsref/met_win_setinterval.asp), яка приймає як аргумент функцію, яку потрібно викликати, і час (у мілісекундах) між викликами функції.
+
+2. Створимо сторінку лічильника [counter03.html](counter03.html) і додамо інтервал, щоб, навіть якщо користувач нічого не натискає, лічильник збільшувався щосекунди.  
+
+## Локальне сховище
+Щоразу, коли ми перезавантажуємо сторінку, вся наша інформація втрачається. Іноді ми хочемо зберігати інформацію, яку ми можемо використовувати, коли користувач повертається на сайт. Один зі способів зробити це – використовувати [локальне сховище](https://www.w3schools.com/jsref/prop_win_localstorage.asp), тобто зберігати інформацію у веб-браузері користувача, аби отримати до неї доступ пізніше. Ця інформація зберігається як набір пар «ключ-значення», майже як словник Python. Щоб використовувати локальне сховище, ми використовуємо дві ключові функції:  
+- `localStorage.getItem(key)`: ця функція шукає запис у локальному сховищі за заданим ключем і повертає значення, пов'язане з ним.
+- `localStorage.setItem(key, value)`: ця функція встановлює запис в локальному сховищі, пов'язуючи ключ з новим значенням.  
+
+1. Використовуємо ці нові функції у файлі [counter04.html](counter04.html) для оновлення нашого лічильника.
+
