@@ -294,5 +294,148 @@ document.querySelector('#tasks').append(li);
 - `localStorage.getItem(key)`: ця функція шукає запис у локальному сховищі за заданим ключем і повертає значення, пов'язане з ним.
 - `localStorage.setItem(key, value)`: ця функція встановлює запис в локальному сховищі, пов'язуючи ключ з новим значенням.  
 
-1. Використовуємо ці нові функції у файлі [counter04.html](counter04.html) для оновлення нашого лічильника.
+Використовуємо ці нові функції у файлі [counter04.html](counter04.html) для оновлення нашого лічильника. Коментарі дивіться в коді файлу.
 
+## APIs. Об’єкти JavaScript
+1. У реальному житті автомобіль – це `object`. Автомобіль має такі `properties` (властивості), як вага та колір, а також такі `methods` (методи), як старт і зупинка:  
+
+![objects](.img/objects.jpg)  
+
+* Усі автомобілі мають однакові `properties`, але значення `properties` відрізняються від автомобіля до автомобіля.  
+* Усі автомобілі мають однакові `methods`, але `methods` виконуються в різний час.  
+
+2. [Об’єкт JavaScript](https://www.w3schools.com/js/js_objects.asp) дуже схожий на словник Python, оскільки він дозволяє нам зберігати пари «ключ-значення». Наприклад, об’єкт, що представляє Гаррі Поттера у консолі буде виглядати наступним чином:  
+
+```js
+let person = {
+    first: 'Гаррі',
+    last: 'Поттер'
+};
+
+person.first
+'Гаррі'
+person.last
+'Поттер'
+person['last']
+'Поттер'
+person.first = 'Ron'
+'Ron'
+person.last = 'Weasley'
+'Weasley'
+person
+{first: 'Ron', last: 'Weasley'}
+
+```
+
+3. JavaScript об’єкти дуже корисні для передачі даних з одного сайта на інший, особливо при використанні [APIs](https://www.mulesoft.com/resources/api/what-is-an-api), які є структурованою форма зв’язку між двома різними застосунками. Ми можемо зробити це за допомогою запитів до API служби, які повернуть нам структуровані дані, часто у формі [JSON](https://www.w3schools.com/js/js_json_intro.asp) (JavaScript Object Notation). Значення в JSON не обов’язково мають бути просто рядками та числами, як у прикладі вище. Ми також можемо зберігати списки або навіть інші об’єкти JavaScript:  
+
+```json
+{
+    "origin": {
+        "city": "New York",
+        "code": "JFK"
+    },
+    "destination": {
+        "city": "London",
+        "code": "LHR"
+    },
+    "duration": 415
+}
+
+```
+## Обмін валют. Практика застосування API   
+1. Для зразка отримаємо доступ до API обмінного курсу Європейського центрального банку(https://exchangeratesapi.io/), що надає актуальні курси валют через API. 
+2. Ознайомившись з [документацією](https://apilayer.com/marketplace/currency_data-api#documentation-tab) та скориставшись посиланням на API сайту [https://api.exchangeratesapi.io/latest?base=USD](https://api.exchangeratesapi.io/latest?base=USD):
+ 
+```json
+{
+  "success": false,
+  "error": {
+    "code": 101,
+    "type": "missing_access_key",
+    "info": "You have not supplied an API Access Key. [Required format: access_key=YOUR_ACCESS_KEY]"
+  }
+}
+```
+cтає зрозуміємо, що для використання API потрібен `access_key`
+
+3. Отримаємо його скориставшись безкоштовним тарифним планом, отримуємо `apikey` в [особовому кабінеті](https://apilayer.com/account):  
+
+![AJAX](.img/apikey.jpg)  
+
+
+Далі маємо варіанти запитів: 
+- Аналіз курсу валют за період: `https://api.apilayer.com/currency_data/change?start_date=2022-05-01&end_date=2022-06-01&source=USD&currencies=EUR,UAH&apikey=YOUR_ACCESS_KEY`  
+- Обміний курс в поточному часі: `https://api.apilayer.com/currency_data/live?source=USD&currencies=EUR&apikey=YOUR_ACCESS_KEY`  
+
+```json
+{
+    "success": true,
+    "timestamp": 1663320124,
+    "source": "UAH",
+    "quotes": {
+        "UAHEUR": 0.027349,
+        "UAHUSD": 0.027281
+    }
+}
+```
+
+4. Створимо новий HTML-файл [currency.html](currency.html) та зв’яжемо його з файлом JavaScript, але тіло сторінки залишимо порожнім.  
+
+5. У файлі [currency.js](currency.js) ми будемо використовувати асинхронний JavaScript і XML, або [AJAX](https://www.w3schools.com/js/js_ajax_intro.asp). Цей механізм дозволяє нам отримувати доступ до інформації із зовнішніх сторінок навіть після завантаження нашої сторінки:  
+
+![AJAX](.img/pic_ajax.gif)  
+
+6. Для запиту інформації про курси валют до сервера будемо використовувати функцію [fetch](https://javascript.info/fetch), яка дозволить нам надіслати HTTP запит. Функція `fetch` повертає `promise`. На цьому етапі ми можемо перевірити статус HTTP, щоб побачити, чи він успішний чи ні, перевірити заголовки: 
+
+```js
+let response = await fetch(url);
+
+if (response.ok) { // if HTTP-status is 200-299
+  // get the response body (the method explained below)
+  let json = await response.json();
+} else {
+  alert("HTTP-Error: " + response.status);
+}
+```
+7. На другому етапі, щоб отримати тіло відповіді, нам потрібно використати додатковий виклик методу:  
+
+```js
+let response = await fetch(url);
+
+let commits = await response.json(); // read response body and parse as JSON
+
+alert(commits[0].author.login);
+```
+
+8. Або те саме без очікування, використовуючи чистий синтаксис з `promise`-ами, надаючи їм атрибут `.then`, що описує, що потрібно зробити, коли ми отримаємо відповідь. Фрагмент коду нижче виведе нашу відповідь у консоль:
+
+```js
+document.addEventListener('DOMContentLoaded', function() {
+    // Надіслати запит GET до URL
+    fetch('https://api.apilayer.com/currency_data/live?source=USD&currencies=EUR&apikey=YOUR_ACCESS_KEY')
+    // Перетворити відповідь у формат json 
+    .then(response => response.json())
+    .then(data => {
+        // Вивести дані до консолі
+        console.log(data);
+    });
+});
+```
+Одним із важливих моментів у наведеному вище коді є те, що аргумент `.then` завжди є функцією. Хоча здається, що ми створюємо змінні response та data, ці змінні є лише параметрами двох анонімних функцій.  
+
+![AJAX](.img/promice.jpg)  
+
+9. Тепер використаємо JavaScript для виведення повідомлення на екрані, як показано в коді [currency.js](currency.js).  
+
+`1 USD дорівнює 36.9413 UAH`
+
+10. Дозволимо користувачеві вибирати, яку валюту він хотів би бачити. Ми почнемо зі зміни нашого [HTML](currency01.html), щоб дозволити користувачеві вводити валюту.
+
+11. Та внесемо деякі зміни в наш [JavaScript](currency01.js), щоб він змінювався лише під час надсилання форми, а також враховував введенні дані користувача. Ми також додамо сюди деякі перевірки помилок.  
+
+![AJAX](.img/usduah.jpg)
+
+## Практичне завдання Електронна пошта  
+
+Спроектуйте зовнішній інтерфейс для поштового клієнта, що використовує API для відправлення та отримання листів.
