@@ -5,23 +5,31 @@
     <h1>Локальна пошта</h1>
     <hr>
     <div class="row justify-content-between navi">
-        <div class="col-4">
+        <div class="col-5">
             <button class="btn btn-sm btn-outline-primary" id="compose">Написати</button>
+            <span id="space">  </span>
             <button class="btn btn-sm btn-outline-primary" id="inbox">Вхідні</button>
             <button class="btn btn-sm btn-outline-primary" id="sent">Надіслані</button>
             <button class="btn btn-sm btn-outline-primary" id="archived">Архів</button>
         </div>
         <div class="col-4 logout">
             <span id="mailbox">{{ request.user.email }}</span> 
+            <span id="space">  </span>
             <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Вийти</a>
         </div>
     </div>
     <hr>
 
     <div id="emails-view">
+    <!-- містить наповнення поштової скриньки (початково пустої).  -->
     </div>
 
     <div id="compose-view">
+    <!-- містить форму, де користувач може створити новий лист. -->
+        <div id="error"> 
+        <!-- Блок повідомлень про помилки -->    
+        </div>
+
         <h3>Написати листа</h3>
         <form id="compose-form">
             <div class="form-group">
@@ -34,7 +42,7 @@
                 <input class="form-control" id="compose-subject" placeholder="Тема">
             </div>
             <textarea class="form-control" id="compose-body" placeholder="Тіло листа"></textarea>
-            <input type="submit" class="btn btn-primary" value="Надіслати"/>
+            <input type="submit" class="btn btn-primary subm-disable" value="Надіслати"/>
         </form>
     </div>
 {% endblock %}
