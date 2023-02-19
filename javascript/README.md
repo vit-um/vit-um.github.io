@@ -453,4 +453,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 4. Перегляд вмісту листа:  
 
-![mail](.img/letter.jpg)
+![mail](.img/letter.jpg)  
