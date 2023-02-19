@@ -156,8 +156,6 @@ function sendmail() {
   })
   .then(response => response.json())
   .then(result => {
-      // Вивести результат в консоль
-      console.log(result);
       if (result.error) {
           document.querySelector('#error').setAttribute('class', "alert alert-danger");
           document.querySelector('#error').innerHTML = `${result.error}`;
@@ -242,4 +240,22 @@ function archive_email(mailID, archStatus) {
   .then(() => {
         load_mailbox('inbox')
   });   
+}
+
+
+function reply_email(email) {
+
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#compose-view').style.display = 'block';
+
+  document.querySelector('#compose-recipients').value = email.sender;
+
+  if (email.subject.slice(0,4) == 'Re: ') 
+      document.querySelector('#compose-subject').value = email.subject;
+  else 
+      document.querySelector('#compose-subject').value = 'Re: ' + email.subject;
+  
+  document.querySelector('#compose-body').value = `\n${email.timestamp} ${email.sender} пише:\n${email.body}`;
+
+  document.querySelector('#compose-form').onsubmit = () => sendmail();
 }

@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h2>Login</h2>
+    <h2>Вхід</h2>
 
     {% if message %}
         <div>{{ message }}</div>
@@ -16,9 +16,9 @@
         <div class="form-group">
             <input class="form-control" type="password" name="password" placeholder="Password">
         </div>
-        <input class="btn btn-primary" type="submit" value="Login">
+        <input class="btn btn-primary" type="submit" value="Увійти">
     </form>
 
-    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+    Ще не маєте облікового запису? <a href="{% url 'register' %}">Регеструйтесь тут.</a>
 
 {% endblock %}
