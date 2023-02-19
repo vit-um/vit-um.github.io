@@ -29,13 +29,26 @@ function compose_email() {
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
-  document.querySelector('#compose-recipients').value = '';
+  const recipients = document.querySelector('#compose-recipients');
+  recipients.value = '';
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
+  const submit = document.querySelector('.subm-disable');
 
+
+  // Забороняємо натискання кнопки Надіслати" в разі якщо довжина введеної адреси менше 3 символів
+  submit.disabled = true;
+  recipients.onkeyup = () => {
+    if (recipients.value.length > 3) 
+      submit.disabled = false;
+    else 
+      submit.disabled = true;
+    }
+  
   // Після відправки форми з новим листом викликаємо обробник, функуцію sendmail
   document.querySelector('#compose-form').onsubmit = () => sendmail();
 
+  return false
 }
 
 function load_mailbox(mailbox) {
@@ -53,12 +66,86 @@ function load_mailbox(mailbox) {
   document.querySelector('#compose-view').style.display = 'none';
 
   // Show the mailbox name
-  document.querySelector('#emails-view').innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
+  switch(mailbox) {
+    case 'sent':
+      document.querySelector('#emails-view').innerHTML = `<h3>Надіслані листи</h3>`;
+      break;
+    case 'archive':
+      document.querySelector('#emails-view').innerHTML = `<h3>Архівовані листи</h3>`;
+      break;
+    default:
+      document.querySelector('#emails-view').innerHTML = `<h3>Вхідні листи</h3>`;
+  } 
+  
+  fetch('/emails/' + mailbox)
+  .then(response => response.json())
+  .then(emails => {
+    const mailbox_div = document.createElement('div');
+    mailbox_div.setAttribute('id', 'mailsblock');
 
+    emails.forEach(email => {
+      const letter_div = document.createElement('div');
+      const address_field = document.createElement('span');
+      const arch_button = document.createElement('button');
+
+      if (mailbox === 'sent') {
+        if (email.read === true)
+          letter_div.setAttribute('class', 'mailgrid_sent read');
+        else
+          letter_div.setAttribute('class', 'mailgrid_sent unread');
+        address_field.innerHTML = `Кому: ${email.recipients}`;
+      }
+      else {
+        address_field.innerHTML = `${email.sender}`;
+        if (email.read === true)
+          letter_div.setAttribute('class', 'mailgrid read');
+        else
+          letter_div.setAttribute('class', 'mailgrid unread');
+
+        if (mailbox === 'inbox')
+          arch_button.className = 'archButton';
+        else
+          arch_button.className = 'unarchButton';
+      }
+      
+      const subject_field = document.createElement('span');
+      subject_field.innerHTML = `${email.subject}`;
+
+      const datatime_field = document.createElement('span');
+      datatime_field.innerHTML = `${email.timestamp}`;
+      datatime_field.setAttribute('class', 'stamp');
+
+
+      const linkdiv = document.createElement('div');
+      linkdiv.setAttribute('class', 'linkdiv');
+
+      if (mailbox === 'sent')
+        letter_div.append(address_field, subject_field, datatime_field, linkdiv);
+      if (mailbox === 'inbox')
+        letter_div.append(arch_button, address_field, subject_field, datatime_field, linkdiv);
+      if (mailbox === 'archive')
+        letter_div.append(arch_button, address_field, subject_field, datatime_field, linkdiv);
+
+      mailbox_div.append(letter_div);
+
+      linkdiv.addEventListener('click', () => {
+        readmail(email.id);
+      });
+    
+      arch_button.addEventListener('click', () => {
+        archive_email(email.id, email.archived);
+      });
+
+    });
+
+    document.querySelector('#emails-view').append(mailbox_div);
+
+  });
 }
 
 
 function sendmail() {
+  
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
@@ -72,20 +159,77 @@ function sendmail() {
       // Вивести результат в консоль
       console.log(result);
       if (result.error) {
-          document.querySelector('#error').setAttribute('class', "alert alert-danger fade show");
+          document.querySelector('#error').setAttribute('class', "alert alert-danger");
           document.querySelector('#error').innerHTML = `${result.error}`;
           compose_email();
       }
       else {
-          // document.querySelector('#error').setAttribute('class', "alert alert-success fade show");
-          // document.querySelector('#error').innerHTML = `${result.error}`;
-//          load_mailbox('sent');
+          load_mailbox('sent');
       }
   });
 
   return false;
 }
 
+function readmail(id) {
 
-// https://getbootstrap.com/docs/5.2/components/alerts/#dismissing  
-// <div class="alert alert-success fade show" role="alert"> </div>
+  document.querySelector('#mailsblock').remove();
+ 
+  
+  fetch('/emails/' + id)
+  .then(response => response.json())
+  .then(email => {
+  
+    document.querySelector("h3").innerHTML = `${email.subject}`;
+
+    const divLetter = document.createElement('div');
+
+    const grid_div = document.createElement('div');
+    grid_div.setAttribute('id', 'grid');
+    
+    const sender_field = document.createElement('div');
+    sender_field.setAttribute("style","text-align: left;");
+    sender_field.innerHTML = `<strong>Від:</strong> ${email.sender}`;
+
+    const datatime_field = document.createElement('div');
+    datatime_field.setAttribute("style", "text-align: right;");
+    datatime_field.innerHTML = `${email.timestamp}`;
+
+    grid_div.append(sender_field, datatime_field);
+
+
+    const recipients_field = document.createElement('p');
+    recipients_field.innerHTML = `<strong>Кому:</strong> ${email.recipients}`;
+
+    const body_field = document.createElement('p');
+    body_field.innerHTML = `${email.body}`;
+
+    divLetter.append(grid_div, recipients_field, body_field);
+
+    document.querySelector('#emails-view').append(divLetter);
+
+   
+  });
+
+  // Позначимо відкритий лист прочитаним
+  fetch('/emails/'+ id, {
+      method: 'PUT',
+      body: JSON.stringify({
+        read: true
+      })
+  });
+  
+}
+
+
+function archive_email(mailID, archStatus) {
+  fetch('/emails/'+ mailID, {
+      method: 'PUT',
+      body: JSON.stringify({
+        archived: !archStatus
+      })
+  })
+  .then(() => {
+        load_mailbox('inbox')
+  });   
+}
