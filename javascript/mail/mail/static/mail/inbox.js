@@ -200,9 +200,9 @@ function readmail(id) {
     recipients_field.innerHTML = `<strong>Кому:</strong> ${email.recipients}`;
 
     const body_field = document.createElement('p');
-    const array = email.body.split("\n");
+    const text = email.body.split("\n");
     let body = '';
-    for (let unit of array) {
+    for (let unit of text) {
         body += unit + '<br>'
     }
 
@@ -255,7 +255,13 @@ function reply_email(email) {
   else 
       document.querySelector('#compose-subject').value = 'Re: ' + email.subject;
   
-  document.querySelector('#compose-body').value = `\n${email.timestamp} ${email.sender} пише:\n${email.body}`;
+  const text = email.body.split("\n");
+  let body = '';
+  for (let unit of text) {
+      body = body + '>' + unit + '\n';
+  }
+  
+  document.querySelector('#compose-body').value = `\n${email.timestamp} ${email.sender} пише:\n` + body;
 
   document.querySelector('#compose-form').onsubmit = () => sendmail();
 }
