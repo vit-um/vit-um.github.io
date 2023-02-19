@@ -202,13 +202,23 @@ function readmail(id) {
     recipients_field.innerHTML = `<strong>Кому:</strong> ${email.recipients}`;
 
     const body_field = document.createElement('p');
-    body_field.innerHTML = `${email.body}`;
+    const array = email.body.split("\n");
+    let body = '';
+    for (let unit of array) {
+        body += unit + '<br>'
+    }
 
-    divLetter.append(grid_div, recipients_field, body_field);
+    body_field.innerHTML = body;
 
+    const reply_btn = document.createElement('button');
+    reply_btn.innerText = 'Відповісти';
+    reply_btn.className = 'btn btn-outline-primary';
+
+    divLetter.append(grid_div, recipients_field, body_field, reply_btn);
     document.querySelector('#emails-view').append(divLetter);
 
-   
+    reply_btn.addEventListener('click', () => reply_email(email));
+    
   });
 
   // Позначимо відкритий лист прочитаним
