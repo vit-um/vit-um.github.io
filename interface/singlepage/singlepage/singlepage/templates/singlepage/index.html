@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Одна сторінка</title>
+        <style>
+            div {
+                display: none;
+            }
+        </style>
+        <script>
+            // Показати наданий розділ
+            function showSection(section) {    
+                // Знайти текст розділу з сервера
+                fetch(`/sections/${section}`)
+                .then(response => response.text())
+                .then(text => {
+                    // Записати текст та вивести на сторінці
+                    console.log(text);
+                    document.querySelector('#content').innerHTML = text;
+                });
+            }
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Додати функціональність кнопок
+                document.querySelectorAll('button').forEach(button => {
+                    button.onclick = function() {
+                        showSection(this.dataset.section);
+                    };
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Добридень!</h1>
+        <button data-section="1">Текст про життя</button>
+        <button data-section="2">Текст про смерть</button>
+        <button data-section="3">Текст про лбюбов</button>
+        </br>
+        <div id="content" style="display: block";>
+        </div>
+    </body>
+</html>
