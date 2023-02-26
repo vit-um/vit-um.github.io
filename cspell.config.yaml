@@ -1,0 +1,12 @@
+version: "0.2"
+ignorePaths: []
+dictionaryDefinitions: []
+dictionaries: []
+words:
+  - застосунку
+  - застосунок
+  - контенту
+  - нашталт
+ignoreWords: []
+import: []
+language: en,uk

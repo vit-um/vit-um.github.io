@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Одна сторінка</title>
+        <style>
+            #content {
+                margin-top: 50px;
+            }
+        </style>
+        <script>
+            // Коли натиснута стрілка назад, показати попередній розділ [ on pop state - коли щось було витягнуто із історії ]
+            window.onpopstate = function(event) {
+                console.log(event.state.section);
+                showSection(event.state.section);
+            }
+
+            function showSection(section) {    
+                fetch(`/sections/${section}`)
+                .then(response => response.text())
+                .then(text => {
+                    console.log(text);
+                    document.querySelector('#content').innerHTML = text;
+                });
+            }
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                // Додати функціональність кнопок
+                document.querySelectorAll('button').forEach(button => {
+                    button.onclick = function() {
+                        const section = this.dataset.section;
+                           // Додати поточний стан до історії за допомогою наступної функції з трьома аргументами 
+                           // (1- данні, пов'язані зі зміною стану, 
+                           // 2 - заголовок сторінки, що у більшості випадків ігнорується, 
+                           // 3- те що побачимо в URL-адресі)
+                        history.pushState({section: section}, "", `section${section}`);
+                        showSection(section); 
+                    };
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Добридень!</h1>
+        <button data-section="1">Текст про життя</button>
+        <button data-section="2">Текст про смерть</button>
+        <button data-section="3">Текст про лбюбов</button>
+
+        <div id="content">
+        </div>
+    </body>
+</html>
