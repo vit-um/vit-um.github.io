@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Анімація</title>
+        <style>
+            @keyframes grow {
+                0% {
+                    font-size: 20px;
+                }
+                50% {
+                    font-size: 150px;
+                }
+                100% {
+                    font-size: 20px;
+                }
+            }
+
+            h1 {
+                animation-name: grow;
+                animation-duration: 3s;
+                animation-fill-mode: both;
+                animation-iteration-count: infinite;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Знайти заголовок
+                const h1 = document.querySelector('h1');
+                // Призупинити анімацію за замовчуванням
+                h1.style.animationPlayState = 'paused';
+                // Дочекатись, поки кнопка буде натиснута
+                document.querySelector('button').onclick = () => {
+                    // Якщо анімація призупинена, програти анімацію
+                    if (h1.style.animationPlayState == 'paused') {
+                        h1.style.animationPlayState = 'running';
+                    }
+                    // В іншому випадку, призупинити анімацію
+                    else {
+                        h1.style.animationPlayState = 'paused';
+                    }
+                }
+            })
+        </script>
+    </head>
+    <body>
+        <button>Пауза</button>
+        <h1>Ласкаво просимо!</h1>
+    </body>
+</html>
