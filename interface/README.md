@@ -1,6 +1,6 @@
 # Інструменти для створення користувацького інтерфейсу  
-## Маніпулювання DOM елементами за допомоною JavaScript:   
-1. В [прикладі](singlepage.html) кожний елемент буде відображено в окремому блоці `<div>`  
+## Маніпулювання DOM елементами за допомогою JavaScript:      
+1. В [прикладі](singlepage.html) кожний елемент буде зображено в окремому блоці `<div>`  
 2. По-перше приховаємо всі елементи `<div>`  за допомогою `CSS`:  
 ```css
 div {
@@ -18,7 +18,7 @@ function showPage(page) {
     document.querySelector(`#${page}`).style.display = 'block';
 }
 ```
-5. Обробляти натискання на кнопки, та викликати знадану функцію теж буде JS:  
+5. Обробляти натискання на кнопки, та викликати згадану функцію теж буде JS:  
 ```js
     // Обрати всі кнопки
     document.querySelectorAll('button').forEach(button => {
@@ -119,7 +119,7 @@ window.onscroll = () => {
 }
 ```
 Для застосування анімації до елемента описуємо в [його властивостях](https://www.w3schools.com/cssref/css3_pr_animation.php):  
-- `animation-name` ім’я анімації
+- `animation-name` ім'я анімації
 - `animation-duration` тривалість анімації (у секундах)
 - `animation-iteration-count` кількість повторювань анімації (`infinite` для нескінченної анімації)
 - `animation-fill-mode` режим заповнення анімації:
@@ -160,3 +160,5 @@ element.parentElement.addEventListener('animationend', () => {
     element.parentElement.remove()   
 })
 ``` 
+## React
+
