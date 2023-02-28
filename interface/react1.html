@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>Привіт!</title>
+    </head>
+    <body>
+        <div id="app"></div>
+    
+        <script type="text/babel">
+            function Hello() {
+                return (
+                    <h1><li><i>Привіт!</i></li></h1>
+                );
+            }            
+            
+            function App() {
+                return (
+                    <ul> 
+                        <Hello />
+                        <Hello />
+                        <Hello />
+                        <Hello />
+                    </ul>
+                );
+            }            
+         
+            ReactDOM.render(<App />, document.querySelector("#app"));
+        </script>
+    </body>
+</html>

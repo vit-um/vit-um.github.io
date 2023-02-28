@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- імпортуємо останні версії React, ReactDOM і Babel. -->
+        <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>Привіт!</title>
+    </head>
+    <body>
+        <!-- Позначаємо ідентифікатор елементу DIV з яким буде працювати код React, що розміщується нижче -->
+        <div id="app"></div>
+        <!-- Вказуємо браузеру тип скрипту, що інтерпретується ним: розміщений нижче код слід перекласти в JS за допомогою раніше під'єднаного пакету Babel -->
+        <script type="text/babel">
+            // Створимо компонент під назвою App, який в даному випадку є функцією JS
+            function App() {
+                return (
+                    // Ось тут демонструється сила мови JSX, що дозволяє використовувати всередині звичайний html
+                    <h1> Привіт, Світ! </h1>
+                );
+            }
+            // Тут функція ReactDOM.render приймає у якості аргументів компонент для виведення та елемент у DOM, всередині якого компонент має бути виведено.
+            ReactDOM.render(<App />, document.querySelector("#app"));
+        </script>
+    </body>
+</html>
