@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Обрахунок</title>
+        <script>
+            
+            // Зачекати завантаження сторінки
+            document.addEventListener('DOMContentLoaded', () => {
+
+                // Ініціалізувати змінну нулем
+                let counter = 0;
+
+                // Якщо кнопка збільшення натиснута, збільшити лічильник та змінити внутрішній html
+                document.querySelector('#increase').onclick = () => {
+                    counter ++;
+                    document.querySelector('h1').innerHTML = counter;
+                }
+
+                // Якщо кнопка зменшення натиснута, зменшити лічильник та змінити внутрішній html
+                document.querySelector('#decrease').onclick = () => {
+                    counter --;
+                    document.querySelector('h1').innerHTML = counter;
+                }
+            })
+        </script>
+    </head>
+    <body>
+        <h1>0</h1>
+        <button id="increase">+</button>
+        <button id="decrease">-</button>
+    </body>
+</html>

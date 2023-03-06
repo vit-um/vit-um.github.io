@@ -190,3 +190,67 @@ def test_flight_page_non_passengers(self):
     self.assertEqual(response.context["non_passengers"].count(), 1)
 ```
 * Запустимо python manage.py test та переконаємось, що всі 10 тестів пройдені успішно.  
+
+## Selenium - засіб для тестування веб-сторінок на стороні клієнту.  
+
+- Розглянемо засіб тестування вебсторінки з боку клієнтського інтерфейсу. Напишемо код сторінки лічильника [counter.html](counter.html) і попрацюймо над написанням тестів для неї.
+
+- Для автоматизованого тестування будемо використовувати інструмент `Web Driver` з фреймворку [Selenium](https://www.selenium.dev/documentation/overview/)
+
+- В [тестовому файлі на Python](counter.py) ми можемо використати відразу два модулі, що потребують попереднього встановлення:   
+    * Selenium - встановлюється командою `pip install selenium`  
+    * ChromeDriver — запустивши `pip install chromedriver-py` та `pip install webdriver-manager`
+    * Для OS Windows тут завантажимо [ChromeDriver](https://chromedriver.chromium.org/downloads) необхідної версії та розпакуємо його в поточний каталог та запустимо в окремому вікні терміналу
+
+- Після встановлення бібліотек та запуску `./chromedriver.exe` спробуємо взаємодіяти з нашою сторінкою через консоль:
+
+```python
+
+>>> import os
+>>> import pathlib
+>>> import unittest
+>>> from selenium import webdriver
+>>> from selenium.webdriver.common.by import By
+
+# Знайти URI для щойноствореного файлу
+>>> uri = pathlib.Path(os.path.abspath("counter.html")).as_uri()
+
+# Налаштовує веб-драйвер на використання Google chrome
+>>> driver = webdriver.Chrome()
+
+'DevTools listening on ws://127.0.0.1:62296/devtools/browser/459w6352-0241-4254-9sa8-df1557fd7f06'
+
+# Використати URI для відкриття вебсторінки
+>>> driver.get(uri)
+
+# Отримати доступ до заголовка поточної сторінки
+>>> driver.title
+'Обрахунок'
+
+# Отримати доступ до основного коду сторінки
+>>> driver.page_source
+
+'<html lang="en"><head>\n        <title>Обрахунок</title>\n        <script>\n            \n            // Зачекати завантаження сторінки\n            document.addEventListener(\'DOMContentLoaded\', () => {\n\n // Ініціалізувати змінну нулем\n                let counter = 0;\n\n                // Якщо кнопка збільшення натиснута, збільшити лічильник та змінити внутрішній html\n                document.querySelector(\'#increase\').onclick = () => {\n                    counter ++;\n                    document.querySelector(\'h1\').innerHTML = counter;\n                }\n\n                // Якщо кнопка зменшення натиснута, зменшити лічильник та змінити внутрішній html\n                document.querySelector(\'#decrease\').onclick = () => {\n                    counter --;\n                    document.querySelector(\'h1\').innerHTML = counter;\n    }\n            })\n        </script>\n    </head>\n    <body>\n        <h1>0</h1>\n        <button id="increase">+</button>\n        <button id="decrease">-</button>\n    \n</body></html>'
+
+# Знайти та зберегти кнопки збільшення та зменшення:
+>>> increase = driver.find_element(By.ID, "increase")
+>>> decrease = driver.find_element(By.ID, "decrease")
+
+# Симулювати натискання користувачем двох кнопок:
+>>> increase.click()
+>>> increase.click()
+>>> decrease.click()
+
+# Ми навіть можемо додавати кліки всередину інших конструкцій Python:
+>>> for i in range(25):
+...     increase.click()
+
+```
+- В мене в системі було встановлено дві версії Python, от же довелось у VS Code встановлювати робоче середовище для якого було раніше встановлено модуль **Selenium** Для цього натисніть `Ctrl + Shift + P` для відкриття панелі команд та введіть "Python: Select Interpreter".  
+
+- Тепер ми готові написати код [файлу на Python для автоматизованого тестування](counter.py). От же запустимо його та отримаємо позитивний результат проходження чотирьох тестів в консолі:  
+
+![silenium](.img/test_silenium.jpg)  
+
+
+
