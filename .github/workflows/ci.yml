@@ -10,7 +10,6 @@ jobs:
         node-version: '16'
     - name: Run Django unit tests
       run: |
-        pip3 install --user django
-        pip3 install tkinter
+        sudo apt-get install python3-tk
         cd testing/airline
         python3 manage.py test
