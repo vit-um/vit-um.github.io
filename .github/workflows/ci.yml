@@ -9,5 +9,6 @@ jobs:
     - name: Run Django unit tests
       run: |
         sudo apt-get install python3-tk
+        pip install django
         cd testing/airline
         python3 manage.py test
