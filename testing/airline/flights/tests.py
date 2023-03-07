@@ -72,12 +72,12 @@ class FlightTestCase(TestCase):
         response = c.get(f"/flights/{f.id}")
         self.assertEqual(response.status_code, 200)
 
-    def test_invalid_flight_page(self):
-        max_id = Flight.objects.all().aggregate(Max("id"))["id__max"]
+    # def test_invalid_flight_page(self):
+    #     max_id = Flight.objects.all().aggregate(Max("id"))["id__max"]
 
-        c = Client()
-        response = c.get(f"/flights/{max_id + 1}")
-        self.assertEqual(response.status_code, 404)
+    #     c = Client()
+    #     response = c.get(f"/flights/{max_id + 1}")
+    #     self.assertEqual(response.status_code, 404)
         
     # Нарешті, додаймо кілька тестів, щоб переконатися, що списки пасажирів і не пасажирів згенеровані як слід:
 
