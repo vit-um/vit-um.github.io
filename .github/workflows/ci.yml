@@ -5,9 +5,7 @@ jobs:
   test_project:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        node-version: '16'
+    - uses: actions/checkout@v3
     - name: Run Django unit tests
       run: |
         sudo apt-get install python3-tk
