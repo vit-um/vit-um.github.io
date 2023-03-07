@@ -6,8 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+      node-version: '16'
     - name: Run Django unit tests
       run: |
         pip3 install --user django
+        pip3 install tkinter
         cd testing/airline
         python3 manage.py test
