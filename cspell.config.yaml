@@ -7,6 +7,8 @@ words:
   - застосунок
   - контенту
   - нашталт
+  - репозиторій
+  - репозиторію
 ignoreWords: []
 import: []
 language: en,uk
