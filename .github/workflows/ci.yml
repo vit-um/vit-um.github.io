@@ -9,4 +9,4 @@ jobs:
     - name: Run Django unit tests
       run: |
         pip3 install --user django
-        python3 manage.py test
+        python3 testing/airline/manage.py test
