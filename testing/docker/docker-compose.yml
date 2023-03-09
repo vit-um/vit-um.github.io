@@ -1,0 +1,18 @@
+version: '4'
+
+services:
+    db:
+        image: postgres
+        environment:
+            POSTGRES_PASSWORD:  vashparol
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+
+    web:
+        build: .
+        volumes:
+            - .:/usr/src/app
+        ports:
+            - "8000:8000"
+volumes:
+    postgres-data:
