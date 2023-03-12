@@ -1,5 +1,33 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-    TODO
+
+<div class="main">
+    {% if request.user.is_authenticated %}
+    <div class = "tab-list">
+        <a class="tab active" href="{% url 'index' %}">Всі дописи</a>
+        <a class="tab" href="#">Вподобані</a>
+    </div>
+    <div class="tab-panel active">
+        {% if form %}
+            <form action="{% url 'index' %}" class="postform" method="post">
+                {% csrf_token %}
+                    {{form}}
+                <button type="submit" class="btn btn-info postbutton">Post</button>
+            </form>
+        {% endif %}
+        
+         
+        Test 1ddddd ddddddd dddddddd ddddddddddddd dddddddddddddddd ddddddddddddd dddddd d dddd dddddd ddddd dddd ddddd ddd dd ddddddd dddddddd dddddddd ddddddddddddd
+    </div>
+    <div class="tab-panel">
+        Тест 2
+    </div>
+    {% endif %}
+    
+
+    
+</div>
+
+
 {% endblock %}

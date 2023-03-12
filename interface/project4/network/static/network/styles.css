@@ -1,0 +1,110 @@
+.body {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.navbar {
+    padding: 0.1rem 3rem;
+    background: #abcbecdc;
+}
+
+.navbar-expand-lg {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+        animation-name: grow;
+        animation-duration: 2s;
+        animation-fill-mode:forwards;
+        animation-iteration-count: 1;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    border-color: #abcbec7c;
+    border-style: none solid none;
+    border-width: 1px;
+
+}
+
+
+.tab-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 1vh;
+    margin-bottom: 1rem;
+}
+
+.tab {
+    width: 50%;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+}
+
+.tab:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.tab.active {
+    position: relative;
+}
+
+.tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    width: 50%;
+    height: 2px;
+    background-color: #abcbecdc;
+}
+
+.tab-panel {
+    flex: 1;
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+    margin: 0 5% 0 5%;
+}
+
+
+/* for login */
+.login_win {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 450px;
+    padding: 20px 50px;
+    background-color: #abcbecdc;
+    border-radius: 10px;
+    margin-top: 10vh;
+}
+
+.logbtn {
+    width: 100%;
+}
+
+@keyframes grow {
+    from {
+        font-size: 5px;
+    }
+    to {
+        font-size: 30px;
+    }
+}
