@@ -6,6 +6,8 @@
         <title>{% block title %}Social Network{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
+        <script src="{% static 'network/network.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'images/online-chat.png' %}" type="image/png">
     </head>
     <body>
 
@@ -13,9 +15,14 @@
             <a class="navbar-brand" href="#">Моя соціальна мережа</a>
             <div>
                 <ul class="navbar-nav mr-auto">
-                    {% if user.is_authenticated %}               
+                    {% if user.is_authenticated %}    
+                        {% if user.is_superuser %}
+                            <li class="nav-item">
+                                <a class="nav-link" style="color:red;" href="admin/"><strong>| Керування БД |  </strong></a>
+                            </li>
+                        {% endif %}           
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><strong>{{ user.username }}</strong></a>
+                            <a class="nav-link" href="#"><strong>{{user.first_name}} {{user.last_name}}</strong></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Вихід</a>

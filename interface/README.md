@@ -323,4 +323,47 @@ if (state.score === 10) {
 5. Запустити сервер:  
 `python manage.py runserver`  
 
-## Створення бази даних для зберігання даних застосунку
+## Створення бази даних для зберігання даних застосунку  
+1. Для початку відкриємо файл БД та подивимось які поля вже в моделі `AbstractUser`, з які били клоновані поля для нашої моделі `Users`  
+
+![sql](.img/sql0.jpg)
+
+2. Додамо до моделі `User` в файлі [models.py](project4\network\models.py) поле з зв'язком "багато до багатьох", що буде зберігати користувачів, за якими слідкує користувач:  
+```python
+class User(AbstractUser):
+    following = models.ManyToManyField("User", blank = True, verbose_name="Слідкую", related_name="followers")
+
+    def __str__(self):
+    return f"{self.id}: {self.username}  |  {self.first_name} {self.last_name}  |  {self.email}"
+
+```
+- Один користувач може слідкувати відразу за багатьма так само як і кожний окремо взятий користувач може слідкувати за цим користувачем. Для зручності пошуку в базі користувачів, що слідкують за обраним користувачем додаємо параметр:  `related_name="followers"`  
+
+- Додане поле може бути порожнім, от же вкажемо  
+`blank = True`  
+
+- Нам буде зручно якщо додане поле в адміністративному інтерфейсі буде підписано зрозумілим значенням, от же задаємо його:  
+`verbose_name="Слідкую"`  
+
+- Та нарешті в `def __str__(self)` визначаємо формат назви запису, як він буде виглядати в адміністративному інтерфейсі:  
+
+![adm](.img/admin.jpg)  
+
+3. В файлі [admin.py](project4\network\admin.py) додамо потрібні моделі для відображення в адміністративному інтерфейсі та опишемо їх класи:  
+```python
+from .models import User, Posts
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ("id", "username", "first_name", "last_name", "email")
+    filter_horizontal = ("following",)
+    
+class PostsAdmin(admin.ModelAdmin):
+    # додамо назви стовпців до таблиці з записами моделі
+    list_display = ("id", "author", "timestamp", "post", "likes") 
+    # Створює зручний фільтр для поля з відношенням багато до багатьох
+    filter_horizontal = ("users_like",) # Створює зручний фільтр для поля з відношенням багато до багатьох
+    
+# Реєструємо моделі
+admin.site.register(User, UserAdmin)
+admin.site.register(Posts, PostsAdmin)
+```
