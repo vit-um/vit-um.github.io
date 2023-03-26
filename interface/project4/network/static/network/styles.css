@@ -73,14 +73,124 @@
     background-color: #abcbecdc;
 }
 
-.tab-panel {
+#tab-panel {
     flex: 1;
-    display: none;
-}
-
-.tab-panel.active {
     display: block;
     margin: 0 5% 0 5%;
+}
+
+#post-block {
+    background-color: #eff2f596;
+    padding: 10px 10px 20px 25px;
+    border: solid 1px #abcbecdc;
+    border-radius: 10px 80px / 100px;
+    margin-bottom: 20px;
+}
+
+#auth {
+    text-decoration: underline;
+    color: #0062cc;
+    font: bold 20px sans-serif;
+}
+
+#stamp {
+    margin-left: 25px;
+    font: bold 16px sans-serif;
+}
+
+#text-block {
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+#button-block {
+    float: right;
+}
+
+#like-count {
+    margin-left: -15px;
+    margin-right: 20px;
+    font: 18px sans-serif;
+}
+
+.edit-btn {
+    background-image: url('edit.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; 
+    background-color: transparent;
+    border: none;
+    position: relative;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    margin: 10px 25px;
+    display: inline-block;
+}
+
+.edit-btn::after {
+    content: "Редагувати";
+    position: absolute;
+    top: 110%;
+    right: auto;
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: #4c9e129c;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.edit-btn:hover::after {
+    opacity: 1;
+}
+
+.edit-btn:hover {
+    border-radius: 10px;
+    background-color: #4c9e129c;
+}
+
+
+.like-btn {
+    background-image: url('like.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; 
+    background-color: transparent;
+    border: none;
+    position: relative;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    margin: 10px 25px;
+    display: inline-block;
+}
+
+.like-btn::after {
+    content: "Вподобайка";
+    position: absolute;
+    top: 110%;
+    right: auto;
+    /* bottom: 100%; */
+    transform: translateX(-50%);
+    padding: 5px;
+    background-color: #f31e1e88;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.like-btn:hover::after {
+    opacity: 1;
+}
+
+.like-btn:hover {
+    border-radius: 10px;
+    background-color: #f31e1e88;
 }
 
 
@@ -99,6 +209,7 @@
 .logbtn {
     width: 100%;
 }
+
 
 @keyframes grow {
     from {

@@ -6,7 +6,7 @@ class User(AbstractUser):
     following = models.ManyToManyField("User", blank = True, verbose_name="Слідкую", related_name="followers")
     
     def __str__(self):
-        return f"{self.id}: {self.username} ({self.first_name} {self.last_name})"
+        return f"{self.username} ({self.first_name} {self.last_name})"
 
 class Posts(models.Model):
     author = models.ForeignKey("User", on_delete=models.CASCADE, verbose_name="Автор допису")
@@ -18,11 +18,11 @@ class Posts(models.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "author": self.author,
+            "author": [self.author.username, self.author.first_name, self.author.last_name ], 
             "timestamp": self.timestamp.strftime("%d.%m.%y %H:%M"),
             "post": self.post,
             "likes": self.likes,
-            "users_like": self.users_like
+            "users_like": list(self.users_like.values_list('username', flat=True)),
         }
         
     def __str__(self):
