@@ -26,7 +26,7 @@ function load_posts(filter) {
     const currentUser = document.getElementById('current_user');
     // Получаем значение атрибута data-username
     const curUser = currentUser.dataset.username;   
-    console.log(curUser);
+    // console.log(curUser);
 
     fetch('/posts/' + filter)
     .then(response => response.json())
@@ -45,12 +45,22 @@ function load_posts(filter) {
 
             const post_field = document.createElement('div');
             post_field.setAttribute('id', 'text-block');
-            post_field.innerHTML = `${post.post}`;
+            post_field.innerHTML = convert_to_HTML(post.post);
 
             const parent_div = document.createElement('parent_div');
             parent_div.setAttribute('id', 'button-block');
+
             const like_button = document.createElement('button');
-            like_button.className = 'like-btn';
+           
+            if (post.users_like.includes(curUser)) {
+                // Якщо масив містить елемент curUser
+                like_button.className = 'like-btn';
+                console.log('Елемент міститься у масиві');
+            } else {
+                // Якщо масив не містить елемент curUser
+                like_button.className = 'unlike-btn';
+                console.log('Елемент не міститься у масиві');
+            }
             const like_count = document.createElement('span');
             like_count.setAttribute('id', 'like-count'); 
             like_count.innerHTML = `${post.likes}`;
@@ -72,3 +82,10 @@ function load_posts(filter) {
     });
 }
 
+function convert_to_HTML(text) {
+    let body = '';
+    for (let unit of text.split("\n")) {
+        body += unit + '<br>'
+    }
+    return body;
+}

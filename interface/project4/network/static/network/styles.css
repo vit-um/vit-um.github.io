@@ -81,7 +81,7 @@
 
 #post-block {
     background-color: #eff2f596;
-    padding: 10px 10px 20px 25px;
+    padding: 10px 10px 40px 25px;
     border: solid 1px #abcbecdc;
     border-radius: 10px 80px / 100px;
     margin-bottom: 20px;
@@ -154,6 +154,21 @@
 
 
 .like-btn {
+    background-image: url('like1.svg');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover; 
+    background-color: transparent;
+    border: none;
+    position: relative;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    margin: 10px 25px;
+    display: inline-block;
+}
+
+.unlike-btn {
     background-image: url('like.svg');
     background-repeat: no-repeat;
     background-position: center center;
@@ -168,6 +183,7 @@
     display: inline-block;
 }
 
+.unlike-btn::after, 
 .like-btn::after {
     content: "Вподобайка";
     position: absolute;
@@ -184,10 +200,12 @@
     transition: opacity 0.3s;
 }
 
+.unlike-btn:hover::after, 
 .like-btn:hover::after {
     opacity: 1;
 }
 
+.unlike-btn:hover, 
 .like-btn:hover {
     border-radius: 10px;
     background-color: #f31e1e88;
