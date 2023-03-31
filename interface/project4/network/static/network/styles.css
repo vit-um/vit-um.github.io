@@ -73,10 +73,20 @@
     background-color: #abcbecdc;
 }
 
+#new_post {
+    flex: 1;
+    display: block;
+    margin: 10px 5% 0 5%;
+    padding: 10px 10px 40px 25px;
+    border: solid 1px #abcbecdc;
+    border-radius: 10px 80px / 100px;
+    margin-bottom: 20px;
+}
+
 #tab-panel {
     flex: 1;
     display: block;
-    margin: 0 5% 0 5%;
+    margin: 10px 5% 0 5%;
 }
 
 #post-block {

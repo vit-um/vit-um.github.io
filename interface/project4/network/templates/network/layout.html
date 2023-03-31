@@ -8,12 +8,15 @@
         <link rel="shortcut icon" href="{% static 'images/online-chat.png' %}" type="image/png">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- імпортуємо останні версії React, ReactDOM і Babel. -->
-
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
-        <script src="{% static 'network/network.js' %}"></script>
+        {% block js %}
+        {% endblock %}
+        
     </head>
     <body>
+        
         <p id="current_user" data-username="{{ user.username }}"></p>
+
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="#">Моя соціальна мережа</a>
             <div>

@@ -1,9 +1,12 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block body %}
 
 <div class="main">
     {% if request.user.is_authenticated %}
+    {% endif %}
+    
     <div class = "tab-list">
         <a id="all">Усі дописи</a>  
         <a id="following">Підписки</a>
@@ -12,11 +15,11 @@
     <div id="new_post">Тут буде поле для створення нового посту  </div>
 
     <div id="tab-panel"> </div>
-    {% endif %}
-    
-
-    
+        
 </div>
 
+{% endblock %}
 
+{% block js %}
+    <script src="{% static 'network/network.js' %}"></script>
 {% endblock %}

@@ -7,8 +7,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function load_posts(filter) {
+    
+    // Получаем элемент p с id="current_user"
+    const currentUser = document.getElementById('current_user');
+    // Получаем значение атрибута data-username
+    const curUser = currentUser.dataset.username;   
+    // console.log(curUser);
+    console.log(curUser);
+
     // Show the posts and other views
-    document.querySelector('#new_post').style.display = 'none';
+    if (curUser) {
+        // Користувач авторизований
+        document.querySelector('#new_post').style.display = 'block';  
+    } else {
+        // Користувач не авторизований
+        document.querySelector('#new_post').style.display = 'none'; 
+        document.querySelector('.tab-list').style.display = 'none';  
+    }
+
+
     document.querySelector('#tab-panel').style.display = 'block';
 
     // Show the mailbox name
@@ -21,12 +38,6 @@ function load_posts(filter) {
         document.querySelector('#all').setAttribute('class', 'tab active');
     }
     document.querySelector('#tab-panel').innerHTML = '';
-
-    // Получаем элемент p с id="current_user"
-    const currentUser = document.getElementById('current_user');
-    // Получаем значение атрибута data-username
-    const curUser = currentUser.dataset.username;   
-    // console.log(curUser);
 
     fetch('/posts/' + filter)
     .then(response => response.json())
@@ -50,21 +61,25 @@ function load_posts(filter) {
             const parent_div = document.createElement('parent_div');
             parent_div.setAttribute('id', 'button-block');
 
+            let liker = 0;
             const like_button = document.createElement('button');
-           
             if (post.users_like.includes(curUser)) {
                 // Якщо масив містить елемент curUser
                 like_button.className = 'like-btn';
-                console.log('Елемент міститься у масиві');
+                liker = -1;
             } else {
                 // Якщо масив не містить елемент curUser
                 like_button.className = 'unlike-btn';
-                console.log('Елемент не міститься у масиві');
+                liker = 1;
             }
+            like_button.addEventListener('click', () => {
+                count_like(post.id, liker);
+            });
+            
             const like_count = document.createElement('span');
             like_count.setAttribute('id', 'like-count'); 
             like_count.innerHTML = `${post.likes}`;
-            
+
             if (post.author[0] === curUser) {
                 const edit_button = document.createElement('button');
                 edit_button.className = 'edit-btn';
@@ -88,4 +103,17 @@ function convert_to_HTML(text) {
         body += unit + '<br>'
     }
     return body;
+}
+
+
+function count_like(postID, liker) {
+    console.log(postID);
+    console.log(liker);
+    fetch('/post/'+ postID, {
+        method: 'PUT',
+        body: JSON.stringify({
+            liker: liker,
+            // users_like: users
+        })
+    });   
 }

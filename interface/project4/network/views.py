@@ -1,10 +1,11 @@
 import json
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+from django.views.decorators.csrf import csrf_exempt
 from .models import User, Posts
 
 
@@ -28,28 +29,51 @@ def following(request):
 
 
 def filter(request, filter):
-    users =  request.user.followers.all()
     if filter == "all":
         posts = Posts.objects.all().order_by('-timestamp')
     elif filter == "following":
+        users =  request.user.followers.all()
         posts = Posts.objects.filter(author = users.first().id).order_by('-timestamp')
     else: 
         return render(request, "network/index.html", "ERROR")
     
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
-    # return render(request, "network/index.html", {
-    #     "auth": users,
-    #     "posts": posts
-    # })
-    
+
+@csrf_exempt
+@login_required
 def post(request, post_id):
-    # Return email contents
+    # Query for requested post
+    try:
+        post = Posts.objects.get(pk=post_id)
+    except Posts.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+    
+    # Return post contents
     if request.method == "GET":
         return JsonResponse(post.serialize())
-    return JsonResponse({
+    
+    # Update whether post is read or should be archived
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("liker") == 1:
+            tmp = post.likes + 1
+            post.likes = tmp
+            post.users_like.add(request.user)
+        else:
+            tmp = post.likes - 1
+            post.likes = tmp  
+            post.users_like.remove(request.user)                   
+        post.save()
+        return HttpResponse(status=204)
+
+    # Post must be via GET or PUT
+    else:
+        return JsonResponse({
             "error": "GET or PUT request required."
         }, status=400)
+
+
 
 def admin(request):
     return render(request, "admin/")
