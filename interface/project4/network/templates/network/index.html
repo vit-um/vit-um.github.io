@@ -12,7 +12,13 @@
         <a id="following">Підписки</a>
     </div>
 
-    <div id="new_post">Тут буде поле для створення нового посту  </div>
+    <div id="new_post">
+        <div id="error">  <!-- Блок повідомлень про помилки --> </div>
+        <form id="compose-form">
+            <textarea class="form-control" id="compose-body" placeholder="Новий пост"></textarea>
+            <input type="submit" class="btn btn-primary subm-disable" value="Надіслати"/>
+        </form>
+    </div>
 
     <div id="tab-panel"> </div>
         

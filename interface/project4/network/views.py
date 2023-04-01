@@ -15,19 +15,6 @@ def index(request):
         "posts": posts
     })
 
-def following(request):
-    users =  request.user.followers.all() # User.objects.filter(username = request.user)
-    # us_id = []
-    # for user in users:
-    #     us_id = user.id
-#    auth = user.all() #.followers.all()
-    posts = Posts.objects.filter(author = users.first().id).order_by('-timestamp')
-    return render(request, "network/index.html", {
-        "auth": users,
-        "posts": posts
-    })
-
-
 def filter(request, filter):
     if filter == "all":
         posts = Posts.objects.all().order_by('-timestamp')
@@ -73,6 +60,19 @@ def post(request, post_id):
             "error": "GET or PUT request required."
         }, status=400)
 
+@csrf_exempt
+@login_required
+def compose(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    
+    data = json.loads(request.body)
+    post = Posts(
+        author=request.user,
+        post=data.get("body", "")
+    )
+    post.save()
+    return JsonResponse({"message": "Ваш пост успішно розміщено у мережі."}, status=201)
 
 
 def admin(request):

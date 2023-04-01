@@ -24,11 +24,25 @@ function load_posts(filter) {
         document.querySelector('#new_post').style.display = 'none'; 
         document.querySelector('.tab-list').style.display = 'none';  
     }
-
-
     document.querySelector('#tab-panel').style.display = 'block';
 
-    // Show the mailbox name
+    // Забороняємо натискання кнопки Надіслати" в разі якщо довжина посту менше за 5 символів 
+    const submit = document.querySelector('.subm-disable');
+    const text = document.querySelector('#compose-body');
+    text.value = '';
+    submit.disabled = true;
+    text.onkeyup = () => {
+        if (text.value.length > 5) 
+            submit.disabled = false;
+        else 
+            submit.disabled = true;
+    }
+
+    // Викликаємо функцію обробник натискання на кнопку Надіслати. 
+    document.querySelector('#compose-form').onsubmit = () => send_post(filter);
+
+
+    // Позначаємо активну вкладку 
     if (filter === 'following') {
         document.querySelector('#following').setAttribute('class', 'tab active');
         document.querySelector('#all').setAttribute('class', 'tab');
@@ -97,6 +111,41 @@ function load_posts(filter) {
     });
 }
 
+
+function send_post(filter) {
+    fetch('/post', {
+    method: 'POST',
+    body: JSON.stringify({
+        body: document.getElementById("compose-body").value
+    })
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.error) {
+            document.querySelector('#error').style.display = 'block';
+            document.querySelector('#error').setAttribute('class', "alert alert-danger");
+            document.querySelector('#error').innerHTML = `${result.error}`;
+            setTimeout(function() {
+                document.querySelector('#error').style.display = 'none';
+            }, 5000);  
+            load_posts(filter);
+            
+        }
+        else {
+            document.querySelector('#error').style.display = 'block';
+            document.querySelector('#error').setAttribute('class', "alert alert-success");
+            document.querySelector('#error').innerHTML = `${result.message}`;
+            setTimeout(function() {
+                document.querySelector('#error').style.display = 'none';
+            }, 3000);  
+            load_posts(filter);
+
+        }
+    });
+    return false;
+}
+
+
 function convert_to_HTML(text) {
     let body = '';
     for (let unit of text.split("\n")) {
@@ -113,7 +162,6 @@ function count_like(postID, liker) {
         method: 'PUT',
         body: JSON.stringify({
             liker: liker,
-            // users_like: users
         })
     });   
 }

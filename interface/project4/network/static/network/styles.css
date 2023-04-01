@@ -37,6 +37,21 @@
 
 }
 
+.form-control {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 96%;
+}
+
+#error {
+    width: 96%;
+}
+
+
+#compose-form input[type="submit"] {
+    float: right;
+    margin-right: 35px;
+}
 
 .tab-list {
     display: flex;
