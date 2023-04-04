@@ -1,6 +1,7 @@
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.forms.models import model_to_dict
 from django.db import IntegrityError
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -25,6 +26,47 @@ def filter(request, filter):
         return render(request, "network/index.html", "ERROR")
     
     return JsonResponse([post.serialize() for post in posts], safe=False)
+
+@csrf_exempt
+@login_required
+def profile(request, profile):
+    try:
+        otherUser = User.objects.get(username = profile)
+    except User.DoesNotExist:
+        return JsonResponse({"error": "User not found."}, status=404)
+        
+    if request.method == "GET":
+        myOwn = request.user.username
+        followingUsers = User.objects.filter(username = myOwn)
+        # Рахуємо кількість тих хто стежить за користувачем profile якого дивимось
+        followers= User.objects.filter(following = otherUser).count()
+        # Рахуємо кількість підписників користувача profile якого дивимось
+        following  = User.objects.filter(followers = otherUser).count()
+        # Усі пости автором яких є власник профілю, що переглядається 
+        posts = Posts.objects.filter(author = otherUser).order_by('-timestamp')
+        
+        data = {'user': myOwn, 
+                'f_users': [user.serialize() for user in followingUsers],
+                'followers': followers,
+                'following': following,
+                'posts': [post.serialize() for post in posts]
+                }    
+        return JsonResponse(data, safe=False)
+
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("subscriber"):
+            otherUser.followers.add(request.user)
+        else:
+            otherUser.followers.remove(request.user)                   
+        otherUser.save()
+        return HttpResponse(status=204)
+
+    # Post must be via GET or PUT
+    else:
+        return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)
 
 
 @csrf_exempt

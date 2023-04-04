@@ -13,7 +13,7 @@ function load_posts(filter) {
     // Получаем значение атрибута data-username
     const curUser = currentUser.dataset.username;   
     // console.log(curUser);
-    console.log(curUser);
+
 
     // Show the posts and other views
     if (curUser) {
@@ -61,18 +61,33 @@ function load_posts(filter) {
         posts.forEach(post => {
             const post_div = document.createElement('div');
             post_div.setAttribute('id', 'post-block');
+            
+            // Автор допису та його дата
             const auth_field = document.createElement('span');
-            auth_field.innerHTML = `${post.author[0]}`;
             auth_field.setAttribute('id', 'auth');
+            
+            const link = document.createElement('a');
+          //  link.setAttribute('href', '/user/' + `${post.author[0]}`);
+            link.innerHTML = `${post.author[0]}`;
+            link.setAttribute('style', 'cursor: pointer;');
+
+            auth_field.append(link);
+
             const dt_field = document.createElement('span'); 
             dt_field.innerHTML = `${post.timestamp}`;
             dt_field.setAttribute('id', 'stamp');
 
+            link.addEventListener('click', () => {
+                profile_settings(post.author);
+            });
+
+            // Текст або тіло допису
             const post_field = document.createElement('div');
             post_field.setAttribute('id', 'text-block');
             post_field.innerHTML = convert_to_HTML(post.post);
 
-            const parent_div = document.createElement('parent_div');
+            // Рядок з елементами керування дописом
+            const parent_div = document.createElement('div');
             parent_div.setAttribute('id', 'button-block');
 
             let liker = 0;
@@ -111,6 +126,95 @@ function load_posts(filter) {
     });
 }
 
+function profile_settings(user_profile) {
+    
+    document.querySelector('#new_post').style.display = 'none';
+    document.querySelector('.tab-list').style.display = 'none';  
+    document.querySelector('#tab-panel').style.display = 'block';
+    document.querySelector('#tab-panel').innerHTML = '<h1>Сторінка профілю користувача</h1><br>' 
+                + '<h5>Логін: ' +`${ user_profile[0] }` + '</h5>'
+                + '<h5>Ім`я: ' +`${ user_profile[1] }` + '</h5>'
+                + '<h5>Прізвище: ' +`${ user_profile[2] }` + '</h5><br>';
+
+
+    fetch('/user/' + user_profile[0])
+    .then(response => response.json())
+    .then(data => {
+        const { user, f_users, followers, following, posts } = data;
+        const posts_div = document.createElement('div');
+        posts_div.innerHTML = '<h5>Кількість підписників цього користувача: <span style="color:red;">' + `${followers}` +'</span></h5>'
+                            + '<h5>Кількість осіб, за якими стежить цей користувач: <span style="color:red;">' + `${following}` +'</span></h5><br>';
+
+
+        // Рядок з елементами керування
+        const control_div = document.createElement('div');
+        control_div.setAttribute('id', 'control-block');
+                
+        const exit_button = document.createElement('button');
+        exit_button.innerHTML = 'Вийти';
+        exit_button.className = 'btn btn-primary'
+
+        exit_button.addEventListener('click', () => {
+            load_posts('all');
+        });
+
+        const subs_button = document.createElement('button');
+        subs_button.className = 'btn btn-primary'
+        const containsUser = f_users.some(usr => usr.following.includes(user_profile[0]));
+        console.log(containsUser);
+        console.log(f_users[0].following);
+        var subscriber = true;
+        if (containsUser) {
+            subs_button.innerHTML = 'Відписатись';
+            subscriber = false;
+        } else {
+            subs_button.innerHTML = 'Підписатись';
+            subscriber = true;
+        }
+
+        subs_button.addEventListener('click', () => {
+            fetch('/user/'+ user_profile[0], {
+                method: 'PUT',
+                body: JSON.stringify({
+                    subscriber: subscriber,
+                })
+            });   
+            subs_button.innerHTML = 'Бля';
+            profile_settings(user_profile);
+        });
+        
+        if (user === user_profile[0]) {
+            control_div.append(exit_button);
+        } else {
+            control_div.append(subs_button, exit_button);
+        }
+        
+
+        const name_head = document.createElement('h5');
+        name_head.innerHTML = '<br>Усі дописи користувача <span style="color:red;">' + user_profile[0] +'</span> (' + user_profile[1] + ' ' + user_profile[2] + ')';
+
+        posts_div.append(control_div, name_head);
+
+        posts.forEach(post => {
+            const dt_field = document.createElement('span'); 
+            dt_field.innerHTML = `${post.timestamp}`;
+            
+            const post_div = document.createElement('div');
+            post_div.setAttribute('id', 'post-block');
+
+            // Текст або тіло допису
+            const post_field = document.createElement('div');
+            post_field.setAttribute('id', 'text-block');
+            post_field.innerHTML = convert_to_HTML(post.post);
+
+            post_div.append(post_field);
+
+            posts_div.append(dt_field, post_div);
+        });
+        document.querySelector('#tab-panel').append(posts_div);
+    });
+    return false;
+}
 
 function send_post(filter) {
     fetch('/post', {
@@ -139,7 +243,6 @@ function send_post(filter) {
                 document.querySelector('#error').style.display = 'none';
             }, 3000);  
             load_posts(filter);
-
         }
     });
     return false;

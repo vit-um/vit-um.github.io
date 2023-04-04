@@ -5,6 +5,14 @@ from django.db import models
 class User(AbstractUser):
     following = models.ManyToManyField("User", blank = True, verbose_name="Слідкую", related_name="followers")
     
+    def serialize(self):
+        return {
+            "username": self.username, 
+            "last_login": self.last_login.strftime("%d.%m.%y %H:%M"),
+            "email": self.email,
+            "following": list(self.following.values_list('username', flat=True)),
+        }
+    
     def __str__(self):
         return f"{self.username} ({self.first_name} {self.last_name})"
 

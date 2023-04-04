@@ -11,14 +11,16 @@
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
         {% block js %}
         {% endblock %}
-        
+
     </head>
     <body>
         
         <p id="current_user" data-username="{{ user.username }}"></p>
+        <p id="cur_user_first" data-userf="{{user.first_name}}"></p>
+        <p id="cur_user_last" data-userl="{{user.last_name}}"></p>
 
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="#">Моя соціальна мережа</a>
+            <a class="navbar-brand" href="{% url 'index' %}">Моя соціальна мережа</a>
             <div>
                 <ul class="navbar-nav mr-auto">
                     {% if user.is_authenticated %}    
@@ -28,7 +30,7 @@
                             </li>
                         {% endif %}           
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><strong>{{user.username}} ({{user.first_name}} {{user.last_name}})</strong></a>
+                            <a id = "prof_user" class="nav-link" href="#"><strong>{{user.username}} ({{user.first_name}} {{user.last_name}})</strong></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Вихід</a>
@@ -44,7 +46,19 @@
                 </ul>
                 </div>
         </nav>
-        
+        <script>
+            var currentUser = document.getElementById('current_user');
+            const curUser = currentUser.dataset.username;
+            currentUser = document.getElementById('cur_user_first');
+            const curUserF = currentUser.dataset.userf;
+            currentUser = document.getElementById('cur_user_last');
+            const curUserL = currentUser.dataset.userl;
+            var userData = [curUser, curUserF, curUserL];
+            const link = document.getElementById("prof_user");
+            link.addEventListener('click', () => {
+                profile_settings(userData);
+            });
+        </script>
         <div class="body">
             {% block body %}
             {% endblock %}

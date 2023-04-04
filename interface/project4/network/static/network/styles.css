@@ -6,7 +6,9 @@
     align-items: center;
 }
 
-
+h5 {
+    color: #0062cc;
+}
 .navbar {
     padding: 0.1rem 3rem;
     background: #abcbecdc;
@@ -234,6 +236,14 @@
 .like-btn:hover {
     border-radius: 10px;
     background-color: #f31e1e88;
+}
+
+#control-block {
+    text-align: center;
+}
+
+#control-block button {
+    margin: 0 10px;
 }
 
 
