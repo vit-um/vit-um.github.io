@@ -9,6 +9,7 @@
 h5 {
     color: #0062cc;
 }
+
 .navbar {
     padding: 0.1rem 3rem;
     background: #abcbecdc;
@@ -22,10 +23,14 @@ h5 {
 }
 
 .navbar-brand {
-        animation-name: grow;
-        animation-duration: 2s;
-        animation-fill-mode:forwards;
-        animation-iteration-count: 1;
+    animation-name: grow;
+    animation-duration: 2s;
+    animation-fill-mode:forwards;
+    animation-iteration-count: 1;
+}
+
+.btn {
+    margin: 0px 18px;
 }
 
 .main {
@@ -108,7 +113,7 @@ h5 {
 
 #post-block {
     background-color: #eff2f596;
-    padding: 10px 10px 40px 25px;
+    padding: 10px 10px 50px 25px;
     border: solid 1px #abcbecdc;
     border-radius: 10px 80px / 100px;
     margin-bottom: 20px;
@@ -125,10 +130,10 @@ h5 {
     font: bold 16px sans-serif;
 }
 
-#text-block {
+/* #text-block {
     margin-top: 15px;
     margin-bottom: 10px;
-}
+} */
 
 #button-block {
     float: right;
@@ -246,6 +251,13 @@ h5 {
     margin: 0 10px;
 }
 
+.editTextArea {
+    width: 98%;
+    border-radius: 6px;
+    height: auto !important;
+    max-height: none !important;
+    white-space: pre-wrap;
+}
 
 /* for login */
 .login_win {

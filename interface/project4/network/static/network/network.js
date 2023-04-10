@@ -67,7 +67,7 @@ function load_posts(filter) {
             auth_field.setAttribute('id', 'auth');
             
             const link = document.createElement('a');
-          //  link.setAttribute('href', '/user/' + `${post.author[0]}`);
+            // link.setAttribute('href', '/user/' + `${post.author[0]}`); //розкоментувати для отримання JSON-відповіді на екрані
             link.innerHTML = `${post.author[0]}`;
             link.setAttribute('style', 'cursor: pointer;');
 
@@ -113,12 +113,63 @@ function load_posts(filter) {
                 const edit_button = document.createElement('button');
                 edit_button.className = 'edit-btn';
                 parent_div.append(edit_button, like_button, like_count);
+
+                edit_button.addEventListener('click', () => {
+                    const postArea = document.querySelector('#text-block');
+                    const postText = postArea.innerText;
+                    console.log(postArea);
+                    postArea.innerHTML = '';
+                    // Create a new textarea for editing the post
+                    const newTextArea = document.createElement('textarea')
+                    newTextArea.setAttribute('class', `editTextArea editTextArea-${post.id}`)
+                    newTextArea.innerHTML = postText.trim()
+                    post_field.appendChild(newTextArea)
+            
+                    // Remove edit and like button temporarily
+                    like_button.style.display = 'none';
+                    edit_button.style.display = 'none';
+                    like_count.style.display = 'none';
+
+                    // Create a button to submit the edited post
+                    const submitEditButton = document.createElement('button');
+                    submitEditButton.className = 'btn btn-primary';
+                    submitEditButton.innerHTML = 'Зберегти';
+                    parent_div.append(submitEditButton);
+                    
+                    // Add event listener for the submit edit button
+                    submitEditButton.addEventListener('click', () => {
+                        const newTextArea = parent_div.querySelector('.editTextArea');
+                        const newText = newTextArea.value.trim();
+                        if (newText) {
+                            fetch(`/edit/${post.id}`, {
+                                method: 'PUT',
+                                body: JSON.stringify({
+                                    post: newText,
+                                })
+                            })
+                            .then(response => response.json())
+                            .then(result => {
+                                if (result.success) {
+                                    postArea.innerHTML = convert_to_HTML(newText);
+                                    postArea.style.display = 'block';
+                                    newTextArea.remove();
+                                    submitEditButton.remove();
+                                    like_button.style.display = 'inline-block';
+                                    edit_button.style.display = 'inline-block';
+                                } else {
+                                    alert(result.message);
+                                }
+                            });
+                        }
+                    });
+
+                });
             }
             else
                 parent_div.append(like_button, like_count);
 
-            post_field.append(parent_div)
-            post_div.append(auth_field, dt_field, post_field);
+            //post_field.append(parent_div)
+            post_div.append(auth_field, dt_field, post_field, parent_div);
 
             posts_div.append(post_div);
         });
@@ -179,7 +230,6 @@ function profile_settings(user_profile) {
                     subscriber: subscriber,
                 })
             });   
-            subs_button.innerHTML = 'Бля';
             profile_settings(user_profile);
         });
         
