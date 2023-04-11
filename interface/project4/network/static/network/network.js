@@ -83,7 +83,7 @@ function load_posts(filter) {
 
             // Текст або тіло допису
             const post_field = document.createElement('div');
-            post_field.setAttribute('id', 'text-block');
+            post_field.setAttribute('id', `text-block-${post.id}`);
             post_field.innerHTML = convert_to_HTML(post.post);
 
             // Рядок з елементами керування дописом
@@ -115,33 +115,48 @@ function load_posts(filter) {
                 parent_div.append(edit_button, like_button, like_count);
 
                 edit_button.addEventListener('click', () => {
-                    const postArea = document.querySelector('#text-block');
+                    // Визначення та копіювання тексту посту для редагування  
+                    const postArea = document.querySelector(`#text-block-${post.id}`);
                     const postText = postArea.innerText;
-                    console.log(postArea);
                     postArea.innerHTML = '';
-                    // Create a new textarea for editing the post
-                    const newTextArea = document.createElement('textarea')
-                    newTextArea.setAttribute('class', `editTextArea editTextArea-${post.id}`)
-                    newTextArea.innerHTML = postText.trim()
-                    post_field.appendChild(newTextArea)
+                    // Створення нової тестової області для редагування тексту, та копіювання в нього тексту посту з обрізкою зайвих символів в кінці
+                    const newTextArea = document.createElement('textarea');
+                    newTextArea.setAttribute('class', `editTextArea editTextArea-${post.id}`);
+                    newTextArea.innerHTML = postText.trim();
+                    post_field.appendChild(newTextArea);
             
-                    // Remove edit and like button temporarily
+                    // Приховуємо зайві елементи керування: edit and like button temporarily
                     like_button.style.display = 'none';
                     edit_button.style.display = 'none';
                     like_count.style.display = 'none';
 
-                    // Create a button to submit the edited post
-                    const submitEditButton = document.createElement('button');
-                    submitEditButton.className = 'btn btn-primary';
-                    submitEditButton.innerHTML = 'Зберегти';
-                    parent_div.append(submitEditButton);
-                    
-                    // Add event listener for the submit edit button
-                    submitEditButton.addEventListener('click', () => {
-                        const newTextArea = parent_div.querySelector('.editTextArea');
+                    // Створюємо кнопку та слухача події її натискання для відміни режиму редагування 
+                    const CancelButton = document.createElement('button');
+                    CancelButton.className = 'btn btn-primary';
+                    CancelButton.innerHTML = 'Скасувати';
+
+                    CancelButton.addEventListener('click', () => {
+                        newTextArea.remove();
+                        CancelButton.remove();
+                        SubmitButton.remove();
+                        postArea.innerHTML = convert_to_HTML(postText);
+                        like_button.style.display = 'inline-block';
+                        edit_button.style.display = 'inline-block';
+                        like_count.style.display = 'inline-block';
+                    });
+
+                    // Створюємо кнопку та слухача події її натискання для зберігання виправленого посту в базі
+                    const SubmitButton = document.createElement('button');
+                    SubmitButton.className = 'btn btn-primary';
+                    SubmitButton.innerHTML = 'Зберегти';
+                    parent_div.append(CancelButton, SubmitButton);
+
+                    SubmitButton.addEventListener('click', () => {
+                        const newTextArea = document.querySelector(`.editTextArea-${post.id}`);
                         const newText = newTextArea.value.trim();
+                        console.log(newText);
                         if (newText) {
-                            fetch(`/edit/${post.id}`, {
+                            fetch(`/post/${post.id}`, {
                                 method: 'PUT',
                                 body: JSON.stringify({
                                     post: newText,
@@ -150,19 +165,19 @@ function load_posts(filter) {
                             .then(response => response.json())
                             .then(result => {
                                 if (result.success) {
-                                    postArea.innerHTML = convert_to_HTML(newText);
-                                    postArea.style.display = 'block';
                                     newTextArea.remove();
-                                    submitEditButton.remove();
+                                    CancelButton.remove();
+                                    SubmitButton.remove();
+                                    postArea.innerHTML = convert_to_HTML(newText);
                                     like_button.style.display = 'inline-block';
                                     edit_button.style.display = 'inline-block';
+                                    like_count.style.display = 'inline-block';
                                 } else {
-                                    alert(result.message);
+                                    alert(result.error);
                                 }
                             });
                         }
                     });
-
                 });
             }
             else
@@ -316,5 +331,12 @@ function count_like(postID, liker) {
         body: JSON.stringify({
             liker: liker,
         })
-    });   
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            alert(result.success);
+        
+        }
+    });  
 }

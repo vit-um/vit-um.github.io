@@ -85,16 +85,23 @@ def post(request, post_id):
     # Update whether post is read or should be archived
     elif request.method == "PUT":
         data = json.loads(request.body)
-        if data.get("liker") == 1:
-            tmp = post.likes + 1
-            post.likes = tmp
-            post.users_like.add(request.user)
+        if data.get("post") is not None:
+            txt = data.get("post")
+            if len(txt) < 5:
+                return JsonResponse({"error": "Ваш допис дуже короткий для зберігання в базі"}, status=400)
+            else:    
+                post.post = data.get("post")
         else:
-            tmp = post.likes - 1
-            post.likes = tmp  
-            post.users_like.remove(request.user)                   
+            if data.get("liker") == 1:
+                tmp = post.likes + 1
+                post.likes = tmp
+                post.users_like.add(request.user)
+            else:
+                tmp = post.likes - 1
+                post.likes = tmp  
+                post.users_like.remove(request.user)                   
         post.save()
-        return HttpResponse(status=204)
+        return JsonResponse({"success": "Ваш пост успішно відредаговано"}, status=201)
 
     # Post must be via GET or PUT
     else:

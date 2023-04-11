@@ -254,8 +254,7 @@ h5 {
 .editTextArea {
     width: 98%;
     border-radius: 6px;
-    height: auto !important;
-    max-height: none !important;
+    max-height: none;
     white-space: pre-wrap;
 }
 
