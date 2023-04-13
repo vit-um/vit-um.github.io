@@ -89,8 +89,13 @@ function load_posts(filter) {
             // Рядок з елементами керування дописом
             const parent_div = document.createElement('div');
             parent_div.setAttribute('id', 'button-block');
+            
+            const like_count = document.createElement('span');
+            like_count.setAttribute('id', 'like-count'); 
+            like_count.innerHTML = `${post.likes}`;
 
             let liker = 0;
+            let count = post.likes;
             const like_button = document.createElement('button');
             if (post.users_like.includes(curUser)) {
                 // Якщо масив містить елемент curUser
@@ -103,11 +108,19 @@ function load_posts(filter) {
             }
             like_button.addEventListener('click', () => {
                 count_like(post.id, liker);
+                if (liker === 1) {
+                    like_button.className = 'like-btn';
+                    count++;
+                    like_count.innerHTML = `${count}`;
+                    liker = -1
+                } else {
+                    like_button.className = 'unlike-btn';
+                    count--;
+                    like_count.innerHTML = `${count}`;
+                    liker = 1
+                }
             });
             
-            const like_count = document.createElement('span');
-            like_count.setAttribute('id', 'like-count'); 
-            like_count.innerHTML = `${post.likes}`;
 
             if (post.author[0] === curUser) {
                 const edit_button = document.createElement('button');
@@ -324,19 +337,10 @@ function convert_to_HTML(text) {
 
 
 function count_like(postID, liker) {
-    console.log(postID);
-    console.log(liker);
     fetch('/post/'+ postID, {
         method: 'PUT',
         body: JSON.stringify({
             liker: liker,
         })
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.success) {
-            alert(result.success);
-        
-        }
-    });  
+    });
 }
