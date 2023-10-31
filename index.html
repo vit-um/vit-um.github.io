@@ -55,7 +55,7 @@
     <div class="sp_div">
         <h2 class="display-5" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#resourceList">Useful Resources</h2> 
     </div>
-    <ol id="resourceList" class="collapse show">
+    <ol id="resourceList" class="collapse">
         <li><a href="https://www.w3schools.com/cssref/default.asp">W3Schools: How to use HTML, CSS, and JavaScript</a></li>
         <li><a href="https://developer.mozilla.org/ru/docs/orphaned/Web">MDN Web Docs: HTML, CSS, JS, HTTP, Web APIs</a></li>
         <li><a href="https://getbootstrap.com/docs/5.1/getting-started/introduction/">Bootstrap 5.1 documentation</a></li> 
@@ -96,5 +96,10 @@
             </tr>       
         </tbody>
     </table>
+    <script>
+        $(document).ready(function(){
+          $('#resourceList').collapse('hide');
+        });
+    </script>
 </body>
 </html>
