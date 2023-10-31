@@ -6,6 +6,8 @@
     <link rel="shortcut icon" href="search/img/vit-um.png" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
     <h1 class="display-5 fw-bold"> My Python and JavaScript CS50 course tasks </h1>
@@ -51,9 +53,9 @@
     </table>
 
     <div class="sp_div">
-        <h2 class="display-5" style="text-align: left;">Useful Resources</h2> 
+        <h2 class="display-5" style="text-align: left;" data-bs-toggle="collapse" data-bs-target="#resourceList">Useful Resources</h2> 
     </div>
-    <ol>
+    <ol id="resourceList" class="collapse">
         <li><a href="https://www.w3schools.com/cssref/default.asp">W3Schools: How to use HTML, CSS, and JavaScript</a></li>
         <li><a href="https://developer.mozilla.org/ru/docs/orphaned/Web">MDN Web Docs: HTML, CSS, JS, HTTP, Web APIs</a></li>
         <li><a href="https://getbootstrap.com/docs/5.1/getting-started/introduction/">Bootstrap 5.1 documentation</a></li> 
@@ -73,5 +75,46 @@
         <li><a href="https://fonts.google.com/">Google Fonts (library of 1490 open source font families and Icons) </a></li>
     </ol>
 
+    <h1 class="display-5 fw-bold"> DevOps та Kubernetes. Practical intensive </h1>
+    <br>
+    <table class="center">
+        <thead>
+            <th class="fw-bold"> № </th>
+            <th class="fw-bold text-center">Name of task</th>
+            <th class="fw-bold text-center">Skills</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a class="text-danger" href="test_bs.html">T00</a></td>
+                <td><a href="https://getbootstrap.com/docs/5.1/examples/">Some experiments with bootstrap</a></td>
+                <td>Bootstrap</td>
+            </tr>
+            <tr>
+                <td><a class="text-danger" href="/search/index.html">T01</a></td>
+                <td>My own frontend for google search</td>
+                <td>HTML/CSS</td>
+            </tr>
+            <tr>
+                <td><a class="text-danger" href="http://vitum.pythonanywhere.com/">T02</a></td>
+                <td>Design an online encyclopedia similar to Wikipedia</td>
+                <td><a class="text-success" href="https://github.com/vit-um/vit-um.github.io/blob/master/python/README.md">Python</a> / <a class="text-success" href="https://github.com/vit-um/vit-um.github.io/blob/master/django/README.md">Django</a></td>
+            </tr>
+            <tr>
+                <td><a class="text-danger" href="https://youtu.be/GUTyulpQsBk">T03</a></td>
+                <td>Design an eBay-like online e-commerce and auction site where users can list, bid and watchlist items</td>
+                <td><a class="text-success" href="https://github.com/vit-um/vit-um.github.io/blob/master/sql/README.md">SQL, Models and Migrations</a></td>
+            </tr>       
+            <tr>
+                <td><a class="text-danger" href="https://github.com/vit-um/vit-um.github.io/blob/master/javascript/mail/">T04</a></td>
+                <td>Design an external interface for a mail client that uses an API to send and receive mail</td>
+                <td><a class="text-success" href="https://github.com/vit-um/vit-um.github.io/blob/master/javascript/README.md">JavaScript</a></td>
+            </tr>       
+            <tr>
+                <td><a class="text-danger" href="https://github.com/vit-um/vit-um.github.io/tree/master/interface/project4">T05</a></td>
+                <td>Design a Twitter-like social network site where you can create posts and follow users</td>
+                <td><a class="text-success" href="https://github.com/vit-um/vit-um.github.io/blob/master/interface/README.md">AJAX, React, API</a> / <a class="text-success" href="https://github.com/vit-um/vit-um.github.io/blob/master/testing/README.md">CI/CD, Docker</a></td>
+            </tr>       
+        </tbody>
+    </table>
 </body>
 </html>
