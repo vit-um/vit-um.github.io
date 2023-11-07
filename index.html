@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <h1 class="display-5 fw-bold"> My Python and JavaScript CS50 course tasks </h1>
+    <h1 class="display-5 fw-bold" style="cursor: pointer;"><a href="Certificate.pdf" target="_blank"> My Python and JavaScript CS50 course tasks</a> </h1>
     <table class="center">
         <thead>
             <th class="fw-bold"> № </th>
@@ -51,7 +51,7 @@
     </table>
 
     <div class="sp_div">
-        <h2 class="display-5" style="text-align: left; cursor: pointer;" onclick="toggleList()">Useful Resources</h2>
+        <h3 class="display-5" style="text-align: left; cursor: pointer;" onclick="toggleList()">Useful Resources</h3>
     </div>
 
     </div>
@@ -74,8 +74,7 @@
         <li><a href="https://docs.docker.com/">Docker Guide and Tutorials</a></li>
         <li><a href="https://fonts.google.com/">Google Fonts (library of 1490 open source font families and Icons) </a></li>
     </ol>
-    <h2 class="display-5" style="text-align: left; cursor: pointer;"><a href="Certificate.pdf">Python and JavaScript CS50 course completion certificate</a></h2>
-
+ 
     <h1 class="display-5 fw-bold"> DevOps та Kubernetes. Practical intensive </h1>
     <table class="center">
         <thead>
@@ -85,17 +84,39 @@
         </thead>
         <tbody>
             <tr>
-                <td><a class="text-danger" href="https://www.youtube.com/watch?v=D6PIP8eHEA0">Introduction</a></td>
+                <td><a class="text-danger" href="https://www.youtube.com/watch?v=D6PIP8eHEA0">Week 01</a></td>
                 <td>DevOps & Kubernetes on Prometheus</td>
-                <td><a class="text-success" href="https://github.com/vit-um/vit-um.github.io/blob/master/DevOps/README.md">DevOps</a></td>
+                <td><a class="text-success" href="https://github.com/vit-um/vit-um.github.io/blob/master/DevOps/README.md">General knowledge about DevOps</a></td>
             </tr>
             <tr>
-                <td><a class="text-danger" href="https://youtu.be/GUTyulpQsBk">Week 01</a></td>
-                <td></td>
-                <td><a class="text-success" href=""></a></td>
+                <td><a class="text-danger" href="">Task 02</a></td>
+                <td>Implement a web service in your own development environment</td>
+                <td><a class="text-success" href="https://github.com/vit-um/DevOps"></a>SDLC</td>
             </tr>       
         </tbody>
     </table>
+
+    <div class="sp_div">
+        <h3 class="display-5" style="text-align: left; cursor: pointer;" onclick="toggleList()">Useful Resources for DevOps</h3>
+    </div>
+
+    </div>
+    <ol id="resourceList" style="display: none;">
+        <li><a href="https://raw.githubusercontent.com/cncf/trailmap/master/CNCF_TrailMap_latest.pdf">Cloud Native Trail Map</a></li>
+        <li><a href="https://digital.ai/learn/devops-periodic-table/?nab=0">DevOps Tools Periodic Table</a></li>
+        <li><a href="https://landscape.cncf.io/">CNCF Cloud Native Interactive Landscape</a></li>
+        <li><a href="https://git-scm.com/book/uk/v2">Pro Git book</a></li>
+        <li><a href="https://githowto.com/ ">GitHowTo</a></li>
+        <li><a href="https://learngitbranching.js.org/?locale=uk">Learn Git Branching</a></li>
+        <li><a href="https://github.blog/2015-06-08-how-to-undo-almost-anything-with-git/">How to undo (almost) anything with Git</a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+        <li><a href=""></a></li>
+    </ol>
+
+
+
     <script>
         function toggleList() {
             var list = document.getElementById("resourceList");
